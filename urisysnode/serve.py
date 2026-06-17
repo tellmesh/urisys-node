@@ -15,6 +15,7 @@ import warnings
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qs, urlparse
 
 from .identity import default_events_path, health_payload, load_identity
 from .pack_resolver import (
@@ -409,6 +410,50 @@ def hotload_release_pack(
     }
 
 
+def _app_chat_store(runtime: Runtime):
+    from .app_data import AppChatStore
+
+    store = getattr(runtime, "_app_chat_store", None)
+    if store is None:
+        store = AppChatStore()
+        runtime._app_chat_store = store  # type: ignore[attr-defined]
+    return store
+
+
+def _app_chat_get(path: str, runtime: Runtime) -> tuple[int, dict[str, Any]]:
+    parsed = urlparse(path)
+    qs = parse_qs(parsed.query)
+    if parsed.path == "/app/chat/messages":
+        channel_id = (qs.get("channel_id") or qs.get("channel") or [""])[0]
+        if not channel_id:
+            return 400, {"ok": False, "error": "channel_id required"}
+        try:
+            limit = int((qs.get("limit") or ["200"])[0])
+        except ValueError:
+            limit = 200
+        messages = _app_chat_store(runtime).list_messages(channel_id, limit=limit)
+        return 200, {"ok": True, "channel_id": channel_id, "messages": messages, "count": len(messages)}
+    if parsed.path == "/app/chat/channels":
+        try:
+            limit = int((qs.get("limit") or ["100"])[0])
+        except ValueError:
+            limit = 100
+        channels = _app_chat_store(runtime).list_channels(limit=limit)
+        return 200, {"ok": True, "channels": channels, "count": len(channels)}
+    return 404, {"ok": False, "error": "not found"}
+
+
+def _app_chat_post(body: dict[str, Any], runtime: Runtime) -> tuple[int, dict[str, Any]]:
+    channel_id = str(body.get("channel_id") or body.get("channel") or "").strip()
+    role = str(body.get("role") or "user").strip() or "user"
+    text = str(body.get("text") or "").strip()
+    meta = body.get("meta") if isinstance(body.get("meta"), dict) else {}
+    if not channel_id or not text:
+        return 400, {"ok": False, "error": "channel_id and text required"}
+    row = _app_chat_store(runtime).append(channel_id, role, text, meta=meta)
+    return 200, {"ok": True, "message": row}
+
+
 def make_handler(runtime: Runtime):
     allow_pack_load = (
         os.environ.get("URISYS_NODE_ALLOW_PACK_LOAD", "1" if auto_install_enabled() else "0") == "1"
@@ -436,6 +481,9 @@ def make_handler(runtime: Runtime):
                     except ValueError:
                         pass
                 return self._json(200, {"ok": True, "events": runtime.events.tail(limit)})
+            if self.path.startswith("/app/chat/"):
+                status, data = _app_chat_get(self.path, runtime)
+                return self._json(status, data)
             return self._json(404, {"ok": False, "error": "not found"})
 
         def do_POST(self) -> None:
@@ -486,6 +534,11 @@ def make_handler(runtime: Runtime):
                     force=force,
                 )
                 return self._json(200 if result.get("ok") else 400, result)
+            if self.path == "/app/chat/messages":
+                length = int(self.headers.get("Content-Length") or "0")
+                req = json.loads(self.rfile.read(length).decode("utf-8") or "{}")
+                status, data = _app_chat_post(req, runtime)
+                return self._json(status, data)
             if self.path != "/uri/call":
                 return self._json(404, {"ok": False, "error": "not found"})
             length = int(self.headers.get("Content-Length") or "0")

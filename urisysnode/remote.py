@@ -196,16 +196,16 @@ def workers(
     )
 
 
-def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None = None, endpoint: str | None = None) -> dict[str, Any]:
-    # `urisys node serve` now takes over the port itself (kills the old
-    # instance), so the restart is just: launch a fresh detached serve.
+def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None = None, endpoint: str | None = None, port: int = 8790) -> dict[str, Any]:
+    # Kill listener on the node port, then start fresh `urisys node serve` (takeover in-process).
     cmd = (
-        "echo scheduled; "
-        "( sleep 1; source ~/venv/bin/activate 2>/dev/null || true; "
+        f"fuser -k {port}/tcp 2>/dev/null || true; "
+        "sleep 2; "
+        "( source ~/venv/bin/activate 2>/dev/null || true; "
         "export URISYS_ALLOW_REAL=1; "
         "export URISYS_NODE_CONFIG=\"${URISYS_NODE_CONFIG:-$HOME/.config/urisys/node-profile.lenovo.json}\"; "
         "mkdir -p ~/.config/urisys; "
-        "setsid urisys node serve --host 0.0.0.0 --port 8790 "
+        f"setsid urisys node serve --host 0.0.0.0 --port {port} "
         "--config \"$URISYS_NODE_CONFIG\" >> /tmp/urisys-node.log 2>&1 < /dev/null & "
         ") >/dev/null 2>&1 &"
     )
@@ -252,6 +252,50 @@ def serve_wheels(
 def wheel_url(wheel_path: Path, *, base: str | None = None) -> str:
     base = (base or default_wheel_host()).rstrip("/")
     return f"{base}/{wheel_path.name}"
+
+
+def upgrade_lenovo_node(
+    *,
+    tellmesh_root: str | Path | None = None,
+    wheel_host: str | None = None,
+    endpoint: str | None = None,
+    wait_s: float = 90.0,
+) -> dict[str, Any]:
+    """Build urisys-node wheel, pip install on lenovo, restart, verify /app/chat/*."""
+    root = Path(tellmesh_root or os.environ.get("TELLMESH_ROOT", "/home/tom/github/tellmesh"))
+    deploy = Path("/tmp/urisys-deploy")
+    host_base = wheel_host or default_wheel_host()
+    ep = endpoint or default_endpoint()
+
+    node_wheel = build_wheel(root / "urisys-node", out_dir=deploy)
+    server = serve_wheels(deploy)
+    time.sleep(1)
+    steps: dict[str, Any] = {}
+    try:
+        steps["health_before"] = health(endpoint=ep)
+        steps["pip_node"] = pip_install([wheel_url(node_wheel, base=host_base)], endpoint=ep)
+        steps["restart"] = schedule_restart(endpoint=ep)
+        steps["health_after"] = wait_health(endpoint=ep, timeout_s=wait_s)
+        hb = steps["health_after"]
+        if hb.get("instance_id") == steps["health_before"].get("instance_id"):
+            steps["warn"] = "instance_id unchanged — restart may not have taken over the port"
+        try:
+            with urllib.request.urlopen(f"{ep}/app/chat/messages?channel_id=__ifuri_probe__", timeout=10) as resp:
+                steps["app_chat_probe"] = json.loads(resp.read().decode("utf-8"))
+            chat_ok = bool(steps["app_chat_probe"].get("ok"))
+        except urllib.error.HTTPError as exc:
+            steps["app_chat_probe"] = {"ok": False, "error": f"HTTP {exc.code}"}
+            chat_ok = False
+        return {"ok": chat_ok, "steps": steps, "endpoint": ep}
+    except (urllib.error.URLError, TimeoutError, OSError) as exc:
+        return {
+            "ok": False,
+            "error": str(exc),
+            "steps": steps,
+            "hint": "verify lenovo: urisys node serve --host 0.0.0.0 --port 8790",
+        }
+    finally:
+        server.terminate()
 
 
 def upgrade_lenovo_kv(
@@ -348,6 +392,12 @@ def main(argv: list[str] | None = None) -> int:
     uk.add_argument("--tellmesh-root", default=None)
     uk.add_argument("--wheel-host", default=None)
 
+    un = sub.add_parser("upgrade-node", help="Build urisys-node wheel, upgrade lenovo, verify /app/chat")
+    un.add_argument("--tellmesh-root", default=None)
+    un.add_argument("--wheel-host", default=None)
+    un.add_argument("--endpoint", default=None)
+    un.add_argument("--wait", type=float, default=90.0)
+
     args = p.parse_args(argv)
 
     try:
@@ -404,6 +454,15 @@ def main(argv: list[str] | None = None) -> int:
             return 0 if out.get("ok", True) else 1
         if args.cmd == "upgrade-kv":
             out = upgrade_lenovo_kv(tellmesh_root=args.tellmesh_root, wheel_host=args.wheel_host)
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok") else 1
+        if args.cmd == "upgrade-node":
+            out = upgrade_lenovo_node(
+                tellmesh_root=args.tellmesh_root,
+                wheel_host=args.wheel_host,
+                endpoint=args.endpoint,
+                wait_s=args.wait,
+            )
             print(json.dumps(out, indent=2, ensure_ascii=False))
             return 0 if out.get("ok") else 1
     except Exception as exc:

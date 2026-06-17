@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.16] - 2026-06-17
+
+### Added
+- `urisys-node remote upgrade-node` — build wheel, pip install on lenovo, restart, verify `/app/chat/*`
+
+### Changed
+- `schedule_restart` — `fuser -k` port before detached `urisys node serve` (takeover when SSH unavailable)
+
+## [0.1.15] - 2026-06-17
+
+### Added
+- **App chat API** for ifURI — `GET/POST /app/chat/messages`, `GET /app/chat/channels`
+- URI routes: `app://{target}/chat/query/messages`, `query/channels`, `command/append`
+- Storage: `~/.local/share/urisys/app-chat.jsonl` (`URISYS_NODE_APP_CHAT`)
+- Tests: `tests/test_app_data.py`
+
 ## [0.1.14] - 2026-06-17
 
 ### Docs

@@ -40,6 +40,25 @@ def register(rt):
         side_effects=True,
     )
     rt.register(
+        "app://{target}/chat/query/messages",
+        "python://urisysnode.app_handlers:query_chat_messages",
+        kind="query",
+        operation="app.chat.messages",
+    )
+    rt.register(
+        "app://{target}/chat/query/channels",
+        "python://urisysnode.app_handlers:query_chat_channels",
+        kind="query",
+        operation="app.chat.channels",
+    )
+    rt.register(
+        "app://{target}/chat/command/append",
+        "python://urisysnode.app_handlers:command_chat_append",
+        kind="command",
+        operation="app.chat.append",
+        side_effects=True,
+    )
+    rt.register(
         "node://{target}/query/workers",
         "python://urisysnode.handlers:query_workers",
         kind="query",
