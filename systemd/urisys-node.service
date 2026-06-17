@@ -1,0 +1,16 @@
+[Unit]
+Description=urisys-node slave URI runtime
+After=network.target
+
+[Service]
+Type=simple
+Environment=URISYS_NODE_CONFIG=/etc/urisys/node-profile.json
+Environment=URISYS_NODE_DATA=/var/lib/urisys-node
+Environment=URISYS_ALLOW_REAL=0
+ExecStart=/usr/local/bin/urisys-node serve --host 0.0.0.0 --port 8790
+Restart=on-failure
+User=urisys
+Group=urisys
+
+[Install]
+WantedBy=multi-user.target

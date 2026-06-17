@@ -1,0 +1,14 @@
+apiVersion: urisys.io/v1
+kind: UriRouteMap
+metadata:
+  id: slave-local-routes
+routes:
+  - match: screen://local/**
+    target: local://urisys-node
+    implementation: uriscreen-mss-python
+  - match: him://local/**
+    target: local://urisys-node
+    implementation: urihim-linux
+  - match: kvm://local/**
+    target: local://urisys-node
+    implementation: urikvm-local

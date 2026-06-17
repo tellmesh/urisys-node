@@ -1,0 +1,66 @@
+{
+  "profile_id": "urisys-node-lenovo",
+  "node_id": "lenovo",
+  "screen": {
+    "default_backend": "auto",
+    "output_dir": "data/screens"
+  },
+  "him": {
+    "driver": "ydotool"
+  },
+  "forwards": [
+    {
+      "scheme": "imgl",
+      "endpoint": "http://127.0.0.1:8219",
+      "patterns": [
+        "imgl://{host}/image/latest/query/layout",
+        "imgl://{host}/image/latest/command/execute"
+      ]
+    },
+    {
+      "scheme": "vql",
+      "endpoint": "http://127.0.0.1:8220",
+      "patterns": [
+        "vql://{host}/ui/latest/query/detect",
+        "vql://{host}/ui/latest/query/compare"
+      ]
+    }
+  ],
+  "policy": {
+    "require_pairing": false,
+    "require_approval_for": [
+      "him.*",
+      "kvm.task.*",
+      "screen.*.capture*",
+      "mail.message.send",
+      "mail.message.publish_post",
+      "office.document.export_pdf",
+      "browser.form.submit",
+      "browser.page.open",
+      "browser.social.publish_post"
+    ]
+  },
+  "browser": {
+    "driver": "system-open"
+  },
+  "kv": {
+    "driver": "sqlite",
+    "path": "~/.local/share/urisys/store.db"
+  },
+  "log": {
+    "streams": {
+      "events": "~/.local/share/urisys/events.jsonl",
+      "node": "/tmp/urisys-node.log"
+    }
+  },
+  "office": {
+    "driver": "mock",
+    "output_dir": "data/office"
+  },
+  "mail": {
+    "driver": "mock",
+    "mailpit_api": "http://127.0.0.1:8025/api/v1",
+    "smtp_host": "127.0.0.1",
+    "smtp_port": 1025
+  }
+}

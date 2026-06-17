@@ -1,0 +1,33 @@
+# Host-controlled urisys-node slave with virtual GUI (Xvfb + zenity).
+# Build context: tellmesh monorepo root (../../.. from this file).
+# Usage: bash scripts/run-urisys-node-docker-e2e.sh
+services:
+  urisys-node-gui:
+    build:
+      context: ../../..
+      dockerfile: urisys-node/docker/Dockerfile.gui
+    container_name: urisys-node-gui
+    ports:
+      - "${URISYS_NODE_HOST_PORT:-8790}:8790"
+    environment:
+      URISYS_NODE_PORT: "8790"
+      URISYS_NODE_HOST: "0.0.0.0"
+      URISYS_NODE_ID: docker-slave
+      URISYS_NODE_SKIP_PAIRING: "1"
+      URISYS_ALLOW_REAL: "1"
+      DISPLAY: ":99"
+      URISYS_NODE_CONFIG: /opt/urisys-node/config/node-profile.docker.json
+      URISYS_NODE_EVENTS: /opt/urisys-node/data/events.jsonl
+      URISYS_NODE_DATA: /opt/urisys-node/data
+      URISYS_NODE_PACKS: node,screen,kvm,him,ocr
+    volumes:
+      - urisys-node-gui-data:/opt/urisys-node/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8790/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 25s
+
+volumes:
+  urisys-node-gui-data:

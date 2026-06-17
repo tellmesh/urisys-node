@@ -1,0 +1,19 @@
+apiVersion: urisys.io/v1
+kind: UriRouteMap
+metadata:
+  id: master-routes
+routes:
+  - match: screen://slave-01/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: slave-01
+  - match: him://slave-01/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: slave-01
+    approval: required
+  - match: kvm://slave-01/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: slave-01
+    approval: required

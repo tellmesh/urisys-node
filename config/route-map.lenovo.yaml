@@ -1,0 +1,44 @@
+apiVersion: urisys.io/v1
+kind: UriRouteMap
+metadata:
+  id: host-to-lenovo
+routes:
+  - match: node://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: screen://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: shell://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: kvm://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: him://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: ocr://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: llm://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: kv://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: log://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo

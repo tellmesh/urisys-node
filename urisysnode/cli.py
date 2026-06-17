@@ -57,6 +57,9 @@ def main(argv=None) -> int:
     c.add_argument("--route-map", default=None)
     c.add_argument("--nodes-registry", default="config/nodes.registry.json")
 
+    rem = sub.add_parser("remote", help="Remote node ops via URI (Python only, no bash scripts)")
+    rem.add_argument("remote_argv", nargs=argparse.REMAINDER, help="e.g. health | call URI | upgrade-kv")
+
     art = sub.add_parser("artifact", help="Resolve artifact-index and run OCI worker (lab/prototype)")
     art_sub = art.add_subparsers(dest="artifact_command", required=True)
     art_sel = art_sub.add_parser("select", help="Print selected artifact for node profile")
@@ -142,6 +145,14 @@ def main(argv=None) -> int:
             result = rt.call(uri, payload, context)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0 if result.get("ok") else 1
+
+    if args.cmd == "remote":
+        from urisysnode.remote import main as remote_main
+
+        remote_argv = list(args.remote_argv or [])
+        if remote_argv[:1] == ["--"]:
+            remote_argv = remote_argv[1:]
+        return remote_main(remote_argv)
 
     if args.cmd == "artifact":
         if args.artifact_command == "select":

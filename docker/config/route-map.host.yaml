@@ -1,0 +1,23 @@
+apiVersion: urisys.io/v1
+kind: UriRouteMap
+metadata:
+  id: host-to-docker-slave
+routes:
+  - match: node://docker-slave/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: docker-slave
+  - match: screen://docker-slave/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: docker-slave
+  - match: kvm://docker-slave/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: docker-slave
+    approval: required
+  - match: him://docker-slave/**
+    target: http://127.0.0.1:8790
+    transport: http
+    node: docker-slave
+    approval: required

@@ -1,0 +1,31 @@
+# systemd user unit — urisys-node on desktop slave (Wayland/X11)
+#
+# Install:
+#   mkdir -p ~/.config/systemd/user
+#   cp urisys-node/systemd/urisys-node-user.service ~/.config/systemd/user/urisys-node.service
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now urisys-node.service
+#   loginctl enable-linger "$USER"
+#
+# Adjust ExecStart path to your venv (e.g. /home/tom/venv/bin/urisys-node).
+
+[Unit]
+Description=urisys-node URI slave
+After=network-online.target graphical-session.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=URISYS_NODE_PACKS=node,screen,shell
+Environment=URISYS_NODE_AUTO_INSTALL=1
+Environment=URISYS_ALLOW_REAL=1
+Environment=URISYS_PACK_SOURCE=auto
+Environment=URISYS_NODE_CONFIG=%h/github/tellmesh/urisys-node/config/node-profile.lenovo.json
+# Optional explicit him driver (auto ydotool on Wayland when ydotool installed):
+# Environment=URISYS_HIM_DRIVER=ydotool
+ExecStart=%h/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

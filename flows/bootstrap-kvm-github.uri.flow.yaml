@@ -1,0 +1,28 @@
+flow:
+  id: bootstrap-kvm-github
+  description: Install kvm packs from GitHub Releases via shell://pip (no PyPI).
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - shell://pip:
+      args:
+        - install
+        - -U
+        - urisysedge>=0.1.0
+        - https://github.com/tellmesh/urikvm/releases/download/v0.1.1/urikvm-0.1.1-py3-none-any.whl
+  - shell://pip:
+      args:
+        - install
+        - -U
+        - https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl
+        - https://github.com/tellmesh/uriocr/releases/download/v0.1.0/uriocr-0.1.0-py3-none-any.whl
+        - https://github.com/tellmesh/urillm/releases/download/v0.1.0/urillm-0.1.0-py3-none-any.whl
+  - shell://pip:
+      args: [install, -U, mss, Pillow, pyautogui]
+
+expect:
+  screen_changed: false

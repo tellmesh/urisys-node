@@ -1,0 +1,18 @@
+{
+  "nodes": {
+    "slave-01": {
+      "endpoint": "http://127.0.0.1:8790",
+      "capabilities": ["screen", "kvm", "him", "ocr", "llm"],
+      "public_key": null,
+      "owner": "local-dev"
+    },
+    "lenovo": {
+      "endpoint": "http://192.168.188.201:8790",
+      "capabilities": ["screen", "kvm", "him", "ocr", "llm"],
+      "public_key": null,
+      "owner": "tom",
+      "hostname": "lenovo",
+      "fingerprint": "5d1e4d31106c2738"
+    }
+  }
+}

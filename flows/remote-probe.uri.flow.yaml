@@ -1,0 +1,17 @@
+flow:
+  id: remote-probe
+  description: Probe remote slave (health, identity, screen capture) — URI only, no shell scripts.
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  - node://lenovo/query/health
+  - node://lenovo/query/identity
+  - screen://lenovo/monitor/primary/command/capture:
+      monitor: 1
+
+expect:
+  screen_changed: false

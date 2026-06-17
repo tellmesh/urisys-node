@@ -1,0 +1,32 @@
+{
+  "profile_id": "urisys-node-local",
+  "node_id": "local",
+  "screen": {
+    "default_backend": "mss",
+    "output_dir": "data/screens",
+    "monitors": {
+      "primary": { "index": 1 }
+    }
+  },
+  "kvm": {
+    "driver": "mss"
+  },
+  "him": {
+    "driver": "pyautogui"
+  },
+  "ocr": {
+    "driver": "tesseract",
+    "lang": "eng"
+  },
+  "llm": {
+    "driver": "litellm",
+    "model_env": "LLM_MODEL",
+    "api_key_env": "OPENROUTER_API_KEY"
+  },
+  "policy": {
+    "require_pairing": true,
+    "require_approval_for": ["him.*", "kvm.task.*", "screen.*.capture*"],
+    "kill_switch_hotkey": "ctrl+alt+pause",
+    "visible_indicator": true
+  }
+}

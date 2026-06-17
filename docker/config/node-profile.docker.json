@@ -1,0 +1,33 @@
+{
+  "profile_id": "urisys-node-docker-gui",
+  "node_id": "docker-slave",
+  "screen": {
+    "default_backend": "mss",
+    "output_dir": "/opt/urisys-node/data/screens",
+    "monitors": {
+      "primary": { "index": 1 }
+    }
+  },
+  "policy": {
+    "require_pairing": false,
+    "require_approval_for": [
+      "him.*",
+      "kvm.task.*",
+      "mail.message.send",
+      "mail.message.publish_post",
+      "office.document.export_pdf",
+      "browser.form.submit"
+    ],
+    "visible_indicator": true
+  },
+  "office": {
+    "driver": "mock",
+    "output_dir": "/opt/urisys-node/data/office"
+  },
+  "mail": {
+    "driver": "mock",
+    "mailpit_api": "http://127.0.0.1:8025/api/v1",
+    "smtp_host": "127.0.0.1",
+    "smtp_port": 1025
+  }
+}

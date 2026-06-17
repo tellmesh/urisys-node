@@ -1,0 +1,12 @@
+flow:
+  id: screen-capture-mss
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - screen://local/monitor/1/command/capture:
+      monitor: 1
+      backend: mss
+      output: ./data/screens

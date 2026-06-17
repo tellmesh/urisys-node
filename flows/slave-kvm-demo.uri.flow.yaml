@@ -1,0 +1,13 @@
+flow:
+  id: slave-kvm-demo
+  description: Master flow targeting slave-01 (rewrite to local on node).
+
+defaults:
+  approved: true
+  dry_run: true
+
+do:
+  - screen://slave-01/monitor/primary/query/frame
+  - ocr://slave-01/image/latest/query/text
+  - kvm://slave-01/task/command/click-text:
+      text: OK

@@ -1,0 +1,18 @@
+flow:
+  id: bootstrap-kvm-pypi
+  description: Install urisys-node kvm packs from PyPI via shell:// (no .sh scripts on slave).
+
+defaults:
+  approved: true
+  dry_run: false
+  allow_real: true
+
+do:
+  # Published on PyPI (2026-06-16): urisysedge, urikvm
+  - shell://pip:
+      args: ["install", "-U", "urisysedge", "urikvm"]
+  - shell://pip:
+      args: ["install", "-U", "urisys-node[real]"]
+  # Uncomment when on PyPI:
+  # - shell://pip:
+  #     args: ["install", "-U", "urihim", "uriocr", "urillm[vision]"]

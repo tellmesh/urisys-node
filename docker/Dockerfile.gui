@@ -1,0 +1,58 @@
+# urisys-node GUI slave — pip install urisys + tellmesh sibling packs, serve :8790
+# Build context: tellmesh workspace root
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONUNBUFFERED=1 \
+    DISPLAY=:99 \
+    URISYS_NODE_PORT=8790 \
+    URISYS_NODE_HOST=0.0.0.0 \
+    URISYS_NODE_ID=docker-slave \
+    URISYS_NODE_SKIP_PAIRING=1 \
+    URISYS_ALLOW_REAL=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl procps \
+    python3 python3-pip python3-venv \
+    xvfb x11-utils xdotool scrot imagemagick tesseract-ocr \
+    zenity fonts-dejavu \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+COPY uricore /build/uricore
+COPY urisysedge /build/urisysedge
+COPY urioperators /build/urioperators
+COPY urisys-node /build/urisys-node
+COPY urikvm /build/urikvm
+COPY urihim /build/urihim
+COPY uriocr /build/uriocr
+COPY urillm /build/urillm
+COPY urisys/pyproject.toml /build/urisys/pyproject.toml
+COPY urisys/src /build/urisys/src
+RUN printf '# urisys\n' > /build/urisys/README.md \
+    && python3 -m pip install --break-system-packages -e /build/uricore \
+    && python3 -m pip install --break-system-packages \
+       -e /build/urisysedge \
+       -e /build/urioperators \
+       -e /build/urisys-node \
+       -e /build/urikvm \
+       -e /build/urihim \
+       -e /build/uriocr \
+       -e /build/urillm \
+       -e "/build/urisys[real]"
+
+COPY urisys-node/docker/config /opt/urisys-node/config
+COPY urisys-node/docker/entrypoint.sh /usr/local/bin/urisys-node-gui-entrypoint
+
+RUN chmod +x /usr/local/bin/urisys-node-gui-entrypoint \
+    && mkdir -p /opt/urisys-node/data/screens \
+    && urisys --help >/dev/null \
+    && urisys-node --help >/dev/null
+
+EXPOSE 8790
+
+HEALTHCHECK --interval=5s --timeout=3s --start-period=20s --retries=12 \
+  CMD curl -fsS "http://127.0.0.1:8790/health" | grep -q '"ok": true'
+
+ENTRYPOINT ["/usr/local/bin/urisys-node-gui-entrypoint"]
