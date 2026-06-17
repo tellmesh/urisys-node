@@ -87,11 +87,15 @@ def test_ensure_pack_for_uri_skips_pip_when_importable(tmp_path):
 
 def test_force_reload_reregister_pack(tmp_path):
     rt = _node_only_runtime(tmp_path)
-    import urihim
-
-    urihim.register(rt)
+    pattern = "him://{host}/mouse/query/status"
+    rt.register(
+        pattern,
+        "python://urihim.handlers:mouse_status",
+        kind="query",
+        operation="him.mouse.status",
+    )
     rt._loaded_packs.add("him")
-    rt._pack_route_patterns = {"him": {r.pattern for r in rt.routes if r.pattern.startswith("him://")}}
+    rt._pack_route_patterns = {"him": {pattern}}
     with patch("urisysnode.serve._register_pack", return_value=True) as reg:
         result = load_pack_into_runtime(rt, "him", force=True)
     assert result["ok"] is True

@@ -9,7 +9,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from .identity import health_payload, load_identity
+from .identity import default_events_path, health_payload, load_identity
 from .pack_resolver import (
     CORE_PACKS,
     PACK_MODULES,
@@ -75,7 +75,7 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     load_urisys_env()
     config_file = config_path or os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
     config = load_json(config_file) if Path(config_file).exists() else {}
-    rt = Runtime(events_path=os.environ.get("URISYS_NODE_EVENTS", "data/events.jsonl"), config=config)
+    rt = Runtime(events_path=default_events_path(), config=config)
 
     # Minimal boot: node + screen + shell (bundled). kvm/him/ocr/llm on first URI or shell://pip.
     packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,shell").split(",")

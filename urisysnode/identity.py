@@ -12,8 +12,31 @@ from pathlib import Path
 from typing import Any
 
 
+def default_data_root() -> Path:
+    """Per-user runtime data root, stable regardless of the process CWD.
+
+    Precedence: ``URISYS_NODE_DATA`` > ``$XDG_DATA_HOME/urisys`` > ``~/.local/share/urisys``.
+    The old CWD-relative ``data/`` default was a footgun — a node started from a
+    different directory generated a fresh identity and lost its pairing.
+    """
+    override = os.environ.get("URISYS_NODE_DATA")
+    if override:
+        return Path(override)
+    xdg = os.environ.get("XDG_DATA_HOME")
+    base = Path(xdg) if xdg else Path.home() / ".local" / "share"
+    return base / "urisys"
+
+
+def default_events_path() -> str:
+    """Default audit-log path: ``URISYS_NODE_EVENTS`` or ``<data root>/events.jsonl``."""
+    override = os.environ.get("URISYS_NODE_EVENTS")
+    if override:
+        return override
+    return str(default_data_root() / "events.jsonl")
+
+
 def _data_dir() -> Path:
-    root = Path(os.environ.get("URISYS_NODE_DATA", "data"))
+    root = default_data_root()
     root.mkdir(parents=True, exist_ok=True)
     return root
 

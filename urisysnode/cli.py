@@ -15,7 +15,7 @@ from urisysnode.artifact_resolver import (
     select_artifact,
 )
 from urisysnode.client import call_via_route_map, discover_mdns
-from urisysnode.identity import enroll, load_identity, load_pairing
+from urisysnode.identity import default_events_path, enroll, load_identity, load_pairing
 from urisysnode.router import load_route_map, rewrite_uri_for_slave
 from urisysnode.runtime import Runtime, load_json
 from urisysnode.serve import build_runtime, serve
@@ -24,7 +24,7 @@ from urisysnode.serve import build_runtime, serve
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="urisys-node", description="urisys slave node — explicit local install")
     p.add_argument("--config", default=os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json"))
-    p.add_argument("--events", default=os.environ.get("URISYS_NODE_EVENTS", "data/events.jsonl"))
+    p.add_argument("--events", default=default_events_path())
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("serve", help="Start HTTP URI server (default :8790)")
