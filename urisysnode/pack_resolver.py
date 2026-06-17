@@ -20,6 +20,7 @@ PACK_MODULES: dict[str, str] = {
     "office": "urioffice",
     "mail": "urimail",
     "vql": "urivql",
+    "img2nl": "uriimg2nl",
     "browser": "uribrowserdocker",
     "kv": "urikv",
 }
@@ -35,6 +36,7 @@ PACK_PYPI: dict[str, str] = {
     "office": "urioffice>=0.1.0",
     "mail": "urimail>=0.1.0",
     "vql": "urivql>=0.1.0",
+    "img2nl": "uriimg2nl>=0.1.0",
     "browser": "uribrowser>=0.1.0",
     "kv": "urikv>=0.1.0",
 }
@@ -49,6 +51,7 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "office": "0.1.1",
     "mail": "0.1.3",
     "vql": "0.1.1",
+    "img2nl": "0.1.0",
     "browser": "0.1.1",
     "kv": "0.1.0",
 }
@@ -61,11 +64,12 @@ PACK_GITHUB_REPO: dict[str, str] = {
     "office": "urioffice",
     "mail": "urimail",
     "vql": "urivql",
+    "img2nl": "uriimg2nl",
     "browser": "uribrowser",
     "kv": "urikv",
 }
 # Prefer GitHub in auto mode until PyPI publish succeeds
-GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "browser", "kv"})
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv"})
 
 # URI scheme -> pack alias (screen/uriscreen is bundled with urisys wheel)
 SCHEME_TO_PACK: dict[str, str] = {
@@ -76,6 +80,7 @@ SCHEME_TO_PACK: dict[str, str] = {
     "urioffice": "office",
     "urimail": "mail",
     "vql": "vql",
+    "img2nl": "img2nl",
     "browser": "browser",
     "kv": "kv",
     "log": "kv",

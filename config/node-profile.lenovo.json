@@ -5,6 +5,9 @@
     "default_backend": "auto",
     "output_dir": "data/screens"
   },
+  "kvm": {
+    "driver": "mss"
+  },
   "him": {
     "driver": "ydotool"
   },

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.12] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+
+### Test
+- Update tests/integration/test_serve_takeover.py
+
+### Other
+- Update VERSION
+- Update config/node-profile.lenovo.json
+- Update config/route-map.lenovo.yaml
+- Update data/events.jsonl
+- Update urisysnode/identity.py
+- Update urisysnode/pack_resolver.py
+- Update urisysnode/remote.py
+- Update urisysnode/serve.py
+- Update urisysnode/supervisor.py
+- Update uv.lock
+
+## [0.1.10] - 2026-06-17
+
+### Fixed
+- **`urisys node serve` port takeover** — kill only listeners on the port and confirmed node processes (pidfile); no longer kills bash/nohup wrappers or the parent shell; `killpg` for detached `setsid` serve; safe restart on re-run.
+
 ## [0.1.9] - 2026-06-17
 
 ### Docs

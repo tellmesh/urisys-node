@@ -92,7 +92,7 @@ class PackSupervisor:
         host: str = "127.0.0.1",
         python_exe: str | None = None,
         state_path: str | Path | None = None,
-        health_timeout: float = 30.0,
+        health_timeout: float = 90.0,
     ) -> None:
         self.runtime = runtime
         self.host = host
@@ -180,14 +180,27 @@ class PackSupervisor:
             worker = self.workers.get(name)
             if not worker:
                 return {"ok": False, "error": f"no worker named {name!r}"}
+            # The wheel was already pip-installed on first spawn, so a restart
+            # must NOT re-run pip (that exceeds the health window and wedges the
+            # restart). Re-install only if the pack is no longer importable.
             return self.spawn(
                 pack=worker.pack,
                 module=worker.module,
-                install=worker.install,
+                install=self._needs_install(worker),
                 specs=worker.specs,
                 env=worker.env,
                 force=True,
             )
+
+    def _needs_install(self, worker: Worker) -> bool:
+        if not worker.pack:
+            return False
+        try:
+            from .pack_resolver import pack_importable
+
+            return not pack_importable(worker.pack)
+        except Exception:
+            return worker.install
 
     def stop(self, name: str) -> dict[str, Any]:
         with self._lock:
@@ -235,7 +248,7 @@ class PackSupervisor:
                 self.spawn(
                     pack=worker.pack,
                     module=worker.module,
-                    install=worker.install,
+                    install=self._needs_install(worker),
                     specs=worker.specs,
                     env=worker.env,
                     force=True,

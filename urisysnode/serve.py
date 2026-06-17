@@ -4,8 +4,11 @@ import errno
 import importlib
 import json
 import os
+import re
 import signal
+import shutil
 import socket
+import subprocess
 import sys
 import time
 import warnings
@@ -35,10 +38,25 @@ def _extend_pack_paths() -> None:
             sys.path.insert(0, str(path))
 
 
-def _register_pack(rt: Runtime, pack: str, *, try_install: bool = False) -> bool:
+def _pack_modules() -> dict[str, str]:
+    """Fresh pack map (reloadable after pip install -U urisys-node)."""
+    from urisysnode import pack_resolver as pr
+
+    importlib.reload(pr)
+    return pr.PACK_MODULES
+
+
+def _register_pack(
+    rt: Runtime,
+    pack: str,
+    *,
+    try_install: bool = False,
+    pack_modules: dict[str, str] | None = None,
+) -> bool:
     """Import and register one capability pack. Optional packs that are not
     installed are skipped with a warning unless try_install triggers PyPI."""
-    module_name = PACK_MODULES.get(pack)
+    modules = pack_modules if pack_modules is not None else PACK_MODULES
+    module_name = modules.get(pack)
     if module_name is None:
         warnings.warn(f"Unknown urisys-node pack '{pack}' — skipping.", stacklevel=2)
         return False
@@ -80,6 +98,7 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     config_file = config_path or os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
     config = load_json(config_file) if Path(config_file).exists() else {}
     rt = Runtime(events_path=default_events_path(), config=config)
+    rt._instance_id = f"{os.getpid()}:{time.time():.3f}"  # type: ignore[attr-defined]
 
     # Minimal boot: node + screen + shell (bundled). kvm/him/ocr/llm on first URI or shell://pip.
     packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,shell").split(",")
@@ -184,14 +203,17 @@ def load_pack_into_runtime(
             runtime.routes = [r for r in runtime.routes if r.pattern not in drop]
         loaded.discard(pack)
         pack_routes.pop(pack, None)
-        module_name = PACK_MODULES.get(pack, "").split(".", 1)[0]
+        from urisysnode import pack_resolver as pr
+
+        importlib.reload(pr)
+        module_name = pr.PACK_MODULES.get(pack, "").split(".", 1)[0]
         if module_name and module_name in sys.modules:
             importlib.reload(sys.modules[module_name])
         importlib.invalidate_caches()
 
     before = {r.pattern for r in runtime.routes}
     try:
-        ok = _register_pack(runtime, pack, try_install=False)
+        ok = _register_pack(runtime, pack, try_install=False, pack_modules=_pack_modules())
     except ModuleNotFoundError as exc:
         return {"ok": False, "pack": pack, "loaded": False, "error": str(exc), "pip": pip_result}
     except Exception as exc:
@@ -494,6 +516,71 @@ def _pid_alive(pid: int) -> bool:
         return exc.errno == errno.EPERM
 
 
+def _read_cmdline(pid: int) -> str:
+    try:
+        raw = (Path("/proc") / str(pid) / "cmdline").read_bytes()
+    except OSError:
+        return ""
+    return raw.replace(b"\0", b" ").decode("utf-8", errors="replace")
+
+
+def _pids_serve_cmdline(port: int) -> list[int]:
+    """PIDs whose cmdline looks like ``urisys node serve`` / ``urisys-node serve`` on ``port``."""
+    port_s = str(port)
+    pids: list[int] = []
+    for entry in Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        pid = int(entry.name)
+        cmd = _read_cmdline(pid).lower()
+        if "serve" not in cmd:
+            continue
+        if port_s not in cmd:
+            continue
+        if "urisys" not in cmd and "urisys-node" not in cmd:
+            continue
+        pids.append(pid)
+    return pids
+
+
+def _pids_on_port_ss(port: int) -> list[int]:
+    """Parse ``ss -ltnp`` for listeners on ``port`` (fallback when /proc/fd scan misses)."""
+    try:
+        proc = subprocess.run(
+            ["ss", "-ltnp", f"sport = :{port}"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=False,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        return []
+    pids: list[int] = []
+    for match in re.finditer(r"pid=(\d+)", proc.stdout or ""):
+        try:
+            pids.append(int(match.group(1)))
+        except ValueError:
+            continue
+    return pids
+
+
+def _fuser_kill_port(port: int) -> bool:
+    """Last-resort: ``fuser -k PORT/tcp`` when pid discovery failed."""
+    if not shutil.which("fuser"):
+        return False
+    try:
+        subprocess.run(
+            [shutil.which("fuser") or "fuser", "-k", f"{port}/tcp"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=False,
+        )
+        return True
+    except (subprocess.TimeoutExpired, OSError):
+        return False
+
+
 def _pids_on_port(port: int) -> list[int]:
     """Find PIDs holding a LISTEN socket on ``port`` via /proc (no deps)."""
     inodes: set[str] = set()
@@ -533,18 +620,32 @@ def _pids_on_port(port: int) -> list[int]:
 
 def _kill_pid(pid: int, *, timeout: float = 6.0) -> None:
     try:
-        os.kill(pid, signal.SIGTERM)
+        pgid = os.getpgid(pid)
+        if pgid == pid:
+            os.killpg(pgid, signal.SIGTERM)
+        else:
+            os.kill(pid, signal.SIGTERM)
     except OSError:
-        pass
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except OSError:
+            pass
     deadline = time.time() + timeout
     while time.time() < deadline:
         if not _pid_alive(pid):
             return
         time.sleep(0.2)
     try:
-        os.kill(pid, signal.SIGKILL)
+        pgid = os.getpgid(pid)
+        if pgid == pid:
+            os.killpg(pgid, signal.SIGKILL)
+        else:
+            os.kill(pid, signal.SIGKILL)
     except OSError:
-        pass
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except OSError:
+            pass
     time.sleep(0.1)
 
 
@@ -588,35 +689,89 @@ def _wait_port_free(host: str, port: int, *, timeout: float = 10.0) -> bool:
     return False
 
 
-def takeover_port(host: str, port: int) -> dict[str, Any]:
-    """Kill any existing urisys node on ``port`` so a fresh serve can bind it.
+def _is_node_serve_process(pid: int, port: int, *, listeners: set[int] | None = None) -> bool:
+    """True if ``pid`` is the urisys node HTTP listener (not a shell one-liner)."""
+    if listeners and pid in listeners:
+        return True
+    cmd = _read_cmdline(pid)
+    if not cmd:
+        return False
+    low = cmd.lower()
+    argv0 = low.split(" ", 1)[0]
+    if argv0.endswith(("bash", "sh", "dash", "zsh", "fish", "nohup", "setsid")):
+        return False
+    if " -c " in low and ("bash" in argv0 or "/bin/sh" in argv0):
+        return False
+    if "serve" not in low:
+        return False
+    if "urisys" not in low and "urisys-node" not in low and "urisysnode" not in low:
+        return False
+    if str(port) in cmd:
+        return True
+    try:
+        for chunk in Path(f"/proc/{pid}/environ").read_bytes().split(b"\0"):
+            if chunk.startswith(b"URISYS_NODE_PORT="):
+                return int(chunk.split(b"=", 1)[1]) == port
+    except (OSError, ValueError, IndexError):
+        pass
+    return False
 
-    This makes ``urisys node serve`` behave like an atomic restart: the old
-    instance is terminated (pidfile first, then any process holding the port),
-    we wait for the port to free, then the caller binds. No external bash."""
-    self_pid = os.getpid()
-    killed: list[int] = []
+
+def _collect_takeover_targets(port: int, self_pid: int) -> set[int]:
+    listeners = set(_pids_on_port(port)) | set(_pids_on_port_ss(port))
+    targets: set[int] = set()
+
+    for pid in listeners:
+        if pid != self_pid:
+            targets.add(pid)
 
     pidfile = _pidfile_path(port)
     try:
         old = int(pidfile.read_text(encoding="utf-8").strip())
     except (OSError, ValueError):
         old = 0
-    targets: set[int] = set()
     if old and old != self_pid and _pid_alive(old):
-        targets.add(old)
-    for pid in _pids_on_port(port):
-        if pid != self_pid:
-            targets.add(pid)
-    for pid in _worker_pids_from_state():
-        if pid != self_pid:
-            targets.add(pid)
-    for pid in sorted(targets):
-        _kill_pid(pid)
-        killed.append(pid)
+        if old in listeners or _is_node_serve_process(old, port, listeners=listeners):
+            targets.add(old)
 
-    freed = _wait_port_free(host, port)
-    return {"killed": killed, "port_free": freed}
+    if targets:
+        for pid in _worker_pids_from_state():
+            if pid != self_pid:
+                targets.add(pid)
+
+    return targets
+
+
+def takeover_port(host: str, port: int) -> dict[str, Any]:
+    """Kill any existing urisys node on ``port`` so a fresh serve can bind it.
+
+    This makes ``urisys node serve`` behave like an atomic restart: the old
+    instance is terminated (pidfile, port listeners, cmdline match, workers),
+    we wait for the port to free, then the caller binds. No external bash."""
+    self_pid = os.getpid()
+    killed: list[int] = []
+    used_fuser = False
+
+    for attempt in range(3):
+        targets = _collect_takeover_targets(port, self_pid)
+        for pid in sorted(targets):
+            if pid not in killed:
+                _kill_pid(pid)
+                killed.append(pid)
+        if _wait_port_free(host, port, timeout=6.0):
+            return {"killed": killed, "port_free": True, "attempts": attempt + 1, "fuser": used_fuser}
+        time.sleep(0.4)
+
+    if not _wait_port_free(host, port, timeout=1.0):
+        used_fuser = _fuser_kill_port(port)
+        time.sleep(0.5)
+
+    freed = _wait_port_free(host, port, timeout=8.0)
+    return {"killed": killed, "port_free": freed, "attempts": 3, "fuser": used_fuser}
+
+
+class _ReuseHTTPServer(ThreadingHTTPServer):
+    allow_reuse_address = True
 
 
 def serve(runtime: Runtime, host: str, port: int, *, takeover: bool = True) -> None:
@@ -624,10 +779,13 @@ def serve(runtime: Runtime, host: str, port: int, *, takeover: bool = True) -> N
         info = takeover_port(host, port)
         if info["killed"]:
             print(f"takeover: terminated old instance pid(s) {info['killed']}")
+        elif info.get("fuser"):
+            print(f"takeover: fuser -k {port}/tcp")
         if not info["port_free"]:
             raise OSError(
                 f"port {port} still in use after takeover "
-                f"(killed={info['killed']}); retry or stop the conflicting process"
+                f"(killed={info['killed']}, fuser={info.get('fuser')}); "
+                f"check: ss -ltnp 'sport = :{port}'"
             )
 
     pidfile = _pidfile_path(port)
@@ -665,7 +823,21 @@ def serve(runtime: Runtime, host: str, port: int, *, takeover: bool = True) -> N
         runtime.config["display_bootstrap"] = bootstrap
     except Exception as exc:
         warnings.warn(f"display bootstrap skipped: {exc}", stacklevel=2)
-    server = ThreadingHTTPServer((host, port), make_handler(runtime))
+    try:
+        server = _ReuseHTTPServer((host, port), make_handler(runtime))
+    except OSError as exc:
+        if takeover and exc.errno in (errno.EADDRINUSE, 98):
+            info = takeover_port(host, port)
+            if info["killed"]:
+                print(f"takeover (late): terminated pid(s) {info['killed']}")
+            if info["port_free"]:
+                server = _ReuseHTTPServer((host, port), make_handler(runtime))
+            else:
+                raise OSError(
+                    f"port {port} in use and takeover failed (killed={info['killed']})"
+                ) from exc
+        else:
+            raise
     print(f"urisys-node listening on http://{host}:{port}")
     print(f"node_id={identity['node_id']} fingerprint={identity.get('fingerprint')}")
     print("endpoints: GET /health  GET /uri/routes  GET /events  POST /uri/call  POST /uri/pack")

@@ -202,7 +202,11 @@ def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None
     cmd = (
         "echo scheduled; "
         "( sleep 1; source ~/venv/bin/activate 2>/dev/null || true; "
-        "setsid urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 < /dev/null & "
+        "export URISYS_ALLOW_REAL=1; "
+        "export URISYS_NODE_CONFIG=\"${URISYS_NODE_CONFIG:-$HOME/.config/urisys/node-profile.lenovo.json}\"; "
+        "mkdir -p ~/.config/urisys; "
+        "setsid urisys node serve --host 0.0.0.0 --port 8790 "
+        "--config \"$URISYS_NODE_CONFIG\" >> /tmp/urisys-node.log 2>&1 < /dev/null & "
         ") >/dev/null 2>&1 &"
     )
     return call_uri(

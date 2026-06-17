@@ -34,7 +34,12 @@ routes:
     target: http://192.168.188.201:8790
     transport: http
     node: lenovo
-  - match: kv://lenovo/**
+  - match: img2nl://lenovo/**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: vql://lenovo/**
     target: http://192.168.188.201:8790
     transport: http
     node: lenovo

@@ -165,6 +165,9 @@ def health_payload(version: str | None = None, runtime: Any | None = None) -> di
         payload["him_driver"] = os.environ.get("URISYS_HIM_DRIVER") or _detect_him_driver()
 
     if runtime is not None:
+        instance_id = getattr(runtime, "_instance_id", None)
+        if instance_id:
+            payload["instance_id"] = instance_id
         loaded = sorted(getattr(runtime, "_loaded_packs", set()) or [])
         payload["packs_loaded"] = loaded
         try:

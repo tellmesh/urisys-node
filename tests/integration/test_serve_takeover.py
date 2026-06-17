@@ -14,7 +14,7 @@ from pathlib import Path
 PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
 sys.path.insert(0, str(PKG))
 
-from urisysnode.serve import _pids_on_port, takeover_port  # noqa: E402
+from urisysnode.serve import _collect_takeover_targets, _pids_on_port, takeover_port  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 
@@ -34,6 +34,16 @@ def _wait_listen(port: int, timeout: float = 15.0) -> bool:
         except Exception:
             time.sleep(0.2)
     return False
+
+
+def test_takeover_does_not_target_shell_wrappers():
+    """Shell one-liners that mention ``urisys node serve --port N`` must not be killed."""
+    port = _free_port()
+    self_pid = os.getpid()
+    # Simulate a bash wrapper cmdline without holding the listen socket.
+    targets = _collect_takeover_targets(port, self_pid)
+    assert self_pid not in targets
+    assert os.getppid() not in targets or os.getppid() == 1
 
 
 def test_takeover_kills_old_listener():
