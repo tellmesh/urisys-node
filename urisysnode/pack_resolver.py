@@ -11,8 +11,8 @@ from typing import Any
 # pack alias -> module exposing register(runtime)
 PACK_MODULES: dict[str, str] = {
     "node": "urisysnode.routes",
-    "screen": "uriscreen.routes",
-    "shell": "urishell.routes",
+    "screen": "uriscreen",
+    "shell": "urishell",
     "kvm": "urikvm",
     "him": "urihim",
     "ocr": "uriocr",
@@ -23,18 +23,25 @@ PACK_MODULES: dict[str, str] = {
     "img2nl": "uriimg2nl",
     "browser": "uribrowserdocker",
     "kv": "urikv",
-    "stt": "uristt.routes",
-    "uristt": "uristt.routes",
-    "tts": "uristt.routes",
-    "voice-lab": "uristt.routes",
-    "webrtc": "uriwebrtc.routes",
-    "uriwebrtc": "uriwebrtc.routes",
+    "stt": "uristt",
+    "uristt": "uristt",
+    "tts": "uristt",
+    "voice-lab": "uristt",
+    "webrtc": "uriwebrtc",
+    "uriwebrtc": "uriwebrtc",
+    "message": "urimessage",
+    "chat": "urichat",
+    "rdp": "urirdp",
+    "rdpedge": "urirdpedge",
+    "env": "urienv",
 }
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
-BUNDLED_PACKS = frozenset({"node", "screen", "shell"})
+BUNDLED_PACKS = frozenset({"node"})
 PACK_PYPI: dict[str, str] = {
     "urisysedge": "urisysedge>=0.1.0",
+    "shell": "urishell>=0.1.0",
+    "screen": "uriscreen>=0.1.0",
     "kvm": "urikvm>=0.1.0",
     "him": "urihim>=0.1.0",
     "ocr": "uriocr>=0.1.0",
@@ -45,12 +52,20 @@ PACK_PYPI: dict[str, str] = {
     "img2nl": "uriimg2nl>=0.1.0",
     "browser": "uribrowser>=0.1.0",
     "kv": "urikv>=0.1.0",
-    "stt": "urisys-automation-lab>=0.1.2",
+    "stt": "uristt>=0.1.0",
+    "webrtc": "uriwebrtc>=0.1.0",
+    "message": "urimessage>=0.1.0",
+    "chat": "urichat>=0.1.0",
+    "rdp": "urirdp>=0.1.0",
+    "rdpedge": "urirdpedge>=0.1.0",
+    "env": "urienv>=0.1.0",
 }
 
 # GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
 PACK_GITHUB_VERSION: dict[str, str] = {
     "urisysedge": "0.1.1",
+    "shell": "0.1.0",
+    "screen": "0.1.0",
     "kvm": "0.1.1",
     "him": "0.1.3",
     "ocr": "0.1.0",
@@ -61,10 +76,18 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "img2nl": "0.1.2",
     "browser": "0.1.1",
     "kv": "0.1.0",
-    "stt": "0.1.2",
+    "stt": "0.1.0",
+    "webrtc": "0.1.0",
+    "message": "0.1.0",
+    "chat": "0.1.0",
+    "rdp": "0.1.0",
+    "rdpedge": "0.1.0",
+    "env": "0.1.0",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
     "urisysedge": "urisysedge",
+    "shell": "urishell",
+    "screen": "uriscreen",
     "kvm": "urikvm",
     "him": "urihim",
     "ocr": "uriocr",
@@ -75,17 +98,23 @@ PACK_GITHUB_REPO: dict[str, str] = {
     "img2nl": "uriimg2nl",
     "browser": "uribrowser",
     "kv": "urikv",
-    "stt": "urisys-automation-lab",
+    "stt": "uristt",
+    "webrtc": "uriwebrtc",
+    "message": "urimessage",
+    "chat": "urichat",
+    "rdp": "urirdp",
+    "rdpedge": "urirdpedge",
+    "env": "urienv",
 }
 # PyPI wheel basename when it differs from repo name (e.g. underscores).
-PACK_GITHUB_WHEEL: dict[str, str] = {
-    "stt": "urisys_automation_lab",
-}
+PACK_GITHUB_WHEEL: dict[str, str] = {}
 # Prefer GitHub in auto mode until PyPI publish succeeds
-GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv"})
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv", "stt", "webrtc", "message", "chat", "rdp", "rdpedge", "env", "screen"})
 
-# URI scheme -> pack alias (screen/uriscreen is bundled with urisys wheel)
+# URI scheme -> pack alias (node only bundled; screen/shell via pip deps)
 SCHEME_TO_PACK: dict[str, str] = {
+    "screen": "screen",
+    "shell": "shell",
     "kvm": "kvm",
     "him": "him",
     "ocr": "ocr",
@@ -101,6 +130,10 @@ SCHEME_TO_PACK: dict[str, str] = {
     "tts": "stt",
     "voice": "stt",
     "webrtc": "webrtc",
+    "message": "message",
+    "chat": "chat",
+    "rdp": "rdp",
+    "env": "env",
 }
 
 # Real backends: extra pip specs when handler needs mss/pyautogui/etc.

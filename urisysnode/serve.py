@@ -32,11 +32,7 @@ from .runtime import Runtime, load_json
 
 
 def _extend_pack_paths() -> None:
-    root = Path(__file__).resolve().parents[3]
-    for rel in ("../urikvm-docker/packages/python", "../urirdp-docker/packages/python"):
-        path = (root / rel).resolve()
-        if path.is_dir() and str(path) not in sys.path:
-            sys.path.insert(0, str(path))
+    """No-op — legacy vendored paths removed after tellmesh pack migration."""
 
 
 def _pack_modules() -> dict[str, str]:
@@ -101,7 +97,7 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     rt = Runtime(events_path=default_events_path(), config=config)
     rt._instance_id = f"{os.getpid()}:{time.time():.3f}"  # type: ignore[attr-defined]
 
-    # Minimal boot: node + screen + shell (bundled). kvm/him/ocr/llm on first URI or shell://pip.
+    # Minimal boot: node (bundled), screen + shell (pip deps). kvm/him/ocr/llm on first URI.
     packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,shell").split(",")
     packs = [p.strip() for p in packs if p.strip()]
 

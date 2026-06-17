@@ -1,14 +1,8 @@
-"""Auto screen backend selection."""
+"""Auto screen backend selection (uriscreen standalone pack)."""
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
-sys.path.insert(0, str(PKG))
-
-from uriscreen.backends import is_black_png, resolve_backend  # noqa: E402
+from uriscreen.backends import is_black_png, resolve_backend
 
 
 def test_resolve_backend_auto_x11(monkeypatch):

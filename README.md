@@ -15,4 +15,6 @@ Generated on 2026-06-17 using [openrouter/qwen/qwen3-coder-next](https://openrou
 
 urisys-node slave: screen/kvm/him URI server components.
 
+Bundled: `urisysnode` only. Core deps: `uriscreen`, `urishell`. Other packs via lazy install.
+
 Licensed under Apache-2.0.

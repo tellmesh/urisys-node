@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `webrtc` / `uriwebrtc` pack mapping in `pack_resolver` (`webrtc://` lazy hot-load)
-- Integration test: hot-load uriwebrtc from urisys-automation-lab layout
+- Integration test: hot-load uriwebrtc from standalone `tellmesh/uriwebrtc` wheel
 
 ## [0.1.18] - 2026-06-17
 
