@@ -7,6 +7,10 @@ Type=simple
 Environment=URISYS_NODE_CONFIG=/etc/urisys/node-profile.json
 Environment=URISYS_NODE_DATA=/var/lib/urisys-node
 Environment=URISYS_ALLOW_REAL=0
+# Worker model: heavy packs run out-of-process so a crash in one
+# (e.g. ocr, browser, him) does not take down the router /health endpoint.
+Environment=URISYS_NODE_PACKS=node,screen,shell
+Environment=URISYS_NODE_WORKER_PACKS=kvm,him,ocr,llm,img2nl,browser,office,mail,kv,vql
 ExecStart=/usr/local/bin/urisys-node serve --host 0.0.0.0 --port 8790
 Restart=on-failure
 User=urisys

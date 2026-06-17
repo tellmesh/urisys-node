@@ -23,6 +23,10 @@ PACK_MODULES: dict[str, str] = {
     "img2nl": "uriimg2nl",
     "browser": "uribrowserdocker",
     "kv": "urikv",
+    "stt": "uristt.routes",
+    "uristt": "uristt.routes",
+    "tts": "uristt.routes",
+    "voice-lab": "uristt.routes",
 }
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
@@ -84,6 +88,9 @@ SCHEME_TO_PACK: dict[str, str] = {
     "browser": "browser",
     "kv": "kv",
     "log": "kv",
+    "stt": "stt",
+    "tts": "stt",
+    "voice": "stt",
 }
 
 # Real backends: extra pip specs when handler needs mss/pyautogui/etc.

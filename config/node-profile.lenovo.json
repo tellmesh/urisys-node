@@ -11,6 +11,10 @@
   "him": {
     "driver": "ydotool"
   },
+  "llm": {
+    "driver": "litellm",
+    "model": "openrouter/google/gemini-3.1-flash-image-preview"
+  },
   "forwards": [
     {
       "scheme": "imgl",
@@ -18,15 +22,8 @@
       "patterns": [
         "imgl://{host}/image/latest/query/layout",
         "imgl://{host}/image/latest/command/execute"
-      ]
-    },
-    {
-      "scheme": "vql",
-      "endpoint": "http://127.0.0.1:8220",
-      "patterns": [
-        "vql://{host}/ui/latest/query/detect",
-        "vql://{host}/ui/latest/query/compare"
-      ]
+      ],
+      "note": "Requires external imgl service on :8219 (semcod/imgl not yet packaged as URI worker)"
     }
   ],
   "policy": {

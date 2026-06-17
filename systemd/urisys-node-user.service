@@ -21,7 +21,10 @@ Wants=network-online.target
 [Service]
 Type=simple
 # Deterministic defaults (set first so the operator's node.env can override them):
-Environment=URISYS_NODE_PACKS=node,screen,shell
+# Thin router: only node in-process; everything else isolated in workers.
+# A crash in browser/ocr/him/etc. respawns automatically without killing /health.
+Environment=URISYS_NODE_PACKS=node
+Environment=URISYS_NODE_WORKER_PACKS=screen,shell,kvm,him,ocr,llm,img2nl,browser,office,mail,kv,vql
 Environment=URISYS_NODE_AUTO_INSTALL=1
 Environment=URISYS_ALLOW_REAL=1
 Environment=URISYS_PACK_SOURCE=auto
