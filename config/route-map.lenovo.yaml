@@ -38,7 +38,30 @@ routes:
     target: http://192.168.188.201:8790
     transport: http
     node: lenovo
+  - match: kv://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
   - match: log://lenovo/**
     target: http://192.168.188.201:8790
     transport: http
     node: lenovo
+  - match: log://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+  - match: browser://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: urioffice://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required
+  - match: urimail://**
+    target: http://192.168.188.201:8790
+    transport: http
+    node: lenovo
+    approval: required

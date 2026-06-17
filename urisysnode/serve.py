@@ -137,9 +137,16 @@ def load_pack_into_runtime(
     pack_routes: dict[str, set[str]] = getattr(runtime, "_pack_route_patterns", {})
     if not hasattr(runtime, "_pack_route_patterns"):
         runtime._pack_route_patterns = pack_routes  # type: ignore[attr-defined]
-    if pack in loaded:
-        if not force:
-            return {"ok": True, "pack": pack, "loaded": True, "already_loaded": True, "new_routes": []}
+    if pack in loaded and not force:
+        return {"ok": True, "pack": pack, "loaded": True, "already_loaded": True, "new_routes": []}
+
+    pip_result = None
+    if install or (auto_install_enabled() and not pack_importable(pack)):
+        pip_result = ensure_pack_pypi(pack, install=True, specs=specs)
+        if not pip_result.get("ok"):
+            return {"ok": False, "pack": pack, "loaded": False, "pip": pip_result}
+
+    if pack in loaded and force:
         drop = pack_routes.get(pack, set())
         if drop:
             runtime.routes = [r for r in runtime.routes if r.pattern not in drop]
@@ -149,12 +156,8 @@ def load_pack_into_runtime(
         if module_name and module_name in sys.modules:
             importlib.reload(sys.modules[module_name])
         importlib.invalidate_caches()
+
     before = {r.pattern for r in runtime.routes}
-    pip_result = None
-    if install or (auto_install_enabled() and not pack_importable(pack)):
-        pip_result = ensure_pack_pypi(pack, install=True, specs=specs)
-        if not pip_result.get("ok"):
-            return {"ok": False, "pack": pack, "loaded": False, "pip": pip_result}
     try:
         ok = _register_pack(runtime, pack, try_install=False)
     except ModuleNotFoundError as exc:

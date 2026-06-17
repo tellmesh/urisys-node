@@ -40,6 +40,9 @@ def test_rewrite_uri_for_slave():
 
     uri = rewrite_uri_for_slave("kvm://slave-01/task/command/click-text", "slave-01", "local")
     assert uri == "kvm://local/task/command/click-text"
+    assert rewrite_uri_for_slave("kv://lenovo/runtime/query/health", "lenovo", "local") == "kv://runtime/query/health"
+    assert rewrite_uri_for_slave("log://lenovo/events/query/summarize", "lenovo", "local") == "log://events/query/summarize"
+    assert rewrite_uri_for_slave("urioffice://lenovo/writer/command/render", "lenovo", "local") == "urioffice://local/writer/command/render"
 
 
 def test_health_payload():

@@ -26,6 +26,9 @@ def resolve_remote_route(uri: str, route_map: dict[str, Any]) -> dict[str, Any] 
     return None
 
 
+HOSTLESS_SCHEMES = frozenset({"kv", "log", "env"})
+
+
 def rewrite_uri_for_slave(uri: str, node_id: str, target_node: str = "local") -> str:
     if node_id == target_node:
         return uri
@@ -35,6 +38,8 @@ def rewrite_uri_for_slave(uri: str, node_id: str, target_node: str = "local") ->
     parts = rest.split("/", 1)
     if parts and parts[0] == node_id:
         tail = parts[1] if len(parts) > 1 else ""
+        if scheme in HOSTLESS_SCHEMES:
+            return f"{scheme}://{tail}" if tail else f"{scheme}://"
         return f"{scheme}://{target_node}/{tail}" if tail else f"{scheme}://{target_node}"
     return uri.replace(f"{scheme}://{node_id}", f"{scheme}://{target_node}", 1)
 

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-06-17
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/integration/test_urisys_node.py
+
+### Other
+- Update config/node.env.example
+- Update config/route-map.lenovo.yaml
+- Update data/events.jsonl
+- Update systemd/urisys-node-user.service
+- Update urisysnode/client.py
+- Update urisysnode/router.py
+- Update urisysnode/serve.py
+- Update uv.lock
+
 ## [0.1.6] - 2026-06-17
 
 ### Docs

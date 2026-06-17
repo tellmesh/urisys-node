@@ -1,13 +1,17 @@
 # systemd user unit — urisys-node on desktop slave (Wayland/X11)
 #
 # Install:
-#   mkdir -p ~/.config/systemd/user
-#   cp urisys-node/systemd/urisys-node-user.service ~/.config/systemd/user/urisys-node.service
+#   mkdir -p ~/.config/systemd/user ~/.config/urisys ~/.local/share/urisys/{screens,office,browser}
+#   cp config/node.env.example         ~/.config/urisys/node.env
+#   cp config/node-profile.lenovo.json ~/.config/urisys/node-profile.json
+#   cp systemd/urisys-node-user.service ~/.config/systemd/user/urisys-node.service
 #   systemctl --user daemon-reload
 #   systemctl --user enable --now urisys-node.service
 #   loginctl enable-linger "$USER"
 #
 # Adjust ExecStart path to your venv (e.g. /home/tom/venv/bin/urisys-node).
+# Layout: ~/.config/urisys = what the node should do (profile/env/secrets);
+#         ~/.local/share/urisys = what it generated (identity, pairing, events, captures).
 
 [Unit]
 Description=urisys-node URI slave
@@ -16,13 +20,21 @@ Wants=network-online.target
 
 [Service]
 Type=simple
+# Deterministic defaults (set first so the operator's node.env can override them):
 Environment=URISYS_NODE_PACKS=node,screen,shell
 Environment=URISYS_NODE_AUTO_INSTALL=1
 Environment=URISYS_ALLOW_REAL=1
 Environment=URISYS_PACK_SOURCE=auto
-Environment=URISYS_NODE_CONFIG=%h/github/tellmesh/urisys-node/config/node-profile.lenovo.json
+Environment=URISYS_NODE_DATA=%h/.local/share/urisys
+Environment=URISYS_NODE_EVENTS=%h/.local/share/urisys/events.jsonl
+Environment=URISYS_NODE_CONFIG=%h/.config/urisys/node-profile.json
+Environment=URISYS_BROWSER_USER_DATA_DIR=%h/.config/google-chrome/Default
 # Optional explicit him driver (auto ydotool on Wayland when ydotool installed):
 # Environment=URISYS_HIM_DRIVER=ydotool
+# Operator overrides + secrets last (later wins); '-' = ok if file absent.
+EnvironmentFile=-%h/.config/urisys/node.env
+EnvironmentFile=-%h/.config/urisys/secrets.env
+ExecStartPre=/bin/mkdir -p %h/.local/share/urisys/screens %h/.local/share/urisys/office %h/.local/share/urisys/browser
 ExecStart=%h/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790
 Restart=on-failure
 RestartSec=5
