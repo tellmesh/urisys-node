@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `webrtc` / `uriwebrtc` pack mapping in `pack_resolver` (`webrtc://` lazy hot-load)
+- Integration test: hot-load uriwebrtc from urisys-automation-lab layout
+
+## [0.1.18] - 2026-06-17
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+
+### Test
+- Update tests/integration/test_pack_github.py
+- Update tests/integration/test_pack_webrtc_hotload.py
+- Update tests/test_pack_resolver_webrtc.py
+
+### Other
+- Update VERSION
+- Update data/events.jsonl
+- Update urisysnode/pack_resolver.py
+- Update uv.lock
+
 ## [0.1.16] - 2026-06-17
 
 ### Added

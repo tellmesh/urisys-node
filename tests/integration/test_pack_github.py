@@ -25,3 +25,11 @@ def test_resolve_pack_spec_auto_prefers_github_for_him():
 
 def test_resolve_pack_spec_kvm_stays_pypi():
     assert resolve_pack_spec("kvm") == "urikvm>=0.1.0"
+
+
+def test_github_wheel_url_stt_uses_underscore_wheel():
+    url = github_wheel_url("stt")
+    assert url == (
+        "https://github.com/tellmesh/urisys-automation-lab/releases/download/"
+        "v0.1.2/urisys_automation_lab-0.1.2-py3-none-any.whl"
+    )

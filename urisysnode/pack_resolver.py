@@ -27,6 +27,8 @@ PACK_MODULES: dict[str, str] = {
     "uristt": "uristt.routes",
     "tts": "uristt.routes",
     "voice-lab": "uristt.routes",
+    "webrtc": "uriwebrtc.routes",
+    "uriwebrtc": "uriwebrtc.routes",
 }
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
@@ -43,6 +45,7 @@ PACK_PYPI: dict[str, str] = {
     "img2nl": "uriimg2nl>=0.1.0",
     "browser": "uribrowser>=0.1.0",
     "kv": "urikv>=0.1.0",
+    "stt": "urisys-automation-lab>=0.1.2",
 }
 
 # GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
@@ -55,9 +58,10 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "office": "0.1.1",
     "mail": "0.1.3",
     "vql": "0.1.1",
-    "img2nl": "0.1.0",
+    "img2nl": "0.1.2",
     "browser": "0.1.1",
     "kv": "0.1.0",
+    "stt": "0.1.2",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
     "urisysedge": "urisysedge",
@@ -71,6 +75,11 @@ PACK_GITHUB_REPO: dict[str, str] = {
     "img2nl": "uriimg2nl",
     "browser": "uribrowser",
     "kv": "urikv",
+    "stt": "urisys-automation-lab",
+}
+# PyPI wheel basename when it differs from repo name (e.g. underscores).
+PACK_GITHUB_WHEEL: dict[str, str] = {
+    "stt": "urisys_automation_lab",
 }
 # Prefer GitHub in auto mode until PyPI publish succeeds
 GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv"})
@@ -91,6 +100,7 @@ SCHEME_TO_PACK: dict[str, str] = {
     "stt": "stt",
     "tts": "stt",
     "voice": "stt",
+    "webrtc": "webrtc",
 }
 
 # Real backends: extra pip specs when handler needs mss/pyautogui/etc.
@@ -123,7 +133,8 @@ def github_wheel_url(pack: str) -> str | None:
         return None
     ver = version.lstrip("v")
     tag = f"v{ver}"
-    wheel = f"{repo}-{ver}-py3-none-any.whl"
+    wheel_base = PACK_GITHUB_WHEEL.get(pack, repo)
+    wheel = f"{wheel_base}-{ver}-py3-none-any.whl"
     return f"https://github.com/{github_owner()}/{repo}/releases/download/{tag}/{wheel}"
 
 

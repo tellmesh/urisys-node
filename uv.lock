@@ -3517,6 +3517,7 @@ name = "urillm"
 version = "0.1.0"
 source = { editable = "../urillm" }
 dependencies = [
+    { name = "pyyaml" },
     { name = "urioperators" },
     { name = "urisysedge" },
 ]
@@ -3531,6 +3532,8 @@ requires-dist = [
     { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
     { name = "urioperators", editable = "../urioperators" },
     { name = "urisysedge", editable = "../urisysedge" },
 ]
@@ -3567,7 +3570,7 @@ source = { editable = "../urioperators" }
 
 [[package]]
 name = "urisys-node"
-version = "0.1.14"
+version = "0.1.17"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -3623,6 +3626,9 @@ provides-extras = ["real", "kvm", "discovery", "dev"]
 name = "urisysedge"
 version = "0.1.1"
 source = { editable = "../urisysedge" }
+dependencies = [
+    { name = "pyyaml" },
+]
 
 [package.metadata]
 requires-dist = [
@@ -3630,6 +3636,7 @@ requires-dist = [
     { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
 ]
 provides-extras = ["dev"]
 
