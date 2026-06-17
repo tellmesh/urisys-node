@@ -118,12 +118,91 @@ def install_pack(
     )
 
 
+def spawn_worker(
+    pack: str | None = None,
+    *,
+    module: str | None = None,
+    install: bool = True,
+    specs: list[str] | None = None,
+    force: bool = False,
+    target: str = "lenovo",
+    route_map: str | None = None,
+    nodes_registry: str | None = None,
+    endpoint: str | None = None,
+) -> dict[str, Any]:
+    """Spawn a capability as an out-of-process worker; the router forwards to it."""
+    payload: dict[str, Any] = {"install": install, "force": force}
+    if pack:
+        payload["pack"] = pack
+    if module:
+        payload["module"] = module
+    if specs:
+        payload["specs"] = specs
+    return call_uri(
+        f"node://{target}/command/spawn-worker",
+        payload=payload,
+        route_map=route_map,
+        nodes_registry=nodes_registry,
+        endpoint=endpoint,
+    )
+
+
+def restart_worker(
+    name: str,
+    *,
+    target: str = "lenovo",
+    route_map: str | None = None,
+    nodes_registry: str | None = None,
+    endpoint: str | None = None,
+) -> dict[str, Any]:
+    return call_uri(
+        f"node://{target}/command/restart-worker",
+        payload={"name": name},
+        route_map=route_map,
+        nodes_registry=nodes_registry,
+        endpoint=endpoint,
+    )
+
+
+def stop_worker(
+    name: str,
+    *,
+    target: str = "lenovo",
+    route_map: str | None = None,
+    nodes_registry: str | None = None,
+    endpoint: str | None = None,
+) -> dict[str, Any]:
+    return call_uri(
+        f"node://{target}/command/stop-worker",
+        payload={"name": name},
+        route_map=route_map,
+        nodes_registry=nodes_registry,
+        endpoint=endpoint,
+    )
+
+
+def workers(
+    *,
+    target: str = "lenovo",
+    route_map: str | None = None,
+    nodes_registry: str | None = None,
+    endpoint: str | None = None,
+) -> dict[str, Any]:
+    return call_uri(
+        f"node://{target}/query/workers",
+        route_map=route_map,
+        nodes_registry=nodes_registry,
+        endpoint=endpoint,
+    )
+
+
 def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None = None, endpoint: str | None = None) -> dict[str, Any]:
+    # `urisys node serve` now takes over the port itself (kills the old
+    # instance), so the restart is just: launch a fresh detached serve.
     cmd = (
         "echo scheduled; "
-        "( sleep 3; pkill -f 'urisys node serve --host' || pkill -f 'urisys-node serve --host' || true; "
-        "sleep 2; source ~/venv/bin/activate && "
-        "nohup urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 & "
+        "( sleep 1; source ~/venv/bin/activate 2>/dev/null || true; "
+        "setsid urisys node serve --host 0.0.0.0 --port 8790 >> /tmp/urisys-node.log 2>&1 < /dev/null & "
         ") >/dev/null 2>&1 &"
     )
     return call_uri(
@@ -238,6 +317,29 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("restart", help="Schedule delayed urisys node restart on remote")
 
+    sw = sub.add_parser("spawn-worker", help="Spawn a pack as an out-of-process worker")
+    sw.add_argument("pack", nargs="?", default=None)
+    sw.add_argument("--module", default=None)
+    sw.add_argument("--spec", action="append", default=[])
+    sw.add_argument("--no-install", dest="install", action="store_false", default=True)
+    sw.add_argument("--force", action="store_true", default=False)
+    sw.add_argument("--target", default="lenovo")
+    sw.add_argument("--endpoint", default=None)
+
+    rw = sub.add_parser("restart-worker", help="Restart a worker by name")
+    rw.add_argument("name")
+    rw.add_argument("--target", default="lenovo")
+    rw.add_argument("--endpoint", default=None)
+
+    stw = sub.add_parser("stop-worker", help="Stop and unregister a worker by name")
+    stw.add_argument("name")
+    stw.add_argument("--target", default="lenovo")
+    stw.add_argument("--endpoint", default=None)
+
+    lw = sub.add_parser("workers", help="List live capability workers")
+    lw.add_argument("--target", default="lenovo")
+    lw.add_argument("--endpoint", default=None)
+
     uk = sub.add_parser("upgrade-kv", help="Build wheels, upgrade urisys-node, restart, install urikv")
     uk.add_argument("--tellmesh-root", default=None)
     uk.add_argument("--wheel-host", default=None)
@@ -272,6 +374,30 @@ def main(argv: list[str] | None = None) -> int:
         if args.cmd == "restart":
             print(json.dumps(schedule_restart(), indent=2, ensure_ascii=False))
             return 0
+        if args.cmd == "spawn-worker":
+            out = spawn_worker(
+                args.pack,
+                module=args.module,
+                install=args.install,
+                specs=args.spec or None,
+                force=args.force,
+                target=args.target,
+                endpoint=args.endpoint,
+            )
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok") else 1
+        if args.cmd == "restart-worker":
+            out = restart_worker(args.name, target=args.target, endpoint=args.endpoint)
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok") else 1
+        if args.cmd == "stop-worker":
+            out = stop_worker(args.name, target=args.target, endpoint=args.endpoint)
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok") else 1
+        if args.cmd == "workers":
+            out = workers(target=args.target, endpoint=args.endpoint)
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok", True) else 1
         if args.cmd == "upgrade-kv":
             out = upgrade_lenovo_kv(tellmesh_root=args.tellmesh_root, wheel_host=args.wheel_host)
             print(json.dumps(out, indent=2, ensure_ascii=False))

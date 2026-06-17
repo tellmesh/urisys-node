@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-06-17
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/integration/_fakepack.py
+- Update tests/integration/test_serve_takeover.py
+- Update tests/integration/test_worker_supervisor.py
+
+### Other
+- Update VERSION
+- Update config/node.env.example
+- Update data/events.jsonl
+- Update data/workers.json
+- Update urisysnode/cli.py
+- Update urisysnode/handlers.py
+- Update urisysnode/remote.py
+- Update urisysnode/routes.py
+- Update urisysnode/serve.py
+- Update urisysnode/supervisor.py
+- ... and 2 more files
+
 ## [0.1.7] - 2026-06-17
 
 ### Docs

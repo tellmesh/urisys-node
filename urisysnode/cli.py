@@ -27,9 +27,14 @@ def main(argv=None) -> int:
     p.add_argument("--events", default=default_events_path())
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    s = sub.add_parser("serve", help="Start HTTP URI server (default :8790)")
+    s = sub.add_parser("serve", help="Start HTTP URI server (default :8790); kills any prior listener on the port.")
     s.add_argument("--host", default=os.environ.get("URISYS_NODE_HOST", "0.0.0.0"))
     s.add_argument("--port", type=int, default=int(os.environ.get("URISYS_NODE_PORT", "8790")))
+    s.add_argument(
+        "--no-takeover",
+        action="store_true",
+        help="Do not kill an existing listener on --port (systemd manages restarts).",
+    )
 
     e = sub.add_parser("enroll", help="Pair node with controller")
     e.add_argument("--controller", required=True)
@@ -86,7 +91,7 @@ def main(argv=None) -> int:
 
     if args.cmd == "serve":
         rt = build_runtime(args.config)
-        serve(rt, args.host, args.port)
+        serve(rt, args.host, args.port, takeover=not args.no_takeover)
         return 0
 
     if args.cmd == "enroll":

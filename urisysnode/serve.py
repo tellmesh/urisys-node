@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import errno
 import importlib
 import json
 import os
+import signal
+import socket
 import sys
+import time
 import warnings
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -115,7 +119,33 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     except Exception as exc:
         warnings.warn(f"release forward wiring skipped: {exc}", stacklevel=2)
 
+    try:
+        _bootstrap_worker_packs(rt)
+    except Exception as exc:
+        warnings.warn(f"worker pack bootstrap skipped: {exc}", stacklevel=2)
+
     return rt
+
+
+def _bootstrap_worker_packs(rt: Runtime) -> None:
+    """Spawn the packs listed in URISYS_NODE_WORKER_PACKS as out-of-process
+    workers and wire their routes to forward into this router. Existing workers
+    from a previous run are re-attached instead of re-spawned."""
+    raw = os.environ.get("URISYS_NODE_WORKER_PACKS", "").strip()
+    worker_packs = [p.strip() for p in raw.split(",") if p.strip()]
+    if not worker_packs:
+        return
+
+    from .supervisor import PackSupervisor
+
+    sup = PackSupervisor(rt)
+    rt._supervisor = sup  # type: ignore[attr-defined]
+    sup.restore()
+    for pack in worker_packs:
+        if pack in sup.workers and sup.workers[pack].alive():
+            continue
+        sup.spawn(pack=pack, install=not pack_importable(pack))
+    sup.start_monitor()
 
 
 def load_pack_into_runtime(
@@ -145,6 +175,8 @@ def load_pack_into_runtime(
         pip_result = ensure_pack_pypi(pack, install=True, specs=specs)
         if not pip_result.get("ok"):
             return {"ok": False, "pack": pack, "loaded": False, "pip": pip_result}
+        if pip_result.get("ok") and not pip_result.get("skipped"):
+            importlib.invalidate_caches()
 
     if pack in loaded and force:
         drop = pack_routes.get(pack, set())
@@ -162,6 +194,8 @@ def load_pack_into_runtime(
         ok = _register_pack(runtime, pack, try_install=False)
     except ModuleNotFoundError as exc:
         return {"ok": False, "pack": pack, "loaded": False, "error": str(exc), "pip": pip_result}
+    except Exception as exc:
+        return {"ok": False, "pack": pack, "loaded": False, "error": str(exc), "pip": pip_result}
     if ok:
         loaded.add(pack)
         added = {r.pattern for r in runtime.routes} - before
@@ -169,6 +203,9 @@ def load_pack_into_runtime(
             pack_routes[pack] = added
     new_routes = sorted({r.pattern for r in runtime.routes} - before)
     out: dict[str, Any] = {"ok": bool(ok), "pack": pack, "loaded": bool(ok), "new_routes": new_routes}
+    if not ok:
+        mod = PACK_MODULES.get(pack, pack)
+        out["error"] = out.get("error") or f"failed to import/register pack module {mod!r}"
     if pip_result:
         out["pip"] = pip_result
     return out
@@ -443,7 +480,182 @@ def make_handler(runtime: Runtime):
     return Handler
 
 
-def serve(runtime: Runtime, host: str, port: int) -> None:
+def _pidfile_path(port: int) -> Path:
+    from .identity import default_events_path
+
+    return Path(default_events_path()).parent / f"urisys-node.{port}.pid"
+
+
+def _pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError as exc:
+        return exc.errno == errno.EPERM
+
+
+def _pids_on_port(port: int) -> list[int]:
+    """Find PIDs holding a LISTEN socket on ``port`` via /proc (no deps)."""
+    inodes: set[str] = set()
+    for proto in ("tcp", "tcp6"):
+        try:
+            lines = Path(f"/proc/net/{proto}").read_text(encoding="utf-8").splitlines()[1:]
+        except OSError:
+            continue
+        for line in lines:
+            parts = line.split()
+            if len(parts) < 10 or parts[3] != "0A":  # 0A = LISTEN
+                continue
+            try:
+                if int(parts[1].rsplit(":", 1)[1], 16) == port:
+                    inodes.add(parts[9])
+            except (ValueError, IndexError):
+                continue
+    if not inodes:
+        return []
+    pids: list[int] = []
+    for entry in Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        try:
+            for fd in (entry / "fd").iterdir():
+                try:
+                    target = os.readlink(fd)
+                except OSError:
+                    continue
+                if target.startswith("socket:[") and target[8:-1] in inodes:
+                    pids.append(int(entry.name))
+                    break
+        except OSError:
+            continue
+    return pids
+
+
+def _kill_pid(pid: int, *, timeout: float = 6.0) -> None:
+    try:
+        os.kill(pid, signal.SIGTERM)
+    except OSError:
+        pass
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if not _pid_alive(pid):
+            return
+        time.sleep(0.2)
+    try:
+        os.kill(pid, signal.SIGKILL)
+    except OSError:
+        pass
+    time.sleep(0.1)
+
+
+def _worker_pids_from_state() -> list[int]:
+    """PIDs persisted by PackSupervisor (out-of-process pack workers)."""
+    state = Path("data/workers.json")
+    if not state.is_file():
+        alt = Path(default_events_path()).parent / "workers.json"
+        if alt.is_file():
+            state = alt
+        else:
+            return []
+    try:
+        records = json.loads(state.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []
+    pids: list[int] = []
+    for rec in records if isinstance(records, list) else []:
+        try:
+            pid = int(rec.get("pid") or 0)
+        except (TypeError, ValueError):
+            continue
+        if pid > 0 and _pid_alive(pid):
+            pids.append(pid)
+    return pids
+
+
+def _wait_port_free(host: str, port: int, *, timeout: float = 10.0) -> bool:
+    bind_host = host if host not in ("", "0.0.0.0") else "0.0.0.0"
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            s.bind((bind_host, port))
+            s.close()
+            return True
+        except OSError:
+            s.close()
+            time.sleep(0.25)
+    return False
+
+
+def takeover_port(host: str, port: int) -> dict[str, Any]:
+    """Kill any existing urisys node on ``port`` so a fresh serve can bind it.
+
+    This makes ``urisys node serve`` behave like an atomic restart: the old
+    instance is terminated (pidfile first, then any process holding the port),
+    we wait for the port to free, then the caller binds. No external bash."""
+    self_pid = os.getpid()
+    killed: list[int] = []
+
+    pidfile = _pidfile_path(port)
+    try:
+        old = int(pidfile.read_text(encoding="utf-8").strip())
+    except (OSError, ValueError):
+        old = 0
+    targets: set[int] = set()
+    if old and old != self_pid and _pid_alive(old):
+        targets.add(old)
+    for pid in _pids_on_port(port):
+        if pid != self_pid:
+            targets.add(pid)
+    for pid in _worker_pids_from_state():
+        if pid != self_pid:
+            targets.add(pid)
+    for pid in sorted(targets):
+        _kill_pid(pid)
+        killed.append(pid)
+
+    freed = _wait_port_free(host, port)
+    return {"killed": killed, "port_free": freed}
+
+
+def serve(runtime: Runtime, host: str, port: int, *, takeover: bool = True) -> None:
+    if takeover:
+        info = takeover_port(host, port)
+        if info["killed"]:
+            print(f"takeover: terminated old instance pid(s) {info['killed']}")
+        if not info["port_free"]:
+            raise OSError(
+                f"port {port} still in use after takeover "
+                f"(killed={info['killed']}); retry or stop the conflicting process"
+            )
+
+    pidfile = _pidfile_path(port)
+    pidfile.parent.mkdir(parents=True, exist_ok=True)
+    pidfile.write_text(str(os.getpid()), encoding="utf-8")
+
+    def _cleanup(*_args: Any) -> None:
+        sup = getattr(runtime, "_supervisor", None)
+        if sup is not None:
+            try:
+                sup.shutdown()
+            except Exception:
+                pass
+        try:
+            if pidfile.read_text(encoding="utf-8").strip() == str(os.getpid()):
+                pidfile.unlink()
+        except OSError:
+            pass
+
+    import atexit
+
+    atexit.register(_cleanup)
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        try:
+            signal.signal(sig, lambda *_a: sys.exit(0))
+        except (ValueError, OSError):
+            pass
+
     identity = load_identity()
     bootstrap = None
     try:

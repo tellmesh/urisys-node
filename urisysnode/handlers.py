@@ -73,6 +73,73 @@ def command_install_pack(payload: dict[str, Any], context: dict[str, Any]) -> di
     )
 
 
+def _get_supervisor(context: dict[str, Any]) -> Any:
+    """Return the router's worker supervisor, creating it on first use so that
+    workers can be spawned on demand even when none were enabled at boot."""
+    runtime = context.get("runtime")
+    if runtime is None:
+        return None
+    sup = getattr(runtime, "_supervisor", None)
+    if sup is None:
+        from urisysnode.supervisor import PackSupervisor
+
+        sup = PackSupervisor(runtime)
+        runtime._supervisor = sup  # type: ignore[attr-defined]
+        sup.start_monitor()
+    return sup
+
+
+def command_spawn_worker(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    if not context.get("approved"):
+        return {"ok": False, "error": "approval required for spawn-worker"}
+    sup = _get_supervisor(context)
+    if sup is None:
+        return {"ok": False, "error": "no runtime in context"}
+    pack = str(payload.get("pack") or "").strip() or None
+    module = str(payload.get("module") or "").strip() or None
+    specs = payload.get("specs")
+    override = [str(s) for s in specs] if isinstance(specs, list) else None
+    return sup.spawn(
+        pack=pack,
+        module=module,
+        install=bool(payload.get("install", False)),
+        specs=override,
+        force=bool(payload.get("force", False)),
+    )
+
+
+def query_workers(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    del payload
+    sup = _get_supervisor(context)
+    if sup is None:
+        return {"ok": False, "error": "no runtime in context"}
+    return sup.status()
+
+
+def command_restart_worker(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    if not context.get("approved"):
+        return {"ok": False, "error": "approval required for restart-worker"}
+    sup = _get_supervisor(context)
+    if sup is None:
+        return {"ok": False, "error": "no runtime in context"}
+    name = str(payload.get("name") or payload.get("pack") or "").strip()
+    if not name:
+        return {"ok": False, "error": "worker name is required"}
+    return sup.restart(name)
+
+
+def command_stop_worker(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
+    if not context.get("approved"):
+        return {"ok": False, "error": "approval required for stop-worker"}
+    sup = _get_supervisor(context)
+    if sup is None:
+        return {"ok": False, "error": "no runtime in context"}
+    name = str(payload.get("name") or payload.get("pack") or "").strip()
+    if not name:
+        return {"ok": False, "error": "worker name is required"}
+    return sup.stop(name)
+
+
 def command_register_forward(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     if not context.get("approved"):
         return {"ok": False, "error": "approval required for register-forward"}

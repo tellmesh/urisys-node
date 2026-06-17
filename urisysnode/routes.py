@@ -39,3 +39,33 @@ def register(rt):
         approval="required",
         side_effects=True,
     )
+    rt.register(
+        "node://{target}/query/workers",
+        "python://urisysnode.handlers:query_workers",
+        kind="query",
+        operation="node.workers",
+    )
+    rt.register(
+        "node://{target}/command/spawn-worker",
+        "python://urisysnode.handlers:command_spawn_worker",
+        kind="command",
+        operation="node.spawn_worker",
+        approval="required",
+        side_effects=True,
+    )
+    rt.register(
+        "node://{target}/command/restart-worker",
+        "python://urisysnode.handlers:command_restart_worker",
+        kind="command",
+        operation="node.restart_worker",
+        approval="required",
+        side_effects=True,
+    )
+    rt.register(
+        "node://{target}/command/stop-worker",
+        "python://urisysnode.handlers:command_stop_worker",
+        kind="command",
+        operation="node.stop_worker",
+        approval="required",
+        side_effects=True,
+    )
