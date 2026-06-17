@@ -1,0 +1,217 @@
+"""Lazy install for optional urisys-node capability packs (PyPI or GitHub Releases)."""
+
+from __future__ import annotations
+
+import importlib
+import os
+import subprocess
+import sys
+from typing import Any
+
+# pack alias -> module exposing register(runtime)
+PACK_MODULES: dict[str, str] = {
+    "node": "urisysnode.routes",
+    "screen": "uriscreen.routes",
+    "shell": "urishell.routes",
+    "kvm": "urikvm",
+    "him": "urihim",
+    "ocr": "uriocr",
+    "llm": "urillm",
+    "office": "urioffice",
+    "mail": "urimail",
+    "vql": "urivql",
+}
+
+CORE_PACKS = frozenset({"node", "screen", "shell"})
+BUNDLED_PACKS = frozenset({"node", "screen", "shell"})
+PACK_PYPI: dict[str, str] = {
+    "urisysedge": "urisysedge>=0.1.0",
+    "kvm": "urikvm>=0.1.0",
+    "him": "urihim>=0.1.0",
+    "ocr": "uriocr>=0.1.0",
+    "llm": "urillm[vision]>=0.1.0",
+    "office": "urioffice>=0.1.0",
+    "mail": "urimail>=0.1.0",
+    "vql": "urivql>=0.1.0",
+}
+
+# GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
+PACK_GITHUB_VERSION: dict[str, str] = {
+    "urisysedge": "0.1.1",
+    "kvm": "0.1.1",
+    "him": "0.1.3",
+    "ocr": "0.1.0",
+    "llm": "0.1.0",
+    "office": "0.1.1",
+    "mail": "0.1.2",
+    "vql": "0.1.1",
+}
+PACK_GITHUB_REPO: dict[str, str] = {
+    "urisysedge": "urisysedge",
+    "kvm": "urikvm",
+    "him": "urihim",
+    "ocr": "uriocr",
+    "llm": "urillm",
+    "office": "urioffice",
+    "mail": "urimail",
+    "vql": "urivql",
+}
+# Prefer GitHub in auto mode until PyPI publish succeeds
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql"})
+
+# URI scheme -> pack alias (screen/uriscreen is bundled with urisys wheel)
+SCHEME_TO_PACK: dict[str, str] = {
+    "kvm": "kvm",
+    "him": "him",
+    "ocr": "ocr",
+    "llm": "llm",
+    "urioffice": "office",
+    "urimail": "mail",
+    "vql": "vql",
+    "browser": "browser",
+}
+
+# Real backends: extra pip specs when handler needs mss/pyautogui/etc.
+REAL_PIP: dict[str, list[str]] = {
+    "screen": ["mss>=9.0", "Pillow>=10.0"],
+    "kvm": ["mss>=9.0", "Pillow>=10.0"],
+    "him": ["pyautogui>=0.9.54"],
+    "ocr": ["pytesseract>=0.3.10", "Pillow>=10.0"],
+    "llm": ["litellm>=1.40"],
+}
+
+
+def auto_install_enabled() -> bool:
+    return os.environ.get("URISYS_NODE_AUTO_INSTALL", "1") == "1"
+
+
+def pack_install_source() -> str:
+    """pypi | github | auto (github for him/ocr/llm, else pypi)."""
+    return os.environ.get("URISYS_PACK_SOURCE", "auto").strip().lower()
+
+
+def github_owner() -> str:
+    return os.environ.get("URISYS_PACK_GITHUB_OWNER", "tellmesh").strip()
+
+
+def github_wheel_url(pack: str) -> str | None:
+    repo = PACK_GITHUB_REPO.get(pack)
+    version = os.environ.get(f"URISYS_PACK_GITHUB_{pack.upper()}_VERSION") or PACK_GITHUB_VERSION.get(pack)
+    if not repo or not version:
+        return None
+    ver = version.lstrip("v")
+    tag = f"v{ver}"
+    wheel = f"{repo}-{ver}-py3-none-any.whl"
+    return f"https://github.com/{github_owner()}/{repo}/releases/download/{tag}/{wheel}"
+
+
+def resolve_pack_spec(pack: str) -> str | None:
+    pypi = PACK_PYPI.get(pack)
+    github = github_wheel_url(pack)
+    source = pack_install_source()
+    if source == "github":
+        return github or pypi
+    if source == "pypi":
+        return pypi
+    if pack in GITHUB_PREFERRED_PACKS and github:
+        return github
+    return pypi
+
+
+def pack_module(pack: str) -> str:
+    return PACK_MODULES.get(pack, pack)
+
+
+def scheme_for_uri(uri: str) -> str:
+    return uri.split("://", 1)[0].lower() if "://" in uri else ""
+
+
+def pack_for_scheme(scheme: str) -> str | None:
+    return SCHEME_TO_PACK.get(scheme)
+
+
+def _pip_install(specs: list[str]) -> dict[str, Any]:
+    cmd = [sys.executable, "-m", "pip", "install", "-U", *specs]
+    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+    return {
+        "ok": proc.returncode == 0,
+        "command": " ".join(cmd),
+        "stdout": (proc.stdout or "")[-2000:],
+        "stderr": (proc.stderr or "")[-2000:],
+        "exit_code": proc.returncode,
+    }
+
+
+def ensure_pip_specs(specs: list[str], *, install: bool = True) -> dict[str, Any]:
+    if not specs:
+        return {"ok": True, "installed": [], "skipped": True}
+    if not install or not auto_install_enabled():
+        return {
+            "ok": False,
+            "error": "auto install disabled (URISYS_NODE_AUTO_INSTALL=0)",
+            "specs": specs,
+        }
+    result = _pip_install(specs)
+    result["specs"] = specs
+    return result
+
+
+def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> list[str]:
+    if override_specs:
+        return [str(s).strip() for s in override_specs if str(s).strip()]
+    specs: list[str] = []
+    if pack != "urisysedge":
+        edge = resolve_pack_spec("urisysedge")
+        if edge:
+            specs.append(edge)
+    spec = resolve_pack_spec(pack)
+    if spec:
+        specs.append(spec)
+    return specs
+
+
+def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None = None) -> dict[str, Any]:
+    """Install pack + urisysedge from PyPI or GitHub Releases when import would fail."""
+    resolved = pack_install_specs(pack, specs)
+    if not resolved:
+        if pack in BUNDLED_PACKS:
+            return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys"}
+        return {"ok": False, "error": f"no install mapping for pack {pack!r}"}
+    out = ensure_pip_specs(resolved, install=install)
+    out["pack"] = pack
+    out["source"] = pack_install_source()
+    return out
+
+
+def ensure_real_deps(pack: str, *, install: bool = True) -> dict[str, Any]:
+    specs = REAL_PIP.get(pack, [])
+    out = ensure_pip_specs(specs, install=install)
+    out["pack"] = pack
+    out["real"] = True
+    return out
+
+
+def github_wheel_urls(*packs: str) -> list[str]:
+    """Pip install specs (urisysedge + wheels) for shell:// bootstrap flows."""
+    specs: list[str] = []
+    edge = resolve_pack_spec("urisysedge")
+    if edge:
+        specs.append(edge)
+    for pack in packs:
+        spec = resolve_pack_spec(pack)
+        if spec and spec not in specs:
+            specs.append(spec)
+    return specs
+
+
+def import_pack_module(pack: str):
+    module_name = pack_module(pack)
+    return importlib.import_module(module_name)
+
+
+def pack_importable(pack: str) -> bool:
+    try:
+        import_pack_module(pack)
+        return True
+    except ModuleNotFoundError:
+        return False
