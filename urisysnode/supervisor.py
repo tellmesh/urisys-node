@@ -104,6 +104,27 @@ class PackSupervisor:
         self._monitor: threading.Thread | None = None
         self._monitor_stop = threading.Event()
 
+    def _default_worker_env(self) -> dict[str, str]:
+        """Propagate node profile + display session vars into pack worker subprocesses."""
+        env: dict[str, str] = {}
+        config_file = os.environ.get("URISYS_NODE_CONFIG") or getattr(self.runtime, "_config_path", None)
+        if not config_file:
+            config_file = "config/node-profile.json"
+        config_path = Path(str(config_file)).expanduser()
+        if config_path.is_file():
+            env["URISYS_NODE_CONFIG"] = str(config_path.resolve())
+        if os.environ.get("URISYS_ALLOW_REAL"):
+            env["URISYS_ALLOW_REAL"] = os.environ["URISYS_ALLOW_REAL"]
+        else:
+            env.setdefault("URISYS_ALLOW_REAL", "1")
+        for key in ("DISPLAY", "WAYLAND_DISPLAY", "XDG_RUNTIME_DIR", "XDG_SESSION_TYPE", "URISYS_HIM_DRIVER"):
+            if os.environ.get(key):
+                env[key] = os.environ[key]
+        if not os.environ.get("URISYS_NODE_ROUTER"):
+            port = int(os.environ.get("URISYS_NODE_PORT", "8790"))
+            env["URISYS_NODE_ROUTER"] = f"http://{self.host}:{port}"
+        return env
+
     # -- lifecycle ---------------------------------------------------------
     def spawn(
         self,
@@ -137,6 +158,7 @@ class PackSupervisor:
                 cmd += ["--spec", spec]
 
             proc_env = dict(os.environ)
+            proc_env.update(self._default_worker_env())
             if env:
                 proc_env.update(env)
             proc = subprocess.Popen(

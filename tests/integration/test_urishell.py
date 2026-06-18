@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from unittest.mock import patch
 
+import pytest
 from uri_control.edge.runtime import Runtime
-import urishell
+
+urishell = pytest.importorskip("urishell", reason="urishell pack not installed in this env")
 
 
 def test_shell_route_registered():

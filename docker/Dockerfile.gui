@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
-COPY urirouter /build/urirouter
-COPY uricore /build/uricore
-COPY uricore /build/uricore
+COPY uriresolver /build/uriresolver
+COPY uriguard /build/uriguard
+COPY uricontrol /build/uricontrol
 COPY urioperators /build/urioperators
 COPY urisys-node /build/urisys-node
 COPY urikvm /build/urikvm
@@ -32,10 +32,11 @@ COPY urillm /build/urillm
 COPY urisys/pyproject.toml /build/urisys/pyproject.toml
 COPY urisys/src /build/urisys/src
 RUN printf '# urisys\n' > /build/urisys/README.md \
-    && python3 -m pip install --break-system-packages -e /build/uricore \
     && python3 -m pip install --break-system-packages \
-       -e /build/urirouter \
-    -e /build/uricore \
+       -e /build/uriguard \
+       -e /build/uricontrol \
+    && python3 -m pip install --break-system-packages \
+       -e /build/uriresolver \
        -e /build/urioperators \
        -e /build/urisys-node \
        -e /build/urikvm \

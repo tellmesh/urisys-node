@@ -7,11 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- `webrtc` / `uriwebrtc` pack mapping in `pack_resolver` (`webrtc://` lazy hot-load)
-- Integration test: hot-load uriwebrtc from standalone `tellmesh/uriwebrtc` wheel
+## [0.1.24] - 2026-06-18
 
-## [0.1.18] - 2026-06-17
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update markpacts/urisys-node.capabilities.markpact.md
+- Update markpacts/urisys-node.contract.markpact.md
+- Update markpacts/urisysnode-app.markpact.md
+- Update markpacts/urisysnode-node.markpact.md
+
+### Test
+- Update tests/integration/test_core_pack_boot_install.py
+- Update tests/integration/test_host_trust.py
+- Update tests/integration/test_uriscreen_auto.py
+- Update tests/integration/test_urishell.py
+- Update tests/test_remote_restart.py
+- Update tests/test_supervisor_worker_env.py
+- Update tests/test_worker_router_callback.py
+
+### Other
+- Update VERSION
+- Update data/events.jsonl
+- Update docker/Dockerfile.gui
+- Update urisysnode/handlers.py
+- Update urisysnode/identity.py
+- Update urisysnode/manifest.yaml
+- Update urisysnode/pack_resolver.py
+- Update urisysnode/remote.py
+- Update urisysnode/serve.py
+- Update urisysnode/supervisor.py
+- ... and 2 more files
+
+## [0.1.23] - 2026-06-18
+
+### Fixed
+- `remote restart` — `--endpoint` / `--route-map` / `--port`; connection drop po `fuser -k` = sukces
 
 ### Docs
 - Update CHANGELOG.md

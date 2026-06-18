@@ -133,11 +133,11 @@ def health_payload(version: str | None = None, runtime: Any | None = None) -> di
         except Exception:
             urisys_version = None
 
-    uricore_version = None
+    uricontrol_version = None
     try:
         from importlib.metadata import version as pkg_version
 
-        uricore_version = pkg_version("uricore")
+        uricontrol_version = pkg_version("uricontrol")
     except Exception:
         pass
 
@@ -148,7 +148,7 @@ def health_payload(version: str | None = None, runtime: Any | None = None) -> di
         "fingerprint": identity.get("fingerprint"),
         "version": urisys_version or "0.1.0",
         "urisys": urisys_version,
-        "uricore": uricore_version,
+        "uricontrol": uricontrol_version,
         "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
         "python_executable": sys.executable,
         "paired": bool(pairing.get("paired")),

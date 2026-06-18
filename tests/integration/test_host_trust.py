@@ -7,8 +7,10 @@ serve.apply_host_trust (wired into serve.call_uri) lets the node profile's
 
 from __future__ import annotations
 
+import pytest
 from uri_control.edge.runtime import Runtime
-import urishell
+
+urishell = pytest.importorskip("urishell", reason="urishell pack not installed in this env")
 
 from urisysnode import serve
 

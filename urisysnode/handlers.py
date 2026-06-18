@@ -99,11 +99,14 @@ def command_spawn_worker(payload: dict[str, Any], context: dict[str, Any]) -> di
     module = str(payload.get("module") or "").strip() or None
     specs = payload.get("specs")
     override = [str(s) for s in specs] if isinstance(specs, list) else None
+    raw_env = payload.get("env")
+    worker_env = {str(k): str(v) for k, v in raw_env.items()} if isinstance(raw_env, dict) else None
     return sup.spawn(
         pack=pack,
         module=module,
         install=bool(payload.get("install", False)),
         specs=override,
+        env=worker_env,
         force=bool(payload.get("force", False)),
     )
 

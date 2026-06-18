@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
-from uriscreen.backends import is_black_png, resolve_backend
+import pytest
+
+_backends = pytest.importorskip("uriscreen.backends", reason="uriscreen pack not installed in this env")
+is_black_png = _backends.is_black_png
+resolve_backend = _backends.resolve_backend
 
 
 def test_resolve_backend_auto_x11(monkeypatch):

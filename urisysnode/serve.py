@@ -24,6 +24,7 @@ from .pack_resolver import (
     PACK_MODULES,
     auto_install_enabled,
     ensure_pack_pypi,
+    ensure_boot_pack,
     ensure_real_deps,
     pack_for_scheme,
     pack_importable,
@@ -62,21 +63,27 @@ def _register_pack(
         module = importlib.import_module(module_name)
     except ModuleNotFoundError as exc:
         top = module_name.split(".", 1)[0]
-        if exc.name not in (module_name, top):
-            raise
-        if pack in CORE_PACKS:
+        if exc.name and exc.name not in (module_name, top):
             raise
         if try_install and auto_install_enabled():
-            pip_result = ensure_pack_pypi(pack, install=True)
+            pip_fn = ensure_boot_pack if pack in CORE_PACKS else ensure_pack_pypi
+            pip_result = pip_fn(pack, install=True)
             if pip_result.get("ok"):
                 importlib.invalidate_caches()
                 module = importlib.import_module(module_name)
+            elif pack in CORE_PACKS:
+                detail = pip_result.get("error") or pip_result.get("stderr") or "pip install failed"
+                raise ModuleNotFoundError(
+                    f"core pack '{pack}' requires module '{module_name}' (pip install failed: {detail})"
+                ) from exc
             else:
                 warnings.warn(
                     f"Skipping urisys-node pack '{pack}': pip install failed ({pip_result.get('error')})",
                     stacklevel=2,
                 )
                 return False
+        elif pack in CORE_PACKS:
+            raise
         else:
             warnings.warn(
                 f"Skipping urisys-node pack '{pack}': module '{module_name}' is not "
@@ -96,6 +103,7 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     config_file = config_path or os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
     config = load_json(config_file) if Path(config_file).exists() else {}
     rt = Runtime(events_path=default_events_path(), config=config)
+    rt._config_path = str(Path(config_file).resolve())  # type: ignore[attr-defined]
     rt._instance_id = f"{os.getpid()}:{time.time():.3f}"  # type: ignore[attr-defined]
 
     # Minimal boot: node (bundled), screen + shell (pip deps). kvm/him/ocr/llm on first URI.

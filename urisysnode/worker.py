@@ -23,6 +23,9 @@ from uri_control.edge.runtime import Runtime, load_json, make_handler
 
 from .identity import default_events_path
 
+# Context keys safe to forward worker → router (JSON-serializable; no runtime/state).
+_ROUTER_CALLBACK_CTX_KEYS = ("approved", "allow_real", "dry_run", "environment", "approval")
+
 
 def _load_node_profile() -> dict[str, Any]:
     """Load the node profile (URISYS_NODE_CONFIG) so a worker runtime gets the same
@@ -32,6 +35,46 @@ def _load_node_profile() -> dict[str, Any]:
         return load_json(config_file) if Path(config_file).exists() else {}
     except Exception:
         return {}
+
+
+def _local_schemes(runtime: Runtime) -> set[str]:
+    schemes: set[str] = set()
+    for route in runtime.routes:
+        pat = getattr(route, "pattern", "") or ""
+        if "://" in pat:
+            schemes.add(pat.split("://", 1)[0])
+    return schemes
+
+
+def _wire_router_callback(runtime: Runtime) -> None:
+    """Forward runtime.call for non-local schemes to the main node router.
+
+    KVM workers call ocr:// / llm:// / him:// via context['runtime'].call; without
+  this hook those schemes are route_not_found inside the isolated worker process.
+    """
+    router = os.environ.get("URISYS_NODE_ROUTER", "").strip()
+    if not router:
+        return
+    local = _local_schemes(runtime)
+    if not local:
+        return
+    original_call = runtime.call
+
+    def call(
+        uri: str,
+        payload: dict[str, Any] | None = None,
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        scheme = uri.split("://", 1)[0] if "://" in uri else ""
+        if scheme in local:
+            return original_call(uri, payload, context)
+        from urisysnode.client import remote_call
+
+        ctx = dict(context or {})
+        fwd = {k: ctx[k] for k in _ROUTER_CALLBACK_CTX_KEYS if k in ctx}
+        return remote_call(router, uri, payload or {}, fwd)
+
+    runtime.call = call  # type: ignore[method-assign]
 
 
 def build_worker_runtime(
@@ -68,6 +111,7 @@ def build_worker_runtime(
         raise ValueError("worker requires --pack or --module")
 
     info["routes"] = [r.pattern for r in rt.routes]
+    _wire_router_callback(rt)
     return rt, info
 
 

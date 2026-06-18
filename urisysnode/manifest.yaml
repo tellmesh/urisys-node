@@ -1,0 +1,96 @@
+id: urisysnode
+version: 0.1.21
+scheme: node
+description: >
+  urisys-node slave capability routes (node:// + app://).
+  HTTP transport (GET /health, POST /uri/call) is documented separately in
+  markpacts/urisys-node.contract.markpact.md.
+
+uri_patterns:
+  - pattern: node://{target}/query/health
+    kind: query
+    operation: node.health
+    side_effects: false
+    approval: not_required
+  - pattern: node://{target}/query/identity
+    kind: query
+    operation: node.identity
+    side_effects: false
+    approval: not_required
+  - pattern: node://{target}/command/indicator-on
+    kind: command
+    operation: node.indicator_on
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/command/indicator-off
+    kind: command
+    operation: node.indicator_off
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/query/packs
+    kind: query
+    operation: node.packs
+    side_effects: false
+    approval: not_required
+  - pattern: node://{target}/command/install-pack
+    kind: command
+    operation: node.install_pack
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/command/register-forward
+    kind: command
+    operation: node.register_forward
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/query/workers
+    kind: query
+    operation: node.workers
+    side_effects: false
+    approval: not_required
+  - pattern: node://{target}/command/spawn-worker
+    kind: command
+    operation: node.spawn_worker
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/command/restart-worker
+    kind: command
+    operation: node.restart_worker
+    side_effects: true
+    approval: required
+  - pattern: node://{target}/command/stop-worker
+    kind: command
+    operation: node.stop_worker
+    side_effects: true
+    approval: required
+  - pattern: app://{target}/chat/query/messages
+    kind: query
+    operation: app.chat.messages
+    side_effects: false
+    approval: not_required
+  - pattern: app://{target}/chat/query/channels
+    kind: query
+    operation: app.chat.channels
+    side_effects: false
+    approval: not_required
+  - pattern: app://{target}/chat/command/append
+    kind: command
+    operation: app.chat.append
+    side_effects: true
+    approval: required
+
+handlers:
+  python:
+    node.health: python://urisysnode.handlers:query_health
+    node.identity: python://urisysnode.handlers:query_identity
+    node.indicator_on: python://urisysnode.handlers:command_indicator_on
+    node.indicator_off: python://urisysnode.handlers:command_indicator_off
+    node.packs: python://urisysnode.handlers:query_packs
+    node.install_pack: python://urisysnode.handlers:command_install_pack
+    node.register_forward: python://urisysnode.handlers:command_register_forward
+    node.workers: python://urisysnode.handlers:query_workers
+    node.spawn_worker: python://urisysnode.handlers:command_spawn_worker
+    node.restart_worker: python://urisysnode.handlers:command_restart_worker
+    node.stop_worker: python://urisysnode.handlers:command_stop_worker
+    app.chat.messages: python://urisysnode.app_handlers:query_chat_messages
+    app.chat.channels: python://urisysnode.app_handlers:query_chat_channels
+    app.chat.append: python://urisysnode.app_handlers:command_chat_append

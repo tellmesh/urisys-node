@@ -38,7 +38,7 @@ PACK_MODULES: dict[str, str] = {
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
 BUNDLED_PACKS = frozenset({"node"})
-CORE_RUNTIME_PACKS = ("urirouter", "uricore")
+CORE_RUNTIME_PACKS = ("uricontrol",)
 PACK_PYPI: dict[str, str] = {
     "shell": "urishell>=0.1.0",
     "screen": "uriscreen>=0.1.0",
@@ -63,8 +63,7 @@ PACK_PYPI: dict[str, str] = {
 
 # GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
 PACK_GITHUB_VERSION: dict[str, str] = {
-    "urirouter": "0.1.0",
-    "uricore": "0.1.8",
+    "uricontrol": "0.1.14",
     "shell": "0.1.0",
     "screen": "0.1.0",
     "kvm": "0.1.1",
@@ -86,8 +85,7 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "env": "0.1.0",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
-    "urirouter": "urirouter",
-    "uricore": "uricore",
+    "uricontrol": "uricontrol",
     "shell": "urishell",
     "screen": "uriscreen",
     "kvm": "urikvm",
@@ -180,10 +178,12 @@ def resolve_pack_spec(pack: str) -> str | None:
     if source == "github":
         return github or pypi
     if source == "pypi":
-        return pypi
+        return pypi or github
+    if pack in CORE_RUNTIME_PACKS and github:
+        return github
     if pack in GITHUB_PREFERRED_PACKS and github:
         return github
-    return pypi
+    return pypi or github
 
 
 def pack_module(pack: str) -> str:
@@ -198,8 +198,11 @@ def pack_for_scheme(scheme: str) -> str | None:
     return SCHEME_TO_PACK.get(scheme)
 
 
-def _pip_install(specs: list[str]) -> dict[str, Any]:
-    cmd = [sys.executable, "-m", "pip", "install", "-U", *specs]
+def _pip_install(specs: list[str], *, no_deps: bool = False) -> dict[str, Any]:
+    cmd = [sys.executable, "-m", "pip", "install", "-U"]
+    if no_deps:
+        cmd.append("--no-deps")
+    cmd.extend(specs)
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     return {
         "ok": proc.returncode == 0,
@@ -240,7 +243,7 @@ def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> li
 
 
 def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None = None) -> dict[str, Any]:
-    """Install pack + urirouter/uricore from GitHub Releases when import would fail."""
+    """Install pack + uricontrol from GitHub Releases when import would fail."""
     resolved = pack_install_specs(pack, specs)
     if not resolved:
         if pack in BUNDLED_PACKS:
@@ -252,6 +255,39 @@ def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None
     return out
 
 
+def ensure_boot_pack(pack: str, *, install: bool = True) -> dict[str, Any]:
+    """Install screen/shell only — uricontrol is already a urisys-node dependency."""
+    if pack in BUNDLED_PACKS:
+        return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys-node"}
+    if not install or not auto_install_enabled():
+        return {"ok": False, "pack": pack, "error": "auto install disabled (URISYS_NODE_AUTO_INSTALL=0)"}
+
+    github = github_wheel_url(pack)
+    pypi = PACK_PYPI.get(pack)
+    attempts: list[dict[str, Any]] = []
+
+    if github:
+        out = _pip_install([github], no_deps=True)
+        attempts.append({"spec": github, "no_deps": True, **out})
+        if out.get("ok"):
+            out["pack"] = pack
+            out["specs"] = [github]
+            out["attempts"] = attempts
+            out["source"] = "github"
+            return out
+
+    if pypi:
+        out = _pip_install([pypi])
+        attempts.append({"spec": pypi, **out})
+        out["pack"] = pack
+        out["specs"] = [pypi]
+        out["attempts"] = attempts
+        out["source"] = "pypi"
+        return out
+
+    return {"ok": False, "pack": pack, "error": f"no install mapping for pack {pack!r}", "attempts": attempts}
+
+
 def ensure_real_deps(pack: str, *, install: bool = True) -> dict[str, Any]:
     specs = REAL_PIP.get(pack, [])
     out = ensure_pip_specs(specs, install=install)
@@ -261,7 +297,7 @@ def ensure_real_deps(pack: str, *, install: bool = True) -> dict[str, Any]:
 
 
 def github_wheel_urls(*packs: str) -> list[str]:
-    """Pip install specs (urirouter + uricore + wheels) for shell:// bootstrap flows."""
+    """Pip install specs (uricontrol + wheels) for shell:// bootstrap flows."""
     specs: list[str] = []
     for core in CORE_RUNTIME_PACKS:
         spec = resolve_pack_spec(core)

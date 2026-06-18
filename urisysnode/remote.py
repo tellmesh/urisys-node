@@ -218,6 +218,22 @@ def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None
     )
 
 
+def _restart_scheduled(out: dict[str, Any]) -> dict[str, Any]:
+    """Treat listener kill mid-request as success (HTTP connection drops when fuser runs)."""
+    if out.get("ok"):
+        return {**out, "scheduled": True}
+    err = str(out.get("error") or "")
+    lowered = err.lower()
+    if any(token in lowered for token in ("closed connection", "connection reset", "broken pipe")):
+        return {
+            "ok": True,
+            "scheduled": True,
+            "note": "connection closed while killing listener (expected)",
+            "hint": "urisys remote wait  # or: urisys-node remote wait",
+        }
+    return out
+
+
 def build_wheel(project_dir: str | Path, *, out_dir: str | Path = "/tmp/urisys-deploy") -> Path:
     import tomllib
 
@@ -362,8 +378,15 @@ def main(argv: list[str] | None = None) -> int:
     ip.add_argument("pack")
     ip.add_argument("--spec", action="append", default=[])
     ip.add_argument("--force", action="store_true", default=True)
+    ip.add_argument("--route-map", default=None)
+    ip.add_argument("--nodes-registry", default=None)
+    ip.add_argument("--endpoint", default=None)
 
-    sub.add_parser("restart", help="Schedule delayed urisys node restart on remote")
+    rs = sub.add_parser("restart", help="Schedule delayed urisys node restart on remote")
+    rs.add_argument("--endpoint", default=None)
+    rs.add_argument("--route-map", default=None)
+    rs.add_argument("--nodes-registry", default=None)
+    rs.add_argument("--port", type=int, default=8790)
 
     sw = sub.add_parser("spawn-worker", help="Spawn a pack as an out-of-process worker")
     sw.add_argument("pack", nargs="?", default=None)
@@ -422,12 +445,27 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(out, indent=2, ensure_ascii=False))
             return 0 if out.get("ok", True) else 1
         if args.cmd == "install-pack":
-            out = install_pack(args.pack, specs=args.spec or None, force=args.force, route_map=args.route_map)
+            out = install_pack(
+                args.pack,
+                specs=args.spec or None,
+                force=args.force,
+                route_map=args.route_map,
+                nodes_registry=args.nodes_registry,
+                endpoint=args.endpoint,
+            )
             print(json.dumps(out, indent=2, ensure_ascii=False))
             return 0 if out.get("result", out).get("ok", out.get("ok")) else 1
         if args.cmd == "restart":
-            print(json.dumps(schedule_restart(), indent=2, ensure_ascii=False))
-            return 0
+            out = _restart_scheduled(
+                schedule_restart(
+                    route_map=args.route_map,
+                    nodes_registry=args.nodes_registry,
+                    endpoint=args.endpoint,
+                    port=args.port,
+                )
+            )
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0 if out.get("ok") else 1
         if args.cmd == "spawn-worker":
             out = spawn_worker(
                 args.pack,
