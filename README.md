@@ -18,3 +18,21 @@ urisys-node slave: screen/kvm/him URI server components.
 Bundled: `urisysnode` only. Core deps: `uriscreen`, `urishell`. Other packs via lazy install.
 
 Licensed under Apache-2.0.
+
+## Ekosystem TellMesh
+
+Orchestrator: **[urisys](https://github.com/tellmesh/urisys)** · Mapa: **[MESH.md](https://github.com/tellmesh/urisys/blob/main/docs/MESH.md)** · Model: **[ECOSYSTEM.md](https://github.com/tellmesh/urisys/blob/main/../docs/ECOSYSTEM.md)**
+
+| Pole | Wartość |
+|------|---------|
+| **Warstwa** | Slave / edge node |
+| **Moduł** | `urisysnode` |
+| **Orchestrator** | [urisys](https://github.com/tellmesh/urisys) |
+| **Runtime** | `uri_control.edge` via `uricore` |
+| **Port** | 8790 |
+| **Rola** | screen/shell + lazy hot-load packów (kvm, him, …) |
+
+Runtime edge: **`uri_control.edge`** w pakiecie **`uricore`** (legacy `urisysedge` usunięty 2026-06).
+Router intencji: **`urirouter`** (`uri_router`) — resolve + HTTP/MQTT delegate.
+
+<!-- end-ecosystem -->
