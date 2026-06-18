@@ -38,8 +38,8 @@ PACK_MODULES: dict[str, str] = {
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
 BUNDLED_PACKS = frozenset({"node"})
+CORE_RUNTIME_PACKS = ("urirouter", "uricore")
 PACK_PYPI: dict[str, str] = {
-    "urisysedge": "urisysedge>=0.1.0",
     "shell": "urishell>=0.1.0",
     "screen": "uriscreen>=0.1.0",
     "kvm": "urikvm>=0.1.0",
@@ -63,7 +63,8 @@ PACK_PYPI: dict[str, str] = {
 
 # GitHub Releases wheel (PyPI alternative) — tellmesh/<repo>/releases/download/vX/Y.whl
 PACK_GITHUB_VERSION: dict[str, str] = {
-    "urisysedge": "0.1.1",
+    "urirouter": "0.1.0",
+    "uricore": "0.1.8",
     "shell": "0.1.0",
     "screen": "0.1.0",
     "kvm": "0.1.1",
@@ -85,7 +86,8 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "env": "0.1.0",
 }
 PACK_GITHUB_REPO: dict[str, str] = {
-    "urisysedge": "urisysedge",
+    "urirouter": "urirouter",
+    "uricore": "uricore",
     "shell": "urishell",
     "screen": "uriscreen",
     "kvm": "urikvm",
@@ -226,10 +228,11 @@ def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> li
     if override_specs:
         return [str(s).strip() for s in override_specs if str(s).strip()]
     specs: list[str] = []
-    if pack != "urisysedge":
-        edge = resolve_pack_spec("urisysedge")
-        if edge:
-            specs.append(edge)
+    for core in CORE_RUNTIME_PACKS:
+        if pack != core:
+            core_spec = resolve_pack_spec(core)
+            if core_spec:
+                specs.append(core_spec)
     spec = resolve_pack_spec(pack)
     if spec:
         specs.append(spec)
@@ -237,7 +240,7 @@ def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> li
 
 
 def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None = None) -> dict[str, Any]:
-    """Install pack + urisysedge from PyPI or GitHub Releases when import would fail."""
+    """Install pack + urirouter/uricore from GitHub Releases when import would fail."""
     resolved = pack_install_specs(pack, specs)
     if not resolved:
         if pack in BUNDLED_PACKS:
@@ -258,11 +261,12 @@ def ensure_real_deps(pack: str, *, install: bool = True) -> dict[str, Any]:
 
 
 def github_wheel_urls(*packs: str) -> list[str]:
-    """Pip install specs (urisysedge + wheels) for shell:// bootstrap flows."""
+    """Pip install specs (urirouter + uricore + wheels) for shell:// bootstrap flows."""
     specs: list[str] = []
-    edge = resolve_pack_spec("urisysedge")
-    if edge:
-        specs.append(edge)
+    for core in CORE_RUNTIME_PACKS:
+        spec = resolve_pack_spec(core)
+        if spec:
+            specs.append(spec)
     for pack in packs:
         spec = resolve_pack_spec(pack)
         if spec and spec not in specs:

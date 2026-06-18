@@ -14,7 +14,7 @@ from pathlib import Path
 PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
 sys.path.insert(0, str(PKG))
 
-from urisysedge.runtime import Runtime  # noqa: E402
+from uri_control.edge.runtime import Runtime  # noqa: E402
 import urisysnode.forward as forward  # noqa: E402
 from urisysnode.serve import register_forward_pack  # noqa: E402
 

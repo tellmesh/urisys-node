@@ -1,5 +1,5 @@
-"""Shim — canonical edge runtime lives in packages/python/urisysedge."""
+"""Shim — canonical edge runtime lives in uri_control.edge (uricore)."""
 
-from urisysedge.runtime import JsonlEventStore, Route, Runtime, load_json
+from uri_control.edge.runtime import JsonlEventStore, Route, Runtime, load_json
 
 __all__ = ["JsonlEventStore", "Route", "Runtime", "load_json"]

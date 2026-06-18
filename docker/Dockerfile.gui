@@ -20,8 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
+COPY urirouter /build/urirouter
 COPY uricore /build/uricore
-COPY urisysedge /build/urisysedge
+COPY uricore /build/uricore
 COPY urioperators /build/urioperators
 COPY urisys-node /build/urisys-node
 COPY urikvm /build/urikvm
@@ -33,7 +34,8 @@ COPY urisys/src /build/urisys/src
 RUN printf '# urisys\n' > /build/urisys/README.md \
     && python3 -m pip install --break-system-packages -e /build/uricore \
     && python3 -m pip install --break-system-packages \
-       -e /build/urisysedge \
+       -e /build/urirouter \
+    -e /build/uricore \
        -e /build/urioperators \
        -e /build/urisys-node \
        -e /build/urikvm \

@@ -16,7 +16,7 @@ import pytest
 PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
 sys.path.insert(0, str(PKG))
 
-from urisysedge.runtime import Runtime  # noqa: E402
+from uri_control.edge.runtime import Runtime  # noqa: E402
 import urisysnode.routes as node_routes  # noqa: E402
 from urisysnode.serve import load_pack_into_runtime  # noqa: E402
 

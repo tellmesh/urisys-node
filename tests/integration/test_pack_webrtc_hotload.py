@@ -9,12 +9,12 @@ from unittest.mock import patch
 PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
 TELLMESH = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PKG))
-for _rel in ("uriwebrtc", "uristt", "urisysedge"):
+for _rel in ("uriwebrtc", "uristt", "uricore"):
     _p = TELLMESH / _rel
     if _p.is_dir():
         sys.path.insert(0, str(_p))
 
-from urisysedge.runtime import Runtime  # noqa: E402
+from uri_control.edge.runtime import Runtime  # noqa: E402
 import urisysnode.routes as node_routes  # noqa: E402
 from urisysnode.serve import load_pack_into_runtime  # noqa: E402
 

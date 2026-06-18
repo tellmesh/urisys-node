@@ -10,7 +10,7 @@ defaults:
 do:
   # Published on PyPI (2026-06-16): urisysedge, urikvm
   - shell://pip:
-      args: ["install", "-U", "urisysedge", "urikvm"]
+      args: ["install", "-U", "uricore", "urikvm"]
   - shell://pip:
       args: ["install", "-U", "urisys-node[real]"]
   # Uncomment when on PyPI:

@@ -17,7 +17,7 @@ import sys
 from http.server import ThreadingHTTPServer
 from typing import Any
 
-from urisysedge.runtime import Runtime, make_handler
+from uri_control.edge.runtime import Runtime, make_handler
 
 from .identity import default_events_path
 

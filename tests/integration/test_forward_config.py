@@ -5,7 +5,7 @@ import os
 from unittest import mock
 
 import urisysnode.forward_config as fc
-from urisysedge.runtime import Runtime
+from uri_control.edge.runtime import Runtime
 from urisysnode.serve import build_runtime
 
 

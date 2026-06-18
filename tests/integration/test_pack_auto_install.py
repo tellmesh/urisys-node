@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pytest
 
-from urisysedge.runtime import Runtime  # noqa: E402
+from uri_control.edge.runtime import Runtime  # noqa: E402
 import urisysnode.routes as node_routes  # noqa: E402
 from urisysnode.serve import call_uri, load_pack_into_runtime  # noqa: E402
 

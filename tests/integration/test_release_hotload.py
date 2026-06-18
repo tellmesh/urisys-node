@@ -16,7 +16,7 @@ import pytest
 PKG = Path(__file__).resolve().parents[1] / "packages" / "python"
 sys.path.insert(0, str(PKG))
 
-from urisysedge.runtime import Runtime  # noqa: E402
+from uri_control.edge.runtime import Runtime  # noqa: E402
 import urisysnode.artifact_resolver as artifact_resolver  # noqa: E402
 import urisysnode.identity as identity  # noqa: E402
 import urisysnode.release_verify as release_verify  # noqa: E402

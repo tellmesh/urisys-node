@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from unittest.mock import patch
 
-from urisysedge.runtime import Runtime
+from uri_control.edge.runtime import Runtime
 import urishell
 
 

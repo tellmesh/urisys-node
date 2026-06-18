@@ -12,7 +12,7 @@ do:
       args:
         - install
         - -U
-        - urisysedge>=0.1.0
+        - uricore>=0.1.8
         - https://github.com/tellmesh/urikvm/releases/download/v0.1.1/urikvm-0.1.1-py3-none-any.whl
   - shell://pip:
       args:
