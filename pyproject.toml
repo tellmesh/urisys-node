@@ -36,6 +36,9 @@ dev = ["pytest>=8.0",
 
 [tool.uv.sources]
 uricontrol = { path = "../uricontrol", editable = true }
+uriguard = { path = "../uriguard", editable = true }
+uriresolver = { path = "../uriresolver", editable = true }
+uritransport = { path = "../uritransport", editable = true }
 urishell = { path = "../urishell", editable = true }
 uriscreen = { path = "../uriscreen", editable = true }
 urioperators = { path = "../urioperators", editable = true }

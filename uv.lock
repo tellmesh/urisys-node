@@ -3464,11 +3464,11 @@ wheels = [
 
 [[package]]
 name = "uricontrol"
-version = "0.1.12"
+version = "0.1.14"
 source = { editable = "../uricontrol" }
 dependencies = [
     { name = "pyyaml" },
-    { name = "urirouter" },
+    { name = "uriguard" },
 ]
 
 [package.metadata]
@@ -3479,10 +3479,18 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
-    { name = "urirouter", specifier = ">=0.1.0" },
-    { name = "urirouter", extras = ["mqtt"], marker = "extra == 'mqtt'", specifier = ">=0.1.0" },
+    { name = "uriguard", editable = "../uriguard" },
+    { name = "uriresolver", marker = "extra == 'mesh'", editable = "../uriresolver" },
+    { name = "uriresolver", marker = "extra == 'mqtt'", editable = "../uriresolver" },
+    { name = "uritransport", marker = "extra == 'mesh'", editable = "../uritransport" },
+    { name = "uritransport", extras = ["mqtt"], marker = "extra == 'mqtt'", editable = "../uritransport" },
 ]
-provides-extras = ["mqtt", "dev"]
+provides-extras = ["mesh", "mqtt", "dev"]
+
+[[package]]
+name = "uriguard"
+version = "0.1.0"
+source = { editable = "../uriguard" }
 
 [[package]]
 name = "urihim"
@@ -3534,6 +3542,7 @@ requires-dist = [
     { name = "uricontrol", editable = "../uricontrol" },
     { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "urihim", marker = "extra == 'dev'", editable = "../urihim" },
+    { name = "urikvmedge", marker = "extra == 'dev'", editable = "../urikvmedge" },
     { name = "urillm", marker = "extra == 'dev'", editable = "../urillm" },
     { name = "uriocr", marker = "extra == 'dev'", editable = "../uriocr" },
 ]
@@ -3597,23 +3606,6 @@ version = "0.1.0"
 source = { editable = "../urioperators" }
 
 [[package]]
-name = "urirouter"
-version = "1.0.4"
-source = { editable = "../urirouter" }
-dependencies = [
-    { name = "pyyaml" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "paho-mqtt", marker = "extra == 'mqtt'", specifier = ">=1.6" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
-]
-provides-extras = ["mqtt", "dev"]
-
-[[package]]
 name = "uriscreen"
 version = "0.1.0"
 source = { editable = "../uriscreen" }
@@ -3665,7 +3657,6 @@ dependencies = [
     { name = "pygments" },
     { name = "pyyaml" },
     { name = "uricontrol" },
-    { name = "urirouter" },
     { name = "uriscreen" },
     { name = "urishell" },
 ]
@@ -3724,7 +3715,6 @@ requires-dist = [
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "urirouter", editable = "../urirouter" },
     { name = "uriscreen", editable = "../uriscreen" },
     { name = "urishell", editable = "../urishell" },
     { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
