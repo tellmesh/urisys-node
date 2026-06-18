@@ -13,13 +13,25 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import sys
 from http.server import ThreadingHTTPServer
+from pathlib import Path
 from typing import Any
 
-from uri_control.edge.runtime import Runtime, make_handler
+from uri_control.edge.runtime import Runtime, load_json, make_handler
 
 from .identity import default_events_path
+
+
+def _load_node_profile() -> dict[str, Any]:
+    """Load the node profile (URISYS_NODE_CONFIG) so a worker runtime gets the same
+    driver/policy config as the main node — without it kvm/screen/him fall back to mock."""
+    config_file = os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
+    try:
+        return load_json(config_file) if Path(config_file).exists() else {}
+    except Exception:
+        return {}
 
 
 def build_worker_runtime(
@@ -38,7 +50,7 @@ def build_worker_runtime(
     from urisysnode.env import load_urisys_env
 
     load_urisys_env()
-    rt = Runtime(events_path=default_events_path())
+    rt = Runtime(events_path=default_events_path(), config=_load_node_profile())
     rt._loaded_packs = set()  # type: ignore[attr-defined]
 
     if module:
