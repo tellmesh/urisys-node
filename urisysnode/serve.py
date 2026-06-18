@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import errno
+import fnmatch
 import importlib
 import json
 import os
@@ -242,8 +243,37 @@ def ensure_pack_for_uri(runtime: Runtime, uri: str) -> dict[str, Any] | None:
     return load_pack_into_runtime(runtime, pack, install=not pack_importable(pack))
 
 
+def apply_host_trust(runtime: Runtime, uri: str, context: dict[str, Any]) -> dict[str, Any]:
+    """Auto-approve trusted operations based on the node profile's approval policy.
+
+    The runtime's gate (``Route.approval == "required"`` + ``side_effects``) blocks any
+    command unless the caller supplies ``context["approved"]``. On a trusted desktop slave
+    that is supposed to "grant all rights to the host", we let the *profile* decide instead
+    of the caller: when ``policy.require_approval_for`` is present in node-profile.json, the
+    node auto-approves every operation that does NOT match one of those glob patterns
+    (``[]`` = full trust). A profile WITHOUT that key keeps the safe default — the caller
+    must still pass ``approved`` — so this never silently loosens an unconfigured node.
+    """
+    policy = (getattr(runtime, "config", None) or {}).get("policy") or {}
+    if "require_approval_for" not in policy:
+        return context
+    ctx = dict(context or {})
+    if ctx.get("approved"):
+        return ctx
+    try:
+        route, _ = runtime.resolve(uri)
+        operation = route.operation
+    except Exception:
+        return ctx  # unresolved (route_not_found etc.) — leave it to runtime.call
+    gated = policy.get("require_approval_for") or []
+    if not any(fnmatch.fnmatch(operation, pattern) for pattern in gated):
+        ctx["approved"] = True
+    return ctx
+
+
 def call_uri(runtime: Runtime, uri: str, payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:
     """Runtime.call with lazy pack install and real-backend deps on first use."""
+    context = apply_host_trust(runtime, uri, context)
     result = runtime.call(uri, payload, context)
     if (
         not result.get("ok")

@@ -1,0 +1,24 @@
+{
+  "profile_id": "urisys-node-full-trust",
+  "node_id": "${URISYS_NODE_ID:-host}",
+  "_comment": "Full-trust desktop slave: the host grants all rights to the controller. screen/shell/him/kvm run for real (URISYS_ALLOW_REAL=1) and execute WITHOUT per-call approval because require_approval_for is empty. Enforced by urisysnode.serve.apply_host_trust. Narrow trust by listing operation globs (e.g. \"him.*\", \"browser.form.submit\") that should still demand explicit approval. Pair with URISYS_NODE_REQUIRE_SIGNATURE=1 + trusted keys when exposed beyond localhost/LAN.",
+  "screen": {
+    "default_backend": "auto",
+    "output_dir": "~/.local/share/urisys/screens"
+  },
+  "kvm": { "driver": "mss" },
+  "him": { "driver": "ydotool" },
+  "browser": { "driver": "system-open" },
+  "kv": { "driver": "sqlite", "path": "~/.local/share/urisys/store.db" },
+  "policy": {
+    "require_pairing": false,
+    "require_approval_for": [],
+    "visible_indicator": true
+  },
+  "log": {
+    "streams": {
+      "events": "~/.local/share/urisys/events.jsonl",
+      "node": "/tmp/urisys-node.log"
+    }
+  }
+}
