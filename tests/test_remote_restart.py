@@ -11,6 +11,17 @@ def test_restart_scheduled_treats_connection_drop_as_ok():
     assert out["scheduled"] is True
 
 
+def test_schedule_restart_maps_connection_exception(monkeypatch):
+    def boom(*_args, **_kwargs):
+        raise ConnectionError("Remote end closed connection without response")
+
+    monkeypatch.setattr("urisysnode.remote.call_uri", boom)
+    raw = schedule_restart(endpoint="http://127.0.0.1:8790")
+    out = _restart_scheduled(raw)
+    assert out["ok"] is True
+    assert out["scheduled"] is True
+
+
 def test_restart_scheduled_passes_through_real_errors():
     out = _restart_scheduled({"ok": False, "error": "approval required"})
     assert out["ok"] is False

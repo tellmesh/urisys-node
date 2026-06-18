@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.26] - 2026-06-18
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_remote_restart.py
+
+### Other
+- Update data/events.jsonl
+- Update urisysnode/remote.py
+
 ## [0.1.25] - 2026-06-18
 
 ### Docs

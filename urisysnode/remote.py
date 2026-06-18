@@ -209,13 +209,16 @@ def schedule_restart(*, route_map: str | None = None, nodes_registry: str | None
         "--config \"$URISYS_NODE_CONFIG\" >> /tmp/urisys-node.log 2>&1 < /dev/null & "
         ") >/dev/null 2>&1 &"
     )
-    return call_uri(
-        "shell://bash",
-        payload={"args": ["-lc", cmd]},
-        route_map=route_map,
-        nodes_registry=nodes_registry,
-        endpoint=endpoint,
-    )
+    try:
+        return call_uri(
+            "shell://bash",
+            payload={"args": ["-lc", cmd]},
+            route_map=route_map,
+            nodes_registry=nodes_registry,
+            endpoint=endpoint,
+        )
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
 
 
 def _restart_scheduled(out: dict[str, Any]) -> dict[str, Any]:
