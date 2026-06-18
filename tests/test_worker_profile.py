@@ -43,5 +43,9 @@ def test_worker_runtime_loads_profile(tmp_path, monkeypatch):
 
 
 def test_missing_profile_is_empty_not_error(tmp_path, monkeypatch):
+    # isolate discovery: nonexistent env + empty HOME + cwd without config/ → nothing found
     monkeypatch.setenv("URISYS_NODE_CONFIG", str(tmp_path / "does-not-exist.json"))
+    monkeypatch.delenv("URISYS_NODE_DATA", raising=False)
+    monkeypatch.setenv("HOME", str(tmp_path / "empty-home"))
+    monkeypatch.chdir(tmp_path)
     assert worker._load_node_profile() == {}

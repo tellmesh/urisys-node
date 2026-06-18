@@ -28,11 +28,17 @@ _ROUTER_CALLBACK_CTX_KEYS = ("approved", "allow_real", "dry_run", "environment",
 
 
 def _load_node_profile() -> dict[str, Any]:
-    """Load the node profile (URISYS_NODE_CONFIG) so a worker runtime gets the same
-    driver/policy config as the main node — without it kvm/screen/him fall back to mock."""
-    config_file = os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
+    """Load the node profile so a worker runtime gets the same driver/policy config as the
+    main node — without it kvm/screen/him fall back to mock. Uses the same XDG/etc discovery
+    as the router (URISYS_NODE_CONFIG, ~/.config/urisys, /etc/urisys)."""
     try:
-        return load_json(config_file) if Path(config_file).exists() else {}
+        from urisysnode.serve import resolve_node_config
+
+        config_file = resolve_node_config()
+    except Exception:
+        config_file = os.environ.get("URISYS_NODE_CONFIG", "config/node-profile.json")
+    try:
+        return load_json(config_file) if config_file and Path(config_file).exists() else {}
     except Exception:
         return {}
 
