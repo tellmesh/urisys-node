@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "urisys-node"
-version = "0.1.36"
+version = "0.1.37"
 description = "urisys-node slave: screen/kvm/him URI server components"
 readme = "README.md"
 requires-python = ">=3.10"
