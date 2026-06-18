@@ -164,6 +164,27 @@ def health_payload(version: str | None = None, runtime: Any | None = None) -> di
     if payload.get("him_driver") is None:
         payload["him_driver"] = os.environ.get("URISYS_HIM_DRIVER") or _detect_him_driver()
 
+    # Profile / mock visibility — so a controller can see at a glance whether the node runs
+    # on a real profile or fell back to default/mock drivers (the "node on mock" trap).
+    if runtime is not None:
+        config_path = getattr(runtime, "_config_path", None) or None
+        cfg = config if isinstance(config, dict) else {}
+        if cfg.get("_source"):
+            source = cfg["_source"]
+        elif config_path and cfg:
+            source = f"profile:{config_path}"
+        else:
+            source = "mock (no profile)"
+        payload["profile_path"] = config_path
+        payload["config_source"] = source
+        kvm_cfg = cfg.get("kvm") or {}
+        payload["kvm_driver"] = kvm_cfg.get("driver", "mock") if isinstance(kvm_cfg, dict) else "mock"
+        screen_cfg = cfg.get("screen") or {}
+        payload["screen_backend"] = (
+            screen_cfg.get("default_backend", "mock") if isinstance(screen_cfg, dict) else "mock"
+        )
+        payload["mock_mode"] = payload["kvm_driver"] in ("mock", None) and not config_path
+
     if runtime is not None:
         instance_id = getattr(runtime, "_instance_id", None)
         if instance_id:
