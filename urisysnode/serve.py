@@ -144,7 +144,19 @@ def build_runtime(config_path: str | None = None) -> Runtime:
 
     load_urisys_env()
     config_file = resolve_node_config(config_path)
-    config = load_json(config_file) if config_file else {}
+    config = {}
+    if config_file:
+        try:
+            config = load_json(config_file) or {}
+            if not isinstance(config, dict):
+                raise ValueError("profile is not a JSON object")
+        except Exception as exc:
+            # An empty/corrupt profile must NOT crash node startup — warn and fall back.
+            warnings.warn(
+                f"urisys-node: profile {config_file} is invalid JSON ({exc}) — ignoring it",
+                stacklevel=2,
+            )
+            config, config_file = {}, ""
     if config_file:
         # Propagate the resolved profile to pack-worker subprocesses (supervisor reads it).
         os.environ["URISYS_NODE_CONFIG"] = config_file
