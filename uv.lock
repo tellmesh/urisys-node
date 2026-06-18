@@ -3519,7 +3519,7 @@ provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urikvm"
-version = "0.1.1"
+version = "0.1.2"
 source = { editable = "../urikvm" }
 dependencies = [
     { name = "uricontrol" },
@@ -3529,6 +3529,7 @@ dependencies = [
 real = [
     { name = "mss" },
     { name = "pillow" },
+    { name = "uriscreen" },
 ]
 
 [package.metadata]
@@ -3545,6 +3546,7 @@ requires-dist = [
     { name = "urikvmedge", marker = "extra == 'dev'", editable = "../urikvmedge" },
     { name = "urillm", marker = "extra == 'dev'", editable = "../urillm" },
     { name = "uriocr", marker = "extra == 'dev'", editable = "../uriocr" },
+    { name = "uriscreen", marker = "extra == 'real'", specifier = ">=0.1.0" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3651,7 +3653,7 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "urisys-node"
-version = "0.1.30"
+version = "0.1.31"
 source = { editable = "." }
 dependencies = [
     { name = "pygments" },

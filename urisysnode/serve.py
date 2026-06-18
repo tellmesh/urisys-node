@@ -577,7 +577,13 @@ def make_handler(runtime: Runtime):
                 return self._json(404, {"ok": False, "error": "not found"})
             length = int(self.headers.get("Content-Length") or "0")
             body = self.rfile.read(length).decode("utf-8")
-            req = json.loads(body or "{}")
+            try:
+                req = json.loads(body or "{}")
+            except json.JSONDecodeError as exc:
+                return self._json(
+                    400,
+                    {"ok": False, "error": f"invalid JSON body: {exc}", "hint": "escape backslashes in shell payloads or use lenovo_remote_session.py"},
+                )
             result = call_uri(
                 runtime,
                 req.get("uri", ""),

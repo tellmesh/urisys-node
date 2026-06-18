@@ -41,7 +41,9 @@
     ]
   },
   "browser": {
-    "driver": "system-open"
+    "driver": "system-open",
+    "user_data_dir": "/home/tom/.config/urisys/chrome-cdp",
+    "cdp_endpoint": "http://127.0.0.1:9222"
   },
   "kv": {
     "driver": "sqlite",
