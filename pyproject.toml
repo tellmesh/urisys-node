@@ -14,7 +14,6 @@ dependencies = [
   "uricontrol>=0.1.8",
   "urishell>=0.1.0",
   "uriscreen>=0.1.0",
-  "urirouter",
   "pygments>=2.20.0",
 ]
 
@@ -46,7 +45,6 @@ uriocr = { path = "../uriocr", editable = true }
 urillm = { path = "../urillm", editable = true }
 uristt = { path = "../uristt", editable = true }
 uriwebrtc = { path = "../uriwebrtc", editable = true }
-urirouter = { path = "../urirouter", editable = true }
 
 [dependency-groups]
 dev = ["pytest>=8.0", "goal>=2.1.0", "costs>=0.1.20", "pfix>=0.1.60", "uristt", "uriwebrtc"]
