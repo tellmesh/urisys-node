@@ -11,9 +11,11 @@ requires-python = ">=3.10"
 license = "Apache-2.0"
 dependencies = [
   "pyyaml>=6.0",
-  "uricore>=0.1.8",
+  "uricontrol>=0.1.8",
   "urishell>=0.1.0",
   "uriscreen>=0.1.0",
+  "urirouter",
+  "pygments>=2.20.0",
 ]
 
 [project.optional-dependencies]
@@ -34,6 +36,7 @@ dev = ["pytest>=8.0",
 ]
 
 [tool.uv.sources]
+uricontrol = { path = "../uricontrol", editable = true }
 urishell = { path = "../urishell", editable = true }
 uriscreen = { path = "../uriscreen", editable = true }
 urioperators = { path = "../urioperators", editable = true }
@@ -43,6 +46,13 @@ uriocr = { path = "../uriocr", editable = true }
 urillm = { path = "../urillm", editable = true }
 uristt = { path = "../uristt", editable = true }
 uriwebrtc = { path = "../uriwebrtc", editable = true }
+urirouter = { path = "../urirouter", editable = true }
+
+[dependency-groups]
+dev = ["pytest>=8.0", "goal>=2.1.0", "costs>=0.1.20", "pfix>=0.1.60", "uristt", "uriwebrtc"]
+
+[tool.uv]
+default-groups = ["dev"]
 
 [tool.setuptools.packages.find]
 where = ["."]

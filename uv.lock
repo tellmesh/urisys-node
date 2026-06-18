@@ -848,7 +848,7 @@ wheels = [
 
 [[package]]
 name = "goal"
-version = "2.1.251"
+version = "2.1.253"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -858,9 +858,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/de/eb/c93edd21b18f84dff15e5b81d3b42c3397da5cba0a8902ab0943f8d1489a/goal-2.1.251.tar.gz", hash = "sha256:1916614721d8a8ec238bafdd2f983616e63b6ed991c86f1ce305fb83cdd984a0", size = 283952, upload-time = "2026-06-17T10:49:31.491Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/24/2d/7b62c85405267f792760ab50d3d071a414a66761edce33e88bde4694e080/goal-2.1.253.tar.gz", hash = "sha256:8278f899391836923d6e5332a15fb18510ff1dfd09ac30a92b43c5e12a12adcc", size = 288721, upload-time = "2026-06-18T09:40:49.89Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/57/df/b8ab0e4fdfaab7df7ba8f699b49aa32556665f15388c61f10427c2a4cad4/goal-2.1.251-py3-none-any.whl", hash = "sha256:cb8e523a8f8c9b699cf074a2d7e7601852080b54daf1bcb138cf73c13f210bed", size = 276990, upload-time = "2026-06-17T10:49:29.472Z" },
+    { url = "https://files.pythonhosted.org/packages/c2/e8/5d67af327751bc0a23c99d646ef1998228a1138c60b490230e5162522180/goal-2.1.253-py3-none-any.whl", hash = "sha256:2eb7dac021bd3d7f417381a1d417e195e0b153506459db8b30f1b316bc1e6e1b", size = 281020, upload-time = "2026-06-18T09:40:47.703Z" },
 ]
 
 [[package]]
@@ -1210,7 +1210,7 @@ wheels = [
 
 [[package]]
 name = "litellm"
-version = "1.89.1"
+version = "1.89.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -1226,9 +1226,9 @@ dependencies = [
     { name = "tiktoken" },
     { name = "tokenizers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/1b/de398e6cef46d4cbc4395c895330f30eab05439bf6d0c5c53b0203661eeb/litellm-1.89.1.tar.gz", hash = "sha256:eb9292f90afe46dcce4bfef6bbeaa54494945813763e1c0917f4e9a1c584c1a4", size = 14071586, upload-time = "2026-06-16T03:12:52.997Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c1/29/865d38325f9c424daf0bcc7ab61908cf51a87862b3a0dfebd059b60dac97/litellm-1.89.2.tar.gz", hash = "sha256:b2534d69568eed026310f4e006407db2d46494eb629bd1e71eb9603ec146540d", size = 14079449, upload-time = "2026-06-18T02:26:03.64Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/24/81f03088876a13b628fdbaf746ee746e1dff127d63f339ef72f1a3801c91/litellm-1.89.1-py3-none-any.whl", hash = "sha256:a52a67625d89cb1787ef48c4b3c1ab9c2574ea304f56900bc631844297a13bd4", size = 15484855, upload-time = "2026-06-16T03:12:49.457Z" },
+    { url = "https://files.pythonhosted.org/packages/32/c8/51c93e8d017e7af02600171b5b6cc3805b07507acb2b94de7235ce764015/litellm-1.89.2-py3-none-any.whl", hash = "sha256:07e8e43b1a70fe919021376742897d18ffe7577ccfbb84632c949670f9abdc03", size = 15492797, upload-time = "2026-06-18T02:25:59.863Z" },
 ]
 
 [[package]]
@@ -1728,7 +1728,7 @@ wheels = [
 
 [[package]]
 name = "openai"
-version = "2.42.0"
+version = "2.43.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -1740,9 +1740,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6b/e2/c8c7eb634fd2438c2f3fc5c385dd34d0f9d04d6623bcfdf3adcefcf6d7ca/openai-2.42.0.tar.gz", hash = "sha256:5263ee2868608571499df225471770238c8f3ff1ac296874bfc096bbabb6da3a", size = 785143, upload-time = "2026-06-16T21:52:35.798Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f3/fa/88d0c58a0c58df7e6758e66b99c5d028d5e0bb49f8812d7203940cd9dbf1/openai-2.43.0.tar.gz", hash = "sha256:e74d238200a26868977002190fb6631613480a93dfe0c9c982e77021ed60a017", size = 785369, upload-time = "2026-06-17T17:06:56.06Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/61/8ea2cbff2531ee0210706aff60174cd10a5a14c1ca17a8c29b1eb34d0b1b/openai-2.42.0-py3-none-any.whl", hash = "sha256:8cd46b1877cfd4aea7ade9474940cc4f78dbd41cce3893de11c12510d0b70caf", size = 1354709, upload-time = "2026-06-16T21:52:33.712Z" },
+    { url = "https://files.pythonhosted.org/packages/a3/d2/ba767f4bbb30776c03d40906a2d3afad716a165ffa1771fc23b8992f7920/openai-2.43.0-py3-none-any.whl", hash = "sha256:65a670b54fadf2268c9e1330133373c963eb779ee969e5cbad419ec2c21dce97", size = 1355077, upload-time = "2026-06-17T17:06:53.614Z" },
 ]
 
 [[package]]
@@ -3463,11 +3463,33 @@ wheels = [
 ]
 
 [[package]]
+name = "uricontrol"
+version = "0.1.12"
+source = { editable = "../uricontrol" }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "urirouter" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
+    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
+    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
+    { name = "urirouter", specifier = ">=0.1.0" },
+    { name = "urirouter", extras = ["mqtt"], marker = "extra == 'mqtt'", specifier = ">=0.1.0" },
+]
+provides-extras = ["mqtt", "dev"]
+
+[[package]]
 name = "urihim"
 version = "0.1.5"
 source = { editable = "../urihim" }
 dependencies = [
-    { name = "urisysedge" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3482,7 +3504,8 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "urisysedge", editable = "../urisysedge" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3491,7 +3514,7 @@ name = "urikvm"
 version = "0.1.1"
 source = { editable = "../urikvm" }
 dependencies = [
-    { name = "urisysedge" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3508,18 +3531,22 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "urisysedge", editable = "../urisysedge" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
+    { name = "urihim", marker = "extra == 'dev'", editable = "../urihim" },
+    { name = "urillm", marker = "extra == 'dev'", editable = "../urillm" },
+    { name = "uriocr", marker = "extra == 'dev'", editable = "../uriocr" },
 ]
 provides-extras = ["real", "dev"]
 
 [[package]]
 name = "urillm"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "../urillm" }
 dependencies = [
     { name = "pyyaml" },
+    { name = "uricontrol" },
     { name = "urioperators" },
-    { name = "urisysedge" },
 ]
 
 [package.optional-dependencies]
@@ -3533,9 +3560,9 @@ requires-dist = [
     { name = "litellm", marker = "extra == 'vision'", specifier = ">=1.40" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "uricore", marker = "extra == 'dev'", editable = "../uricore" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
     { name = "urioperators", editable = "../urioperators" },
-    { name = "urisysedge", editable = "../urisysedge" },
 ]
 provides-extras = ["vision", "dev"]
 
@@ -3544,7 +3571,7 @@ name = "uriocr"
 version = "0.1.0"
 source = { editable = "../uriocr" }
 dependencies = [
-    { name = "urisysedge" },
+    { name = "uricontrol" },
 ]
 
 [package.optional-dependencies]
@@ -3559,7 +3586,8 @@ requires-dist = [
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "urisysedge", editable = "../urisysedge" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["real", "dev"]
 
@@ -3569,12 +3597,77 @@ version = "0.1.0"
 source = { editable = "../urioperators" }
 
 [[package]]
-name = "urisys-node"
-version = "0.1.17"
-source = { editable = "." }
+name = "urirouter"
+version = "1.0.4"
+source = { editable = "../urirouter" }
 dependencies = [
     { name = "pyyaml" },
-    { name = "urisysedge" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "paho-mqtt", marker = "extra == 'mqtt'", specifier = ">=1.6" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6.0" },
+]
+provides-extras = ["mqtt", "dev"]
+
+[[package]]
+name = "uriscreen"
+version = "0.1.0"
+source = { editable = "../uriscreen" }
+dependencies = [
+    { name = "uricontrol" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mss", marker = "extra == 'real'", specifier = ">=9.0" },
+    { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "uricontrol", specifier = ">=0.1.8" },
+]
+provides-extras = ["real", "dev"]
+
+[[package]]
+name = "urishell"
+version = "0.1.0"
+source = { editable = "../urishell" }
+dependencies = [
+    { name = "uricontrol" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "uricontrol", specifier = ">=0.1.8" }]
+
+[[package]]
+name = "uristt"
+version = "0.1.0"
+source = { editable = "../uristt" }
+dependencies = [
+    { name = "uricontrol" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
+]
+provides-extras = ["dev"]
+
+[[package]]
+name = "urisys-node"
+version = "0.1.18"
+source = { editable = "." }
+dependencies = [
+    { name = "pygments" },
+    { name = "pyyaml" },
+    { name = "uricontrol" },
+    { name = "urirouter" },
+    { name = "uriscreen" },
+    { name = "urishell" },
 ]
 
 [package.optional-dependencies]
@@ -3583,6 +3676,8 @@ dev = [
     { name = "goal" },
     { name = "pfix" },
     { name = "pytest" },
+    { name = "uristt" },
+    { name = "uriwebrtc" },
 ]
 discovery = [
     { name = "zeroconf" },
@@ -3601,6 +3696,16 @@ real = [
     { name = "pytesseract" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "costs" },
+    { name = "goal" },
+    { name = "pfix" },
+    { name = "pytest" },
+    { name = "uristt" },
+    { name = "uriwebrtc" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
@@ -3610,33 +3715,47 @@ requires-dist = [
     { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pillow", marker = "extra == 'real'", specifier = ">=10.0" },
     { name = "pyautogui", marker = "extra == 'real'", specifier = ">=0.9.54" },
+    { name = "pygments", specifier = ">=2.20.0" },
     { name = "pytesseract", marker = "extra == 'real'", specifier = ">=0.3.10" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "pyyaml", specifier = ">=6.0" },
+    { name = "uricontrol", editable = "../uricontrol" },
     { name = "urihim", extras = ["real"], marker = "extra == 'kvm'", editable = "../urihim" },
     { name = "urikvm", extras = ["real"], marker = "extra == 'kvm'", editable = "../urikvm" },
     { name = "urillm", extras = ["vision"], marker = "extra == 'kvm'", editable = "../urillm" },
     { name = "uriocr", extras = ["real"], marker = "extra == 'kvm'", editable = "../uriocr" },
-    { name = "urisysedge", editable = "../urisysedge" },
+    { name = "urirouter", editable = "../urirouter" },
+    { name = "uriscreen", editable = "../uriscreen" },
+    { name = "urishell", editable = "../urishell" },
+    { name = "uristt", marker = "extra == 'dev'", editable = "../uristt" },
+    { name = "uriwebrtc", marker = "extra == 'dev'", editable = "../uriwebrtc" },
     { name = "zeroconf", marker = "extra == 'discovery'", specifier = ">=0.131.0" },
 ]
 provides-extras = ["real", "kvm", "discovery", "dev"]
 
+[package.metadata.requires-dev]
+dev = [
+    { name = "costs", specifier = ">=0.1.20" },
+    { name = "goal", specifier = ">=2.1.0" },
+    { name = "pfix", specifier = ">=0.1.60" },
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "uristt", editable = "../uristt" },
+    { name = "uriwebrtc", editable = "../uriwebrtc" },
+]
+
 [[package]]
-name = "urisysedge"
-version = "0.1.1"
-source = { editable = "../urisysedge" }
+name = "uriwebrtc"
+version = "0.1.0"
+source = { editable = "../uriwebrtc" }
 dependencies = [
-    { name = "pyyaml" },
+    { name = "uricontrol" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
-    { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
-    { name = "pfix", marker = "extra == 'dev'", specifier = ">=0.1.60" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "uricontrol", editable = "../uricontrol" },
+    { name = "uricontrol", marker = "extra == 'dev'", editable = "../uricontrol" },
 ]
 provides-extras = ["dev"]
 
