@@ -10,7 +10,16 @@ set -euo pipefail
 #
 # Re-runnable: only writes node.env / node-profile.json if absent (won't clobber edits);
 # always refreshes the systemd unit and restarts the service.
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT="${URISYS_NODE_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+if [ ! -f "$ROOT/config/node-profile.full-trust.json" ]; then
+  for cand in \
+    "$HOME/github/tellmesh/urisys-node" \
+    "$HOME/urisys-node" \
+    "$(python3 -c 'import urisysnode, pathlib; print(pathlib.Path(urisysnode.__file__).resolve().parent.parent)' 2>/dev/null)"; do
+    [ -n "$cand" ] && [ -f "$cand/config/node-profile.full-trust.json" ] && ROOT="$cand" && break
+  done
+fi
 
 NODE_ID="$(hostname -s 2>/dev/null || hostname)"
 VENV_BIN=""
@@ -63,16 +72,59 @@ fi
 
 # 2) full-trust profile (require_approval_for: [] → no per-call approval). Substitute node_id.
 if [ ! -f "$CFG/node-profile.json" ]; then
-  sed "s/\${URISYS_NODE_ID:-host}/$NODE_ID/" \
-    "$ROOT/config/node-profile.full-trust.json" > "$CFG/node-profile.json"
+  if [ -f "$ROOT/config/node-profile.full-trust.json" ]; then
+    sed "s/\${URISYS_NODE_ID:-host}/$NODE_ID/" \
+      "$ROOT/config/node-profile.full-trust.json" > "$CFG/node-profile.json"
+  else
+    cat > "$CFG/node-profile.json" <<EOF
+{
+  "profile_id": "urisys-node-full-trust",
+  "node_id": "$NODE_ID",
+  "screen": {"default_backend": "auto", "output_dir": "~/.local/share/urisys/screens"},
+  "kvm": {"driver": "mss"},
+  "him": {"driver": "ydotool"},
+  "browser": {"driver": "system-open", "user_data_dir": "~/.config/urisys/chrome-cdp", "cdp_endpoint": "http://127.0.0.1:9222"},
+  "kv": {"driver": "sqlite", "path": "~/.local/share/urisys/store.db"},
+  "policy": {"require_pairing": false, "require_approval_for": [], "visible_indicator": true},
+  "log": {"streams": {"events": "~/.local/share/urisys/events.jsonl", "node": "/tmp/urisys-node.log"}}
+}
+EOF
+  fi
   echo "→ wrote $CFG/node-profile.json (full-trust)"
 else
   echo "→ kept existing $CFG/node-profile.json"
 fi
 
 # 3) systemd user unit, ExecStart pinned to the resolved venv + host/port.
-sed -e "s#%h/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790#$VENV_BIN serve --host $BIND --port $PORT#" \
-    "$ROOT/systemd/urisys-node-user.service" > "$UNIT_DIR/urisys-node.service"
+UNIT_SRC="$ROOT/systemd/urisys-node-user.service"
+if [ ! -f "$UNIT_SRC" ]; then
+  UNIT_SRC="$SCRIPT_DIR/../systemd/urisys-node-user.service"
+fi
+if [ ! -f "$UNIT_SRC" ]; then
+  cat > "$UNIT_DIR/urisys-node.service" <<EOF
+[Unit]
+Description=urisys-node URI slave
+After=network-online.target graphical-session.target
+Wants=network-online.target
+[Service]
+Type=simple
+Environment=URISYS_NODE_PACKS=node
+Environment=URISYS_NODE_WORKER_PACKS=screen,shell,kvm,him,ocr,llm,img2nl,browser,office,mail,kv,vql
+Environment=URISYS_NODE_AUTO_INSTALL=1
+Environment=URISYS_ALLOW_REAL=1
+Environment=URISYS_PACK_SOURCE=auto
+Environment=URISYS_NODE_CONFIG=%h/.config/urisys/node-profile.json
+EnvironmentFile=-%h/.config/urisys/node.env
+ExecStart=$VENV_BIN serve --host $BIND --port $PORT
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=default.target
+EOF
+else
+  sed -e "s#%h/venv/bin/urisys-node serve --host 0.0.0.0 --port 8790#$VENV_BIN serve --host $BIND --port $PORT#" \
+    "$UNIT_SRC" > "$UNIT_DIR/urisys-node.service"
+fi
 echo "→ installed $UNIT_DIR/urisys-node.service"
 
 # 4) enable + survive logout, then (re)start.
