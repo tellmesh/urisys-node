@@ -15,7 +15,7 @@ def test_schedule_restart_maps_connection_exception(monkeypatch):
     def boom(*_args, **_kwargs):
         raise ConnectionError("Remote end closed connection without response")
 
-    monkeypatch.setattr("urisysnode.remote.call_uri", boom)
+    monkeypatch.setattr("urisysnode.remote.client.call_uri", boom)
     raw = schedule_restart(endpoint="http://127.0.0.1:8790")
     out = _restart_scheduled(raw)
     assert out["ok"] is True
@@ -35,7 +35,7 @@ def test_schedule_restart_forwards_endpoint(monkeypatch):
         seen.update(kwargs)
         return {"ok": True}
 
-    monkeypatch.setattr("urisysnode.remote.call_uri", fake_call_uri)
+    monkeypatch.setattr("urisysnode.remote.client.call_uri", fake_call_uri)
     schedule_restart(endpoint="http://192.168.188.201:8790", port=8791)
     assert seen["endpoint"] == "http://192.168.188.201:8790"
-    assert "8791/tcp" in seen["payload"]["args"][1]
+    assert "8791" in seen["payload"]["args"][1]

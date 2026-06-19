@@ -1,35 +1,37 @@
-"""Remote node operations via URI (no shell scripts).
+"""Remote operations package."""
 
-This module is a compatibility shim that re-exports all functions from the
-urisysnode.remote subpackage. For new code, import directly from the
-submodules (e.g., from urisysnode.remote.client import call_uri).
-"""
-
-from __future__ import annotations
-
-# Re-export everything from the remote subpackage for backward compatibility
-from urisysnode.remote import (
-    build_wheel,
+from urisysnode.remote.client import (
     call_uri,
+    health,
+    pip_install,
+    wait_health,
+)
+from urisysnode.remote.config import (
     default_endpoint,
     default_nodes_registry,
     default_route_map,
     default_wheel_host,
-    health,
-    install_pack,
-    main,
-    pip_install,
-    restart_worker,
-    schedule_restart,
+)
+from urisysnode.remote.deploy import (
+    build_wheel,
     serve_wheels,
-    spawn_worker,
-    stop_worker,
+    wheel_url,
+)
+from urisysnode.remote.main import main
+from urisysnode.remote.pack import install_pack
+from urisysnode.remote.restart import (
+    _restart_scheduled,
+    schedule_restart,
+)
+from urisysnode.remote.upgrade import (
     upgrade_lenovo_kv,
     upgrade_lenovo_node,
-    wait_health,
-    wheel_url,
+)
+from urisysnode.remote.worker import (
+    restart_worker,
+    spawn_worker,
+    stop_worker,
     workers,
-    _restart_scheduled,
 )
 
 __all__ = [
