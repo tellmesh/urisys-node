@@ -197,6 +197,68 @@ class PackSupervisor:
             self._persist()
             return {"ok": True, "name": name, **worker.to_record(), "wired": wired}
 
+    def call_ephemeral(
+        self,
+        uri: str,
+        payload: dict[str, Any] | None,
+        context: dict[str, Any] | None,
+        *,
+        pack: str | None = None,
+        module: str | None = None,
+        install: bool = False,
+        specs: list[str] | None = None,
+        env: dict[str, str] | None = None,
+    ) -> dict[str, Any]:
+        """Run a single URI call in a throwaway worker process, then tear it down.
+
+        Unlike :meth:`spawn`, this never registers the worker, never wires forward
+        routes and is never respawned by the monitor: the process exists only for
+        the duration of one call. A crash therefore cannot affect the router or any
+        other in-flight task — the strongest isolation boundary available."""
+        name = module or pack or ""
+        if not name:
+            return {"ok": False, "error": "ephemeral call requires pack or module"}
+
+        port = _free_port(self.host)
+        cmd = [self.python_exe, "-m", "urisysnode.worker", "--host", self.host, "--port", str(port)]
+        if module:
+            cmd += ["--module", module]
+        else:
+            cmd += ["--pack", str(pack)]
+        if install:
+            cmd.append("--install")
+        for spec in specs or []:
+            cmd += ["--spec", spec]
+
+        proc_env = dict(os.environ)
+        proc_env.update(self._default_worker_env())
+        if env:
+            proc_env.update(env)
+        proc = subprocess.Popen(cmd, env=proc_env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        worker = Worker(
+            name=name, endpoint=f"http://{self.host}:{port}", port=port,
+            pack=pack, module=module, proc=proc, install=install, specs=specs, env=env,
+        )
+        try:
+            if not self._wait_health(worker):
+                return {"ok": False, "name": name, "type": "ephemeral_unhealthy",
+                        "error": "ephemeral worker did not become healthy", "endpoint": worker.endpoint}
+            from .forward import _FORWARD_CONTEXT_KEYS
+            from .client import remote_call
+
+            ctx = context or {}
+            fwd = {k: ctx[k] for k in _FORWARD_CONTEXT_KEYS if k in ctx}
+            try:
+                out = remote_call(worker.endpoint, uri, payload or {}, fwd)
+            except Exception as exc:
+                return {"ok": False, "uri": uri, "type": "ephemeral_failed",
+                        "error": f"{type(exc).__name__}: {exc}", "endpoint": worker.endpoint}
+            if isinstance(out, dict):
+                out.setdefault("isolation", "ephemeral")
+            return out
+        finally:
+            self._terminate(worker)
+
     def restart(self, name: str) -> dict[str, Any]:
         with self._lock:
             worker = self.workers.get(name)

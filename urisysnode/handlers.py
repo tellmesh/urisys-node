@@ -79,14 +79,9 @@ def _get_supervisor(context: dict[str, Any]) -> Any:
     runtime = context.get("runtime")
     if runtime is None:
         return None
-    sup = getattr(runtime, "_supervisor", None)
-    if sup is None:
-        from urisysnode.supervisor import PackSupervisor
+    from urisysnode.serve import get_supervisor
 
-        sup = PackSupervisor(runtime)
-        runtime._supervisor = sup  # type: ignore[attr-defined]
-        sup.start_monitor()
-    return sup
+    return get_supervisor(runtime)
 
 
 def command_spawn_worker(payload: dict[str, Any], context: dict[str, Any]) -> dict[str, Any]:

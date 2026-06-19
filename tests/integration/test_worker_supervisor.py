@@ -89,3 +89,57 @@ def test_supervisor_stop_terminates_worker(tmp_path):
         assert "_fakepack" not in sup.workers
     finally:
         sup.shutdown()
+
+
+def test_call_ephemeral_runs_and_tears_down(tmp_path):
+    """A per-call worker executes the call, returns its result, then is gone:
+    no persistent worker is registered and no forward route leaks onto the router."""
+    rt = _router(tmp_path)
+    sup = PackSupervisor(rt, state_path=tmp_path / "workers.json")
+    try:
+        out = sup.call_ephemeral(
+            "fake://node/query/ping", {"msg": "yo"}, {"approved": True},
+            module="_fakepack", env=_worker_env(),
+        )
+        assert out["ok"] is True, out
+        assert out["result"]["pong"] is True
+        assert out["result"]["echo"] == "yo"
+        assert out.get("isolation") == "ephemeral"
+        # nothing persisted: no registered worker, no forward route on the router
+        assert "_fakepack" not in sup.workers
+        assert not any(r.pattern.startswith("fake://") for r in rt.routes)
+    finally:
+        sup.shutdown()
+
+
+def test_persistent_worker_crash_is_isolated_and_respawned(tmp_path):
+    """Killing a pack worker must NOT take the router down; the monitor respawns
+    it and forwarding resumes — the core guarantee behind default separation."""
+    import os
+    import signal
+    import time
+
+    rt = _router(tmp_path)
+    sup = PackSupervisor(rt, state_path=tmp_path / "workers.json")
+    try:
+        assert sup.spawn(module="_fakepack", env=_worker_env())["ok"]
+        first_pid = sup.workers["_fakepack"].proc.pid
+
+        # Hard-kill the worker process (simulated crash).
+        os.kill(first_pid, signal.SIGKILL)
+        deadline = time.time() + 10
+        while time.time() < deadline and sup.workers["_fakepack"].alive():
+            time.sleep(0.1)
+        assert not sup.workers["_fakepack"].alive()
+
+        # Router itself is untouched: its route table still resolves.
+        assert any(r.pattern.startswith("fake://") for r in rt.routes)
+
+        # Monitor reaps the dead worker and brings the capability back.
+        sup._reap()
+        assert sup.workers["_fakepack"].proc.pid != first_pid
+        out = rt.call("fake://node/query/ping", {"msg": "back"}, {"approved": True})
+        assert out["ok"] is True
+        assert out["result"]["result"]["echo"] == "back"
+    finally:
+        sup.shutdown()
