@@ -1,0 +1,83 @@
+# code2llm/evolution | 201 func | 26f | 2026-06-19
+# generated in 0.00s
+
+NEXT[10] (ranked by impact):
+  [1] !! SPLIT           urisysnode/serve.py
+      WHY: 529L, 1 classes, max CC=22
+      EFFORT: ~4h  IMPACT: 11638
+
+  [2] !  SPLIT-FUNC      main  CC=22  fan=48
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 1056
+
+  [3] !! SPLIT-FUNC      main  CC=26  fan=36
+      WHY: CC=26 exceeds 15
+      EFFORT: ~1h  IMPACT: 936
+
+  [4] !! SPLIT-FUNC      load_pack_into_runtime  CC=30  fan=23
+      WHY: CC=30 exceeds 15
+      EFFORT: ~1h  IMPACT: 690
+
+  [5] !  SPLIT-FUNC      build_runtime  CC=18  fan=25
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 450
+
+  [6] !  SPLIT-FUNC      serve  CC=16  fan=26
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 416
+
+  [7] !  SPLIT-FUNC      call_uri  CC=22  fan=17
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 374
+
+  [8] !  SPLIT-FUNC      PackSupervisor.spawn  CC=15  fan=17
+      WHY: CC=15 exceeds 15
+      EFFORT: ~1h  IMPACT: 255
+
+  [9] !  SPLIT-FUNC      _pids_on_port  CC=16  fan=14
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 224
+
+  [10] !  SPLIT-FUNC      PackSupervisor.call_ephemeral  CC=16  fan=14
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 224
+
+
+RISKS[3]:
+  ⚠ Splitting planfile.yaml may break 0 import paths
+  ⚠ Splitting urisysnode/serve.py may break 12 import paths
+  ⚠ Splitting goal.yaml may break 0 import paths
+
+METRICS-TARGET:
+  CC̄:          4.9 → ≤3.4
+  max-CC:      30 → ≤15
+  god-modules: 4 → 0
+  high-CC(≥15): 12 → ≤6
+  hub-types:   0 → ≤0
+
+PATTERNS (language parser shared logic):
+  _extract_declarations() in base.py — unified extraction for:
+    - TypeScript: interfaces, types, classes, functions, arrow funcs
+    - PHP: namespaces, traits, classes, functions, includes
+    - Ruby: modules, classes, methods, requires
+    - C++: classes, structs, functions, #includes
+    - C#: classes, interfaces, methods, usings
+    - Java: classes, interfaces, methods, imports
+    - Go: packages, functions, structs
+    - Rust: modules, functions, traits, use statements
+
+  Shared regex patterns per language:
+    - import: language-specific import/require/using patterns
+    - class: class/struct/trait declarations with inheritance
+    - function: function/method signatures with visibility
+    - brace_tracking: for C-family languages ({ })
+    - end_keyword_tracking: for Ruby (module/class/def...end)
+
+  Benefits:
+    - Consistent extraction logic across all languages
+    - Reduced code duplication (~70% reduction in parser LOC)
+    - Easier maintenance: fix once, apply everywhere
+    - Standardized FunctionInfo/ClassInfo models
+
+HISTORY:
+  prev CC̄=5.1 → now CC̄=4.9

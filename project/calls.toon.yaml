@@ -1,0 +1,266 @@
+# code2llm call graph | /home/tom/github/tellmesh/urisys-node
+# generated in 0.07s
+# nodes: 170 | edges: 200 | modules: 23
+# CC̄=4.9
+
+HUBS[20]:
+  urisysnode.serve.make_handler
+    CC=2  in:3  out:88  total:91
+  urisysnode.serve.serve
+    CC=16  in:1  out:43  total:44
+  urisysnode.runtime.builder.build_runtime
+    CC=18  in:2  out:37  total:39
+  urisysnode.runtime.packs.load_pack_into_runtime
+    CC=30  in:4  out:31  total:35
+  urisysnode.serve.call_uri
+    CC=22  in:1  out:31  total:32
+  urisysnode.remote.upgrade_lenovo_node
+    CC=7  in:1  out:23  total:24
+  urisysnode.runtime.config.resolve_node_config
+    CC=7  in:2  out:20  total:22
+  urisysnode.supervisor.PackSupervisor.spawn
+    CC=15  in:0  out:21  total:21
+  urisysnode.artifact_resolver.run_release
+    CC=8  in:2  out:19  total:21
+  urisysnode.handlers.command_spawn_worker
+    CC=11  in:0  out:21  total:21
+  urisysnode.forward_config.load_forward_entries
+    CC=15  in:1  out:20  total:21
+  urisysnode.identity.core.load_identity
+    CC=4  in:6  out:15  total:21
+  urisysnode.remote.upgrade_lenovo_kv
+    CC=4  in:1  out:19  total:20
+  urisysnode.serve.hotload_release_pack
+    CC=14  in:2  out:17  total:19
+  urisysnode.display_bootstrap.bootstrap_wayland_capture
+    CC=7  in:1  out:17  total:18
+  urisysnode.port.manager._pids_on_port
+    CC=16  in:1  out:17  total:18
+  urisysnode.runtime.builder._register_pack
+    CC=14  in:1  out:16  total:17
+  urisysnode.forward_config._normalize_release_entry
+    CC=11  in:2  out:15  total:17
+  urisysnode.artifact_resolver.select_artifact
+    CC=15  in:3  out:14  total:17
+  urisysnode.serve._register_pack
+    CC=14  in:1  out:16  total:17
+
+MODULES:
+  urisysnode.app_data  [2 funcs]
+    __init__  CC=2  out:3
+    default_app_chat_path  CC=2  out:4
+  urisysnode.app_handlers  [4 funcs]
+    _store  CC=4  out:3
+    command_chat_append  CC=9  out:15
+    query_chat_channels  CC=2  out:5
+    query_chat_messages  CC=5  out:9
+  urisysnode.artifact_resolver  [19 funcs]
+    _auth_opener  CC=4  out:11
+    _contract_yaml_block  CC=6  out:6
+    contract_spec_from_release  CC=2  out:4
+    contract_url_from_release  CC=6  out:8
+    docker_pull  CC=4  out:4
+    docker_run_worker  CC=3  out:4
+    fetch_json  CC=1  out:6
+    fetch_release  CC=5  out:11
+    fetch_text  CC=1  out:5
+    is_url  CC=1  out:1
+  urisysnode.client  [2 funcs]
+    call_via_route_map  CC=6  out:14
+    remote_call  CC=3  out:8
+  urisysnode.display_bootstrap  [7 funcs]
+    _agent_up  CC=2  out:2
+    _agent_url  CC=1  out:2
+    _ensure_session_env  CC=5  out:7
+    _screencast_ready  CC=4  out:9
+    _start_agent  CC=4  out:9
+    _start_screencast  CC=5  out:7
+    bootstrap_wayland_capture  CC=7  out:17
+  urisysnode.forward  [1 funcs]
+    forward_call  CC=9  out:8
+  urisysnode.forward_config  [6 funcs]
+    _normalize_entry  CC=11  out:13
+    _normalize_release_entry  CC=11  out:15
+    load_forward_entries  CC=15  out:20
+    load_release_forward_entries  CC=11  out:12
+    wire_forward_packs  CC=2  out:2
+    wire_release_forward_packs  CC=3  out:4
+  urisysnode.handlers  [12 funcs]
+    _get_supervisor  CC=2  out:2
+    command_indicator_off  CC=1  out:2
+    command_indicator_on  CC=1  out:4
+    command_install_pack  CC=6  out:13
+    command_register_forward  CC=7  out:12
+    command_restart_worker  CC=6  out:7
+    command_spawn_worker  CC=11  out:21
+    command_stop_worker  CC=6  out:7
+    query_health  CC=1  out:2
+    query_identity  CC=2  out:8
+  urisysnode.identity.core  [7 funcs]
+    _data_dir  CC=1  out:2
+    _hostname  CC=1  out:1
+    _identity_path  CC=1  out:1
+    default_data_root  CC=3  out:5
+    default_events_path  CC=2  out:3
+    load_identity  CC=4  out:15
+    save_identity  CC=1  out:3
+  urisysnode.identity.health  [10 funcs]
+    _detect_him_driver  CC=3  out:4
+    _get_config_source  CC=6  out:2
+    _get_driver_info  CC=7  out:7
+    _get_him_driver  CC=6  out:5
+    _get_pairing_info  CC=1  out:6
+    _get_python_info  CC=1  out:0
+    _get_runtime_info  CC=7  out:11
+    _get_uricontrol_version  CC=2  out:1
+    _get_urisys_version  CC=2  out:1
+    health_payload  CC=4  out:12
+  urisysnode.identity.pairing  [6 funcs]
+    _pairing_path  CC=1  out:1
+    enroll  CC=3  out:4
+    load_pairing  CC=3  out:5
+    require_paired  CC=4  out:5
+    save_pairing  CC=1  out:3
+    set_remote_control  CC=2  out:2
+  urisysnode.pack_resolver  [17 funcs]
+    _pip_install  CC=4  out:4
+    auto_install_enabled  CC=1  out:1
+    ensure_boot_pack  CC=7  out:8
+    ensure_pack_pypi  CC=3  out:3
+    ensure_pip_specs  CC=4  out:2
+    ensure_real_deps  CC=1  out:2
+    github_owner  CC=1  out:2
+    github_wheel_url  CC=4  out:7
+    github_wheel_urls  CC=6  out:4
+    import_pack_module  CC=1  out:2
+  urisysnode.port.manager  [7 funcs]
+    _collect_takeover_targets  CC=12  out:15
+    _is_node_serve_process  CC=16  out:11
+    _kill_pid  CC=9  out:13
+    _pids_on_port  CC=16  out:17
+    _wait_port_free  CC=4  out:8
+    _worker_pids_from_state  CC=10  out:12
+    takeover_port  CC=6  out:12
+  urisysnode.port.utils  [6 funcs]
+    _fuser_kill_port  CC=4  out:3
+    _pid_alive  CC=2  out:1
+    _pidfile_path  CC=1  out:2
+    _pids_on_port_ss  CC=5  out:5
+    _pids_serve_cmdline  CC=7  out:8
+    _read_cmdline  CC=2  out:5
+  urisysnode.release_verify  [4 funcs]
+    _ed25519_verify  CC=3  out:5
+    canonical_digest  CC=3  out:5
+    signature_required  CC=3  out:2
+    verify_release  CC=14  out:15
+  urisysnode.remote  [19 funcs]
+    build_wheel  CC=3  out:11
+    call_uri  CC=4  out:4
+    default_endpoint  CC=1  out:2
+    default_nodes_registry  CC=1  out:4
+    default_route_map  CC=1  out:4
+    default_wheel_host  CC=1  out:2
+    health  CC=2  out:5
+    install_pack  CC=2  out:1
+    pip_install  CC=1  out:1
+    restart_worker  CC=1  out:1
+  urisysnode.router  [5 funcs]
+    _match_pattern  CC=1  out:4
+    load_route_map  CC=3  out:4
+    node_endpoint  CC=5  out:6
+    resolve_remote_route  CC=5  out:3
+    rewrite_uri_for_slave  CC=8  out:5
+  urisysnode.runtime.builder  [3 funcs]
+    _extend_pack_paths  CC=1  out:0
+    _register_pack  CC=14  out:16
+    build_runtime  CC=18  out:37
+  urisysnode.runtime.config  [1 funcs]
+    resolve_node_config  CC=7  out:20
+  urisysnode.runtime.packs  [6 funcs]
+    apply_host_trust  CC=10  out:8
+    ensure_isolated_pack  CC=9  out:14
+    ensure_pack_for_uri  CC=3  out:6
+    get_supervisor  CC=2  out:3
+    isolation_mode  CC=6  out:5
+    load_pack_into_runtime  CC=30  out:31
+  urisysnode.serve  [10 funcs]
+    _app_chat_get  CC=10  out:14
+    _app_chat_post  CC=9  out:15
+    _app_chat_store  CC=2  out:2
+    _register_pack  CC=14  out:16
+    _release_forward_spec  CC=11  out:8
+    call_uri  CC=22  out:31
+    hotload_release_pack  CC=14  out:17
+    make_handler  CC=2  out:88
+    register_forward_pack  CC=13  out:8
+    serve  CC=16  out:43
+  urisysnode.supervisor  [10 funcs]
+    _fetch_patterns  CC=3  out:3
+    _needs_install  CC=3  out:1
+    _wait_health  CC=5  out:5
+    _wire  CC=2  out:5
+    call_ephemeral  CC=16  out:16
+    spawn  CC=15  out:21
+    alive  CC=3  out:2
+    _free_port  CC=1  out:3
+    _http_get  CC=1  out:4
+    _schemes_of  CC=4  out:3
+  urisysnode.worker  [6 funcs]
+    _load_node_profile  CC=5  out:5
+    _local_schemes  CC=4  out:4
+    _wire_router_callback  CC=3  out:7
+    build_worker_runtime  CC=5  out:13
+    main  CC=4  out:13
+    serve_worker  CC=5  out:11
+
+EDGES:
+  urisysnode.release_verify.verify_release → urisysnode.release_verify.signature_required
+  urisysnode.release_verify.verify_release → urisysnode.release_verify.canonical_digest
+  urisysnode.release_verify.verify_release → urisysnode.release_verify._ed25519_verify
+  urisysnode.forward_config.load_forward_entries → urisysnode.forward_config._normalize_entry
+  urisysnode.forward_config.wire_forward_packs → urisysnode.serve.register_forward_pack
+  urisysnode.forward_config.load_release_forward_entries → urisysnode.forward_config._normalize_release_entry
+  urisysnode.forward_config.wire_release_forward_packs → urisysnode.serve.hotload_release_pack
+  urisysnode.client.call_via_route_map → urisysnode.router.load_route_map
+  urisysnode.client.call_via_route_map → urisysnode.router.resolve_remote_route
+  urisysnode.client.call_via_route_map → urisysnode.router.node_endpoint
+  urisysnode.client.call_via_route_map → urisysnode.router.rewrite_uri_for_slave
+  urisysnode.client.call_via_route_map → urisysnode.client.remote_call
+  urisysnode.forward.forward_call → urisysnode.client.remote_call
+  urisysnode.remote.health → urisysnode.remote.default_endpoint
+  urisysnode.remote.wait_health → urisysnode.remote.default_endpoint
+  urisysnode.remote.wait_health → urisysnode.remote.health
+  urisysnode.remote.call_uri → urisysnode.client.call_via_route_map
+  urisysnode.remote.call_uri → urisysnode.client.remote_call
+  urisysnode.remote.call_uri → urisysnode.remote.default_route_map
+  urisysnode.remote.call_uri → urisysnode.remote.default_nodes_registry
+  urisysnode.remote.pip_install → urisysnode.remote.call_uri
+  urisysnode.remote.install_pack → urisysnode.remote.call_uri
+  urisysnode.remote.spawn_worker → urisysnode.remote.call_uri
+  urisysnode.remote.restart_worker → urisysnode.remote.call_uri
+  urisysnode.remote.stop_worker → urisysnode.remote.call_uri
+  urisysnode.remote.workers → urisysnode.remote.call_uri
+  urisysnode.remote.schedule_restart → urisysnode.remote.call_uri
+  urisysnode.remote.wheel_url → urisysnode.remote.default_wheel_host
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.build_wheel
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.serve_wheels
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.default_wheel_host
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.default_endpoint
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.health
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.pip_install
+  urisysnode.remote.upgrade_lenovo_node → urisysnode.remote.schedule_restart
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.build_wheel
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.serve_wheels
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.default_wheel_host
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.health
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.pip_install
+  urisysnode.remote.upgrade_lenovo_kv → urisysnode.remote.schedule_restart
+  urisysnode.router.resolve_remote_route → urisysnode.router._match_pattern
+  urisysnode.display_bootstrap._agent_up → urisysnode.display_bootstrap._agent_url
+  urisysnode.display_bootstrap._screencast_ready → urisysnode.display_bootstrap._agent_url
+  urisysnode.display_bootstrap._start_agent → urisysnode.display_bootstrap._agent_up
+  urisysnode.display_bootstrap._start_screencast → urisysnode.display_bootstrap._screencast_ready
+  urisysnode.display_bootstrap._start_screencast → urisysnode.display_bootstrap._agent_url
+  urisysnode.display_bootstrap.bootstrap_wayland_capture → urisysnode.display_bootstrap._ensure_session_env
+  urisysnode.display_bootstrap.bootstrap_wayland_capture → urisysnode.display_bootstrap._agent_url
+  urisysnode.display_bootstrap.bootstrap_wayland_capture → urisysnode.display_bootstrap._agent_up

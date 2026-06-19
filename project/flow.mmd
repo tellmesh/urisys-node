@@ -1,0 +1,33 @@
+flowchart TD
+%% generated in 0.01s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph CLI
+        urisysnode__cli__main["main"]
+        urisysnode__client__discover_mdns["discover_mdns"]
+        urisysnode__client__remote_call["remote_call"]
+        urisysnode__client__call_via_route_map["call_via_route_map"]
+    end
+
+    subgraph Core
+        docker__entrypoint__start_xvfb["start_xvfb"]
+        docker__entrypoint__show_gui_target["show_gui_target"]
+        docker__entrypoint__verify_cli["verify_cli"]
+        urisysnode__routes__register["register"]
+        urisysnode__forward_config__load_forward_entries{{load_forward_entries CC=15}}
+        urisysnode__forward__forward_call["forward_call"]
+        urisysnode__remote__main["main"]
+        urisysnode__pack_resolver__github_owner["github_owner"]
+        urisysnode__pack_resolver__github_wheel_url["github_wheel_url"]
+        urisysnode__pack_resolver__resolve_pack_spec("resolve_pack_spec CC=10")
+        urisysnode__pack_resolver__pack_install_specs("pack_install_specs CC=8")
+        urisysnode__pack_resolver__ensure_pack_pypi["ensure_pack_pypi"]
+        urisysnode__pack_resolver__ensure_boot_pack["ensure_boot_pack"]
+        urisysnode__pack_resolver__github_wheel_urls["github_wheel_urls"]
+        urisysnode__artifact_resolver___GitHubHeaderAuth__https_request["https_request"]
+        ...["+48 more"]
+    end
+
+    class docker__entrypoint__start_xvfb,docker__entrypoint__show_gui_target,docker__entrypoint__verify_cli,urisysnode__cli__main,urisysnode__routes__register,urisysnode__client__discover_mdns,urisysnode__client__remote_call,urisysnode__client__call_via_route_map,urisysnode__forward__forward_call,urisysnode__remote__main entry

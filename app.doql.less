@@ -1,0 +1,121 @@
+// LESS format — define @variables here as needed
+
+app {
+  name: urisys-node;
+  version: 0.1.40;
+}
+
+dependencies {
+  runtime: "pyyaml>=6.0, uricontrol>=0.1.8, pygments>=2.20.0";
+  boot: "uriscreen>=0.1.0, urishell>=0.1.0";
+  real: "mss>=9.0, Pillow>=10.0, pyautogui>=0.9.54, pytesseract>=0.3.10, litellm>=1.40";
+  kvm: "urikvm[real]>=0.1.0, urihim[real]>=0.1.0, uriocr[real]>=0.1.0, urillm[vision]>=0.1.0";
+  discovery: zeroconf>=0.131.0;
+  dev: "pytest>=8.0, goal>=2.1.0, costs>=0.1.20, pfix>=0.1.60, uristt, uriwebrtc, uriscreen, urishell";
+}
+
+interface[type="cli"] {
+  framework: argparse;
+}
+interface[type="cli"] page[name="urisys-node"] {
+  entry: urisysnode.cli:main;
+}
+
+workflow[name="install"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pip install -e .;
+}
+
+workflow[name="test"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest -q;
+}
+
+workflow[name="test-all"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest -v;
+}
+
+workflow[name="test-integration"] {
+  trigger: manual;
+  step-1: run cmd=$(PYTHON) -m pytest tests/integration/ -v;
+}
+
+workflow[name="test-coverage"] {
+  trigger: manual;
+  step-1: run cmd=.venv/bin/pip install -q pytest-cov > /dev/null 2>&1 || true;
+  step-2: run cmd=$(PYTHON) -m pytest --cov=urisysnode --cov-report=term-missing -v;
+}
+
+workflow[name="test-watch"] {
+  trigger: manual;
+  step-1: run cmd=.venv/bin/pip install -q pytest-watch > /dev/null 2>&1 || true;
+  step-2: run cmd=$(PYTHON) -m ptw tests/ --pattern "test_*.py" --ignore "tests/integration/";
+}
+
+workflow[name="serve"] {
+  trigger: manual;
+  step-1: run cmd=URISYS_NODE_SKIP_PAIRING=1 urisys-node serve --host 0.0.0.0 --port $(PORT);
+}
+
+workflow[name="health"] {
+  trigger: manual;
+  step-1: run cmd=curl -fsS "http://127.0.0.1:$(PORT)/health" | $(PYTHON) -m json.tool | head -15;
+}
+
+workflow[name="app-chat-smoke"] {
+  trigger: manual;
+  step-1: run cmd=curl -fsS -X POST "http://127.0.0.1:$(PORT)/app/chat/messages" \;
+  step-2: run cmd=-H 'Content-Type: application/json' \;
+  step-3: run cmd=-d '{"channel_id":"smoke","role":"user","text":"ping"}' | $(PYTHON) -m json.tool;
+  step-4: run cmd=curl -fsS "http://127.0.0.1:$(PORT)/app/chat/messages?channel_id=smoke" | $(PYTHON) -m json.tool;
+}
+
+workflow[name="publish"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Publishing to PyPI...";
+  step-2: run cmd=command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build);
+  step-3: run cmd=rm -rf dist/ build/ *.egg-info/;
+  step-4: run cmd=.venv/bin/python -m build;
+  step-5: run cmd=.venv/bin/twine check dist/*;
+  step-6: run cmd=echo "🚀 Uploading to PyPI...";
+  step-7: run cmd=.venv/bin/twine upload dist/*;
+}
+
+workflow[name="publish-test"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Publishing to TestPyPI...";
+  step-2: run cmd=command -v .venv/bin/twine > /dev/null 2>&1 || (.venv/bin/pip install --upgrade twine build);
+  step-3: run cmd=rm -rf dist/ build/ *.egg-info/;
+  step-4: run cmd=.venv/bin/python -m build;
+  step-5: run cmd=.venv/bin/twine upload --repository testpypi dist/*;
+}
+
+workflow[name="version"] {
+  trigger: manual;
+  step-1: run cmd=echo "📦 Version information...";
+  step-2: run cmd=cat VERSION;
+  step-3: run cmd=.venv/bin/python -c "from importlib.metadata import version; print(f'Installed version: {version(\"sumd\")}')";
+}
+
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
+}
+
+env_vars {
+  keys: OPENROUTER_API_KEY, LLM_MODEL, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_MAX_RETRIES, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_CREATE_BACKUPS;
+}
+
+deploy {
+  target: docker;
+}
+
+environment[name="local"] {
+  runtime: docker-compose;
+  env_file: .env;
+  template_file: .env.example;
+  python_version: >=3.10;
+  vars: LLM_MODEL, OPENROUTER_API_KEY, PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
+  runtime_llm: OPENROUTER_API_KEY;
+  runtime_pfix: PFIX_AUTO_APPLY, PFIX_AUTO_INSTALL_DEPS, PFIX_AUTO_RESTART, PFIX_CREATE_BACKUPS, PFIX_DRY_RUN, PFIX_ENABLED, PFIX_GIT_COMMIT, PFIX_GIT_PREFIX, PFIX_MAX_RETRIES;
+}

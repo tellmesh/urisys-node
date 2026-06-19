@@ -1,0 +1,52 @@
+# urisys-node | 201 func | 26f | 7784L | python | 2026-06-19
+# generated in 0.00s
+
+HEALTH:
+  CC̄=4.9  critical=29 (limit:10)  dup=0  cycles=0
+
+ALERTS[20]:
+  !!! high_fan_out     main = 48 (limit:10)
+  !!! high_fan_out     main = 36 (limit:10)
+  !!! cc_exceeded      load_pack_into_runtime = 30 (limit:15)
+  !!! high_fan_out     make_handler = 30 (limit:10)
+  !!! cc_exceeded      main = 26 (limit:15)
+  !!! high_fan_out     serve = 26 (limit:10)
+  !!! high_fan_out     build_runtime = 25 (limit:10)
+  !!! high_fan_out     load_pack_into_runtime = 23 (limit:10)
+  !!! high_fan_out     upgrade_lenovo_node = 21 (limit:10)
+  !!  cc_exceeded      main = 22 (limit:15)
+
+MODULES[61] (top by size):
+  M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
+  M[urisysnode/serve.py] 529L C:1 F:12 CC↑22 D:6 (python)
+  M[goal.yaml] 525L C:0 F:0 CC↑0 D:0 (yaml)
+  M[urisysnode/remote.py] 516L C:0 F:21 CC↑26 D:0 (python)
+  M[urisysnode/supervisor.py] 420L C:2 F:22 CC↑16 D:0 (python)
+  M[urisysnode/pack_resolver.py] 323L C:0 F:17 CC↑10 D:5 (python)
+  M[urisysnode/artifact_resolver.py] 305L C:1 F:21 CC↑15 D:2 (python)
+  M[urisysnode/runtime/packs.py] 236L C:0 F:7 CC↑30 D:4 (python)
+  M[urisysnode/port/manager.py] 211L C:0 F:7 CC↑16 D:1 (python)
+  M[urisysnode/cli.py] 196L C:0 F:1 CC↑22 D:0 (python)
+  M[urisysnode/identity/health.py] 195L C:0 F:10 CC↑7 D:2 (python)
+  M[urisysnode/worker.py] 186L C:0 F:6 CC↑5 D:0 (python)
+  M[urisysnode/runtime/builder.py] 169L C:0 F:4 CC↑18 D:1 (python)
+  M[urisysnode/handlers.py] 154L C:0 F:12 CC↑11 D:0 (python)
+  M[urisysnode/forward_config.py] 144L C:0 F:6 CC↑15 D:1 (python)
+  LANGS: python:30/yaml:15/json:7/shell:5/other:1/gui:1/yml:1/toml:1
+
+HOTSPOTS[10]:
+  ★ main fan=48  // Orchestrates 48 calls
+  ★ main fan=36  // Orchestrates 36 calls
+  ★ make_handler fan=30  // Orchestrates 30 calls
+  ★ serve fan=26  // Orchestrates 26 calls
+  ★ build_runtime fan=25  // Build and configure a Runtime instance for urisys-node.
+
+REFACTOR[15]:
+  [1] H/L Split main (CC=26)
+  [2] H/L Split load_pack_into_runtime (CC=30)
+  [3] H/H Split god module urisysnode/remote.py (516L, 0 classes)
+  [4] H/H Split god module urisysnode/serve.py (529L, 1 classes)
+  [5] H/H Split god module goal.yaml (525L, 0 classes)
+
+EVOLUTION:
+  2026-06-19 CC̄=4.9 crit=29 7784L // Automated analysis

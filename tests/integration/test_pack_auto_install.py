@@ -51,10 +51,8 @@ def test_query_packs(tmp_path):
 
 
 def test_call_uri_lazy_pack_route_not_found(tmp_path):
-    from urisysnode.runtime.packs import ensure_pack_for_uri
-
     rt = _node_only_runtime(tmp_path)
-    with patch("urisysnode.runtime.packs.ensure_pack_for_uri") as ensure:
+    with patch("urisysnode.serve.ensure_pack_for_uri") as ensure:
         ensure.return_value = {"ok": True, "loaded": True, "pack": "kvm"}
         with patch.object(rt, "call", side_effect=[
             {"ok": False, "type": "route_not_found", "uri": "kvm://local/monitor/1/query/screenshot"},
@@ -86,7 +84,7 @@ def test_ensure_pack_for_uri_skips_pip_when_importable(tmp_path):
     rt = _node_only_runtime(tmp_path)
     with patch("urisysnode.pack_resolver._pip_install") as pip:
         with patch("urisysnode.runtime.builder._register_pack", return_value=True):
-            with patch("urisysnode.pack_resolver.pack_importable", return_value=True):
+            with patch("urisysnode.runtime.packs.pack_importable", return_value=True):
                 ensure_pack_for_uri(rt, "him://local/mouse/query/status")
     pip.assert_not_called()
     assert "him" in rt._loaded_packs
@@ -105,8 +103,9 @@ def test_force_reload_reregister_pack(tmp_path):
     )
     rt._loaded_packs.add("him")
     rt._pack_route_patterns = {"him": {pattern}}
-    with patch("urisysnode.runtime.builder._register_pack", return_value=True) as reg:
-        result = load_pack_into_runtime(rt, "him", force=True)
+    with patch("urisysnode.runtime.packs.pack_importable", return_value=True):
+        with patch("urisysnode.runtime.builder._register_pack", return_value=True) as reg:
+            result = load_pack_into_runtime(rt, "him", force=True)
     assert result["ok"] is True
     assert reg.called
     assert "him" in rt._loaded_packs

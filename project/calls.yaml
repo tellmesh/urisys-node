@@ -1,0 +1,2045 @@
+project: /home/tom/github/tellmesh/urisys-node
+generated_from: code2llm call graph analysis
+stats:
+  total_nodes: 170
+  total_edges: 200
+  modules_count: 23
+nodes:
+  urisysnode.forward_config._normalize_entry:
+    name: _normalize_entry
+    module: urisysnode.forward_config
+    line: 15
+    cyclomatic_complexity: 11
+    calls_out: 13
+    calls_in: 3
+  urisysnode.artifact_resolver.contract_url_from_release:
+    name: contract_url_from_release
+    module: urisysnode.artifact_resolver
+    line: 100
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  urisysnode.serve.register_forward_pack:
+    name: register_forward_pack
+    module: urisysnode.serve
+    line: 168
+    cyclomatic_complexity: 13
+    calls_out: 8
+    calls_in: 4
+  urisysnode.pack_resolver._pip_install:
+    name: _pip_install
+    module: urisysnode.pack_resolver
+    line: 201
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 3
+  urisysnode.handlers.command_restart_worker:
+    name: command_restart_worker
+    module: urisysnode.handlers
+    line: 117
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 0
+  urisysnode.remote.upgrade_lenovo_node:
+    name: upgrade_lenovo_node
+    module: urisysnode.remote
+    line: 276
+    cyclomatic_complexity: 7
+    calls_out: 23
+    calls_in: 1
+  urisysnode.release_verify.canonical_digest:
+    name: canonical_digest
+    module: urisysnode.release_verify
+    line: 42
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  urisysnode.pack_resolver.ensure_boot_pack:
+    name: ensure_boot_pack
+    module: urisysnode.pack_resolver
+    line: 258
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 0
+  urisysnode.pack_resolver.github_wheel_url:
+    name: github_wheel_url
+    module: urisysnode.pack_resolver
+    line: 162
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 2
+  urisysnode.pack_resolver.scheme_for_uri:
+    name: scheme_for_uri
+    module: urisysnode.pack_resolver
+    line: 193
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 3
+  urisysnode.remote.build_wheel:
+    name: build_wheel
+    module: urisysnode.remote
+    line: 240
+    cyclomatic_complexity: 3
+    calls_out: 11
+    calls_in: 3
+  urisysnode.handlers.command_stop_worker:
+    name: command_stop_worker
+    module: urisysnode.handlers
+    line: 129
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 0
+  urisysnode.runtime.builder._register_pack:
+    name: _register_pack
+    module: urisysnode.runtime.builder
+    line: 36
+    cyclomatic_complexity: 14
+    calls_out: 16
+    calls_in: 1
+  urisysnode.supervisor.PackSupervisor.spawn:
+    name: spawn
+    module: urisysnode.supervisor
+    line: 129
+    cyclomatic_complexity: 15
+    calls_out: 21
+    calls_in: 0
+  urisysnode.supervisor._schemes_of:
+    name: _schemes_of
+    module: urisysnode.supervisor
+    line: 40
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  urisysnode.serve.serve:
+    name: serve
+    module: urisysnode.serve
+    line: 457
+    cyclomatic_complexity: 16
+    calls_out: 43
+    calls_in: 1
+  urisysnode.client.remote_call:
+    name: remote_call
+    module: urisysnode.client
+    line: 54
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 5
+  urisysnode.port.manager._wait_port_free:
+    name: _wait_port_free
+    module: urisysnode.port.manager
+    line: 111
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 3
+  urisysnode.supervisor.PackSupervisor._wait_health:
+    name: _wait_health
+    module: urisysnode.supervisor
+    line: 374
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  urisysnode.remote.default_wheel_host:
+    name: default_wheel_host
+    module: urisysnode.remote
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  urisysnode.display_bootstrap.bootstrap_wayland_capture:
+    name: bootstrap_wayland_capture
+    module: urisysnode.display_bootstrap
+    line: 91
+    cyclomatic_complexity: 7
+    calls_out: 17
+    calls_in: 1
+  urisysnode.handlers.command_install_pack:
+    name: command_install_pack
+    module: urisysnode.handlers
+    line: 56
+    cyclomatic_complexity: 6
+    calls_out: 13
+    calls_in: 0
+  urisysnode.artifact_resolver.load_artifact_index:
+    name: load_artifact_index
+    module: urisysnode.artifact_resolver
+    line: 126
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 3
+  urisysnode.client.call_via_route_map:
+    name: call_via_route_map
+    module: urisysnode.client
+    line: 71
+    cyclomatic_complexity: 6
+    calls_out: 14
+    calls_in: 2
+  urisysnode.forward_config._normalize_release_entry:
+    name: _normalize_release_entry
+    module: urisysnode.forward_config
+    line: 81
+    cyclomatic_complexity: 11
+    calls_out: 15
+    calls_in: 2
+  urisysnode.pack_resolver.pack_install_source:
+    name: pack_install_source
+    module: urisysnode.pack_resolver
+    line: 153
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  urisysnode.identity.health._get_driver_info:
+    name: _get_driver_info
+    module: urisysnode.identity.health
+    line: 92
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
+  urisysnode.remote.install_pack:
+    name: install_pack
+    module: urisysnode.remote
+    line: 100
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  urisysnode.router.rewrite_uri_for_slave:
+    name: rewrite_uri_for_slave
+    module: urisysnode.router
+    line: 32
+    cyclomatic_complexity: 8
+    calls_out: 5
+    calls_in: 2
+  urisysnode.runtime.packs.get_supervisor:
+    name: get_supervisor
+    module: urisysnode.runtime.packs
+    line: 135
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  urisysnode.identity.pairing.set_remote_control:
+    name: set_remote_control
+    module: urisysnode.identity.pairing
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  urisysnode.port.utils._pid_alive:
+    name: _pid_alive
+    module: urisysnode.port.utils
+    line: 20
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 3
+  urisysnode.identity.pairing.enroll:
+    name: enroll
+    module: urisysnode.identity.pairing
+    line: 37
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  urisysnode.port.utils._pidfile_path:
+    name: _pidfile_path
+    module: urisysnode.port.utils
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  urisysnode.runtime.builder.build_runtime:
+    name: build_runtime
+    module: urisysnode.runtime.builder
+    line: 86
+    cyclomatic_complexity: 18
+    calls_out: 37
+    calls_in: 2
+  urisysnode.port.manager._kill_pid:
+    name: _kill_pid
+    module: urisysnode.port.manager
+    line: 55
+    cyclomatic_complexity: 9
+    calls_out: 13
+    calls_in: 1
+  urisysnode.identity.health._get_config_source:
+    name: _get_config_source
+    module: urisysnode.identity.health
+    line: 82
+    cyclomatic_complexity: 6
+    calls_out: 2
+    calls_in: 1
+  urisysnode.forward_config.wire_forward_packs:
+    name: wire_forward_packs
+    module: urisysnode.forward_config
+    line: 67
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  urisysnode.identity.core._identity_path:
+    name: _identity_path
+    module: urisysnode.identity.core
+    line: 45
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  urisysnode.remote.call_uri:
+    name: call_uri
+    module: urisysnode.remote
+    line: 61
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 10
+  urisysnode.app_handlers.command_chat_append:
+    name: command_chat_append
+    module: urisysnode.app_handlers
+    line: 30
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 0
+  urisysnode.remote.wait_health:
+    name: wait_health
+    module: urisysnode.remote
+    line: 48
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 3
+  urisysnode.serve._release_forward_spec:
+    name: _release_forward_spec
+    module: urisysnode.serve
+    line: 207
+    cyclomatic_complexity: 11
+    calls_out: 8
+    calls_in: 1
+  urisysnode.release_verify.signature_required:
+    name: signature_required
+    module: urisysnode.release_verify
+    line: 31
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 1
+  urisysnode.router.node_endpoint:
+    name: node_endpoint
+    module: urisysnode.router
+    line: 47
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  urisysnode.pack_resolver.pack_importable:
+    name: pack_importable
+    module: urisysnode.pack_resolver
+    line: 318
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 5
+  urisysnode.forward_config.wire_release_forward_packs:
+    name: wire_release_forward_packs
+    module: urisysnode.forward_config
+    line: 129
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  urisysnode.supervisor.PackSupervisor._wire:
+    name: _wire
+    module: urisysnode.supervisor
+    line: 390
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  urisysnode.runtime.packs.ensure_isolated_pack:
+    name: ensure_isolated_pack
+    module: urisysnode.runtime.packs
+    line: 149
+    cyclomatic_complexity: 9
+    calls_out: 14
+    calls_in: 1
+  urisysnode.pack_resolver.pack_install_specs:
+    name: pack_install_specs
+    module: urisysnode.pack_resolver
+    line: 230
+    cyclomatic_complexity: 8
+    calls_out: 8
+    calls_in: 1
+  urisysnode.artifact_resolver.select_artifact:
+    name: select_artifact
+    module: urisysnode.artifact_resolver
+    line: 155
+    cyclomatic_complexity: 15
+    calls_out: 14
+    calls_in: 3
+  urisysnode.remote.default_route_map:
+    name: default_route_map
+    module: urisysnode.remote
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  urisysnode.identity.core.default_data_root:
+    name: default_data_root
+    module: urisysnode.identity.core
+    line: 15
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 3
+  urisysnode.identity.health._get_uricontrol_version:
+    name: _get_uricontrol_version
+    module: urisysnode.identity.health
+    line: 34
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  urisysnode.display_bootstrap._start_screencast:
+    name: _start_screencast
+    module: urisysnode.display_bootstrap
+    line: 65
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  urisysnode.supervisor.PackSupervisor._fetch_patterns:
+    name: _fetch_patterns
+    module: urisysnode.supervisor
+    line: 386
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  urisysnode.runtime.packs.isolation_mode:
+    name: isolation_mode
+    module: urisysnode.runtime.packs
+    line: 111
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 1
+  urisysnode.release_verify.verify_release:
+    name: verify_release
+    module: urisysnode.release_verify
+    line: 89
+    cyclomatic_complexity: 14
+    calls_out: 15
+    calls_in: 1
+  urisysnode.port.manager._worker_pids_from_state:
+    name: _worker_pids_from_state
+    module: urisysnode.port.manager
+    line: 87
+    cyclomatic_complexity: 10
+    calls_out: 12
+    calls_in: 1
+  urisysnode.identity.health._detect_him_driver:
+    name: _detect_him_driver
+    module: urisysnode.identity.health
+    line: 61
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  urisysnode.identity.pairing.load_pairing:
+    name: load_pairing
+    module: urisysnode.identity.pairing
+    line: 19
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 5
+  urisysnode.remote.default_endpoint:
+    name: default_endpoint
+    module: urisysnode.remote
+    line: 34
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  urisysnode.port.utils._read_cmdline:
+    name: _read_cmdline
+    module: urisysnode.port.utils
+    line: 29
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 2
+  urisysnode.remote.wheel_url:
+    name: wheel_url
+    module: urisysnode.remote
+    line: 271
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 3
+  urisysnode.identity.pairing._pairing_path:
+    name: _pairing_path
+    module: urisysnode.identity.pairing
+    line: 14
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  urisysnode.remote.workers:
+    name: workers
+    module: urisysnode.remote
+    line: 184
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisysnode.forward.forward_call:
+    name: forward_call
+    module: urisysnode.forward
+    line: 20
+    cyclomatic_complexity: 9
+    calls_out: 8
+    calls_in: 0
+  urisysnode.port.utils._pids_serve_cmdline:
+    name: _pids_serve_cmdline
+    module: urisysnode.port.utils
+    line: 38
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 0
+  urisysnode.supervisor.PackSupervisor._needs_install:
+    name: _needs_install
+    module: urisysnode.supervisor
+    line: 279
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 0
+  urisysnode.app_data.default_app_chat_path:
+    name: default_app_chat_path
+    module: urisysnode.app_data
+    line: 14
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  urisysnode.identity.health._get_pairing_info:
+    name: _get_pairing_info
+    module: urisysnode.identity.health
+    line: 51
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  urisysnode.pack_resolver.resolve_pack_spec:
+    name: resolve_pack_spec
+    module: urisysnode.pack_resolver
+    line: 174
+    cyclomatic_complexity: 10
+    calls_out: 3
+    calls_in: 4
+  urisysnode.artifact_resolver.wait_health:
+    name: wait_health
+    module: urisysnode.artifact_resolver
+    line: 209
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 2
+  urisysnode.artifact_resolver.run_release:
+    name: run_release
+    module: urisysnode.artifact_resolver
+    line: 253
+    cyclomatic_complexity: 8
+    calls_out: 19
+    calls_in: 2
+  urisysnode.worker._wire_router_callback:
+    name: _wire_router_callback
+    module: urisysnode.worker
+    line: 55
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  urisysnode.serve._app_chat_store:
+    name: _app_chat_store
+    module: urisysnode.serve
+    line: 301
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 3
+  urisysnode.serve.make_handler:
+    name: make_handler
+    module: urisysnode.serve
+    line: 345
+    cyclomatic_complexity: 2
+    calls_out: 88
+    calls_in: 3
+  urisysnode.app_handlers._store:
+    name: _store
+    module: urisysnode.app_handlers
+    line: 10
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 3
+  urisysnode.artifact_resolver.fetch_json:
+    name: fetch_json
+    module: urisysnode.artifact_resolver
+    line: 51
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 2
+  urisysnode.remote.stop_worker:
+    name: stop_worker
+    module: urisysnode.remote
+    line: 167
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisysnode.pack_resolver.github_wheel_urls:
+    name: github_wheel_urls
+    module: urisysnode.pack_resolver
+    line: 299
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 0
+  urisysnode.artifact_resolver.contract_spec_from_release:
+    name: contract_spec_from_release
+    module: urisysnode.artifact_resolver
+    line: 113
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  urisysnode.remote.upgrade_lenovo_kv:
+    name: upgrade_lenovo_kv
+    module: urisysnode.remote
+    line: 320
+    cyclomatic_complexity: 4
+    calls_out: 19
+    calls_in: 1
+  urisysnode.display_bootstrap._start_agent:
+    name: _start_agent
+    module: urisysnode.display_bootstrap
+    line: 47
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 1
+  urisysnode.serve._register_pack:
+    name: _register_pack
+    module: urisysnode.serve
+    line: 76
+    cyclomatic_complexity: 14
+    calls_out: 16
+    calls_in: 1
+  urisysnode.artifact_resolver.docker_pull:
+    name: docker_pull
+    module: urisysnode.artifact_resolver
+    line: 177
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 2
+  urisysnode.remote.schedule_restart:
+    name: schedule_restart
+    module: urisysnode.remote
+    line: 199
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 3
+  urisysnode.display_bootstrap._screencast_ready:
+    name: _screencast_ready
+    module: urisysnode.display_bootstrap
+    line: 37
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 2
+  urisysnode.worker.main:
+    name: main
+    module: urisysnode.worker
+    line: 156
+    cyclomatic_complexity: 4
+    calls_out: 13
+    calls_in: 0
+  urisysnode.handlers.command_spawn_worker:
+    name: command_spawn_worker
+    module: urisysnode.handlers
+    line: 87
+    cyclomatic_complexity: 11
+    calls_out: 21
+    calls_in: 0
+  urisysnode.remote.spawn_worker:
+    name: spawn_worker
+    module: urisysnode.remote
+    line: 121
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 1
+  urisysnode.artifact_resolver.fetch_release:
+    name: fetch_release
+    module: urisysnode.artifact_resolver
+    line: 143
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 3
+  urisysnode.worker._local_schemes:
+    name: _local_schemes
+    module: urisysnode.worker
+    line: 46
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  urisysnode.remote.default_nodes_registry:
+    name: default_nodes_registry
+    module: urisysnode.remote
+    line: 26
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  urisysnode.handlers.query_health:
+    name: query_health
+    module: urisysnode.handlers
+    line: 9
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  urisysnode.supervisor._free_port:
+    name: _free_port
+    module: urisysnode.supervisor
+    line: 29
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  urisysnode.supervisor._http_get:
+    name: _http_get
+    module: urisysnode.supervisor
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 3
+  urisysnode.remote.restart_worker:
+    name: restart_worker
+    module: urisysnode.remote
+    line: 150
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisysnode.pack_resolver.ensure_pack_pypi:
+    name: ensure_pack_pypi
+    module: urisysnode.pack_resolver
+    line: 245
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  urisysnode.identity.health.health_payload:
+    name: health_payload
+    module: urisysnode.identity.health
+    line: 152
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 2
+  urisysnode.display_bootstrap._agent_url:
+    name: _agent_url
+    module: urisysnode.display_bootstrap
+    line: 25
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 4
+  urisysnode.artifact_resolver.fetch_text:
+    name: fetch_text
+    module: urisysnode.artifact_resolver
+    line: 57
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  urisysnode.serve.call_uri:
+    name: call_uri
+    module: urisysnode.serve
+    line: 128
+    cyclomatic_complexity: 22
+    calls_out: 31
+    calls_in: 1
+  urisysnode.artifact_resolver.is_url:
+    name: is_url
+    module: urisysnode.artifact_resolver
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisysnode.pack_resolver.import_pack_module:
+    name: import_pack_module
+    module: urisysnode.pack_resolver
+    line: 313
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  urisysnode.pack_resolver.pack_module:
+    name: pack_module
+    module: urisysnode.pack_resolver
+    line: 189
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  urisysnode.router.resolve_remote_route:
+    name: resolve_remote_route
+    module: urisysnode.router
+    line: 21
+    cyclomatic_complexity: 5
+    calls_out: 3
+    calls_in: 1
+  urisysnode.artifact_resolver.parse_contract_spec:
+    name: parse_contract_spec
+    module: urisysnode.artifact_resolver
+    line: 80
+    cyclomatic_complexity: 12
+    calls_out: 15
+    calls_in: 1
+  urisysnode.remote.health:
+    name: health
+    module: urisysnode.remote
+    line: 42
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 4
+  urisysnode.artifact_resolver._auth_opener:
+    name: _auth_opener
+    module: urisysnode.artifact_resolver
+    line: 22
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 2
+  urisysnode.handlers.query_identity:
+    name: query_identity
+    module: urisysnode.handlers
+    line: 16
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  urisysnode.artifact_resolver.docker_run_worker:
+    name: docker_run_worker
+    module: urisysnode.artifact_resolver
+    line: 183
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 2
+  urisysnode.handlers.query_packs:
+    name: query_packs
+    module: urisysnode.handlers
+    line: 45
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 0
+  urisysnode.supervisor.Worker.alive:
+    name: alive
+    module: urisysnode.supervisor
+    line: 65
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 0
+  urisysnode.identity.pairing.save_pairing:
+    name: save_pairing
+    module: urisysnode.identity.pairing
+    line: 32
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  urisysnode.display_bootstrap._agent_up:
+    name: _agent_up
+    module: urisysnode.display_bootstrap
+    line: 29
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  urisysnode.remote.serve_wheels:
+    name: serve_wheels
+    module: urisysnode.remote
+    line: 258
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  urisysnode.forward_config.load_forward_entries:
+    name: load_forward_entries
+    module: urisysnode.forward_config
+    line: 29
+    cyclomatic_complexity: 15
+    calls_out: 20
+    calls_in: 1
+  urisysnode.identity.health._get_him_driver:
+    name: _get_him_driver
+    module: urisysnode.identity.health
+    line: 70
+    cyclomatic_complexity: 6
+    calls_out: 5
+    calls_in: 1
+  urisysnode.artifact_resolver.load_node_profile:
+    name: load_node_profile
+    module: urisysnode.artifact_resolver
+    line: 121
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 3
+  urisysnode.worker.build_worker_runtime:
+    name: build_worker_runtime
+    module: urisysnode.worker
+    line: 86
+    cyclomatic_complexity: 5
+    calls_out: 13
+    calls_in: 2
+  urisysnode.port.manager._pids_on_port:
+    name: _pids_on_port
+    module: urisysnode.port.manager
+    line: 18
+    cyclomatic_complexity: 16
+    calls_out: 17
+    calls_in: 1
+  urisysnode.serve._app_chat_post:
+    name: _app_chat_post
+    module: urisysnode.serve
+    line: 334
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 1
+  urisysnode.display_bootstrap._ensure_session_env:
+    name: _ensure_session_env
+    module: urisysnode.display_bootstrap
+    line: 15
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
+  urisysnode.identity.core.save_identity:
+    name: save_identity
+    module: urisysnode.identity.core
+    line: 79
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  urisysnode.artifact_resolver.release_api_url:
+    name: release_api_url
+    module: urisysnode.artifact_resolver
+    line: 136
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  urisysnode.identity.health._get_python_info:
+    name: _get_python_info
+    module: urisysnode.identity.health
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  urisysnode.runtime.packs.apply_host_trust:
+    name: apply_host_trust
+    module: urisysnode.runtime.packs
+    line: 209
+    cyclomatic_complexity: 10
+    calls_out: 8
+    calls_in: 1
+  urisysnode.serve._app_chat_get:
+    name: _app_chat_get
+    module: urisysnode.serve
+    line: 311
+    cyclomatic_complexity: 10
+    calls_out: 14
+    calls_in: 1
+  urisysnode.runtime.builder._extend_pack_paths:
+    name: _extend_pack_paths
+    module: urisysnode.runtime.builder
+    line: 24
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  urisysnode.pack_resolver.auto_install_enabled:
+    name: auto_install_enabled
+    module: urisysnode.pack_resolver
+    line: 149
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 11
+  urisysnode.remote.pip_install:
+    name: pip_install
+    module: urisysnode.remote
+    line: 84
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 3
+  urisysnode.identity.pairing.require_paired:
+    name: require_paired
+    module: urisysnode.identity.pairing
+    line: 82
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 3
+  urisysnode.handlers.command_indicator_off:
+    name: command_indicator_off
+    module: urisysnode.handlers
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  urisysnode.pack_resolver.ensure_pip_specs:
+    name: ensure_pip_specs
+    module: urisysnode.pack_resolver
+    line: 216
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 2
+  urisysnode.pack_resolver.ensure_real_deps:
+    name: ensure_real_deps
+    module: urisysnode.pack_resolver
+    line: 291
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  urisysnode.port.utils._fuser_kill_port:
+    name: _fuser_kill_port
+    module: urisysnode.port.utils
+    line: 78
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  urisysnode.identity.core.default_events_path:
+    name: default_events_path
+    module: urisysnode.identity.core
+    line: 30
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 5
+  urisysnode.runtime.packs.ensure_pack_for_uri:
+    name: ensure_pack_for_uri
+    module: urisysnode.runtime.packs
+    line: 195
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  urisysnode.handlers._get_supervisor:
+    name: _get_supervisor
+    module: urisysnode.handlers
+    line: 76
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  urisysnode.supervisor.PackSupervisor.call_ephemeral:
+    name: call_ephemeral
+    module: urisysnode.supervisor
+    line: 200
+    cyclomatic_complexity: 16
+    calls_out: 16
+    calls_in: 0
+  urisysnode.runtime.packs.load_pack_into_runtime:
+    name: load_pack_into_runtime
+    module: urisysnode.runtime.packs
+    line: 43
+    cyclomatic_complexity: 30
+    calls_out: 31
+    calls_in: 4
+  urisysnode.app_handlers.query_chat_messages:
+    name: query_chat_messages
+    module: urisysnode.app_handlers
+    line: 21
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 0
+  urisysnode.pack_resolver.pack_for_scheme:
+    name: pack_for_scheme
+    module: urisysnode.pack_resolver
+    line: 197
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 3
+  urisysnode.identity.core._hostname:
+    name: _hostname
+    module: urisysnode.identity.core
+    line: 50
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  urisysnode.identity.core._data_dir:
+    name: _data_dir
+    module: urisysnode.identity.core
+    line: 38
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 2
+  urisysnode.serve.hotload_release_pack:
+    name: hotload_release_pack
+    module: urisysnode.serve
+    line: 228
+    cyclomatic_complexity: 14
+    calls_out: 17
+    calls_in: 2
+  urisysnode.port.manager.takeover_port:
+    name: takeover_port
+    module: urisysnode.port.manager
+    line: 182
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 2
+  urisysnode.router.load_route_map:
+    name: load_route_map
+    module: urisysnode.router
+    line: 11
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  urisysnode.handlers.query_workers:
+    name: query_workers
+    module: urisysnode.handlers
+    line: 109
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  urisysnode.worker.serve_worker:
+    name: serve_worker
+    module: urisysnode.worker
+    line: 124
+    cyclomatic_complexity: 5
+    calls_out: 11
+    calls_in: 1
+  urisysnode.artifact_resolver.resolve_and_run:
+    name: resolve_and_run
+    module: urisysnode.artifact_resolver
+    line: 224
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 1
+  urisysnode.handlers.command_register_forward:
+    name: command_register_forward
+    module: urisysnode.handlers
+    line: 141
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 0
+  urisysnode.router._match_pattern:
+    name: _match_pattern
+    module: urisysnode.router
+    line: 16
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  urisysnode.handlers.command_indicator_on:
+    name: command_indicator_on
+    module: urisysnode.handlers
+    line: 32
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  urisysnode.port.utils._pids_on_port_ss:
+    name: _pids_on_port_ss
+    module: urisysnode.port.utils
+    line: 57
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  urisysnode.runtime.config.resolve_node_config:
+    name: resolve_node_config
+    module: urisysnode.runtime.config
+    line: 10
+    cyclomatic_complexity: 7
+    calls_out: 20
+    calls_in: 2
+  urisysnode.identity.core.load_identity:
+    name: load_identity
+    module: urisysnode.identity.core
+    line: 55
+    cyclomatic_complexity: 4
+    calls_out: 15
+    calls_in: 6
+  urisysnode.identity.health._get_urisys_version:
+    name: _get_urisys_version
+    module: urisysnode.identity.health
+    line: 25
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  urisysnode.app_handlers.query_chat_channels:
+    name: query_chat_channels
+    module: urisysnode.app_handlers
+    line: 41
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 0
+  urisysnode.artifact_resolver.resolve_from_release:
+    name: resolve_from_release
+    module: urisysnode.artifact_resolver
+    line: 295
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  urisysnode.identity.health._get_runtime_info:
+    name: _get_runtime_info
+    module: urisysnode.identity.health
+    line: 111
+    cyclomatic_complexity: 7
+    calls_out: 11
+    calls_in: 1
+  urisysnode.release_verify._ed25519_verify:
+    name: _ed25519_verify
+    module: urisysnode.release_verify
+    line: 70
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  urisysnode.pack_resolver.github_owner:
+    name: github_owner
+    module: urisysnode.pack_resolver
+    line: 158
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  urisysnode.artifact_resolver._contract_yaml_block:
+    name: _contract_yaml_block
+    module: urisysnode.artifact_resolver
+    line: 63
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 1
+  urisysnode.port.manager._collect_takeover_targets:
+    name: _collect_takeover_targets
+    module: urisysnode.port.manager
+    line: 156
+    cyclomatic_complexity: 12
+    calls_out: 15
+    calls_in: 1
+  urisysnode.app_data.AppChatStore.__init__:
+    name: __init__
+    module: urisysnode.app_data
+    line: 22
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  urisysnode.worker._load_node_profile:
+    name: _load_node_profile
+    module: urisysnode.worker
+    line: 30
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  urisysnode.port.manager._is_node_serve_process:
+    name: _is_node_serve_process
+    module: urisysnode.port.manager
+    line: 128
+    cyclomatic_complexity: 16
+    calls_out: 11
+    calls_in: 1
+  urisysnode.forward_config.load_release_forward_entries:
+    name: load_release_forward_entries
+    module: urisysnode.forward_config
+    line: 101
+    cyclomatic_complexity: 11
+    calls_out: 12
+    calls_in: 1
+edges:
+- caller: urisysnode.release_verify.verify_release
+  callee: urisysnode.release_verify.signature_required
+  call_type: resolved
+- caller: urisysnode.release_verify.verify_release
+  callee: urisysnode.release_verify.canonical_digest
+  call_type: resolved
+- caller: urisysnode.release_verify.verify_release
+  callee: urisysnode.release_verify._ed25519_verify
+  call_type: resolved
+- caller: urisysnode.forward_config.load_forward_entries
+  callee: urisysnode.forward_config._normalize_entry
+  call_type: resolved
+- caller: urisysnode.forward_config.wire_forward_packs
+  callee: urisysnode.serve.register_forward_pack
+  call_type: resolved
+- caller: urisysnode.forward_config.load_release_forward_entries
+  callee: urisysnode.forward_config._normalize_release_entry
+  call_type: resolved
+- caller: urisysnode.forward_config.wire_release_forward_packs
+  callee: urisysnode.serve.hotload_release_pack
+  call_type: resolved
+- caller: urisysnode.client.call_via_route_map
+  callee: urisysnode.router.load_route_map
+  call_type: resolved
+- caller: urisysnode.client.call_via_route_map
+  callee: urisysnode.router.resolve_remote_route
+  call_type: resolved
+- caller: urisysnode.client.call_via_route_map
+  callee: urisysnode.router.node_endpoint
+  call_type: resolved
+- caller: urisysnode.client.call_via_route_map
+  callee: urisysnode.router.rewrite_uri_for_slave
+  call_type: resolved
+- caller: urisysnode.client.call_via_route_map
+  callee: urisysnode.client.remote_call
+  call_type: resolved
+- caller: urisysnode.forward.forward_call
+  callee: urisysnode.client.remote_call
+  call_type: resolved
+- caller: urisysnode.remote.health
+  callee: urisysnode.remote.default_endpoint
+  call_type: resolved
+- caller: urisysnode.remote.wait_health
+  callee: urisysnode.remote.default_endpoint
+  call_type: resolved
+- caller: urisysnode.remote.wait_health
+  callee: urisysnode.remote.health
+  call_type: resolved
+- caller: urisysnode.remote.call_uri
+  callee: urisysnode.client.call_via_route_map
+  call_type: resolved
+- caller: urisysnode.remote.call_uri
+  callee: urisysnode.client.remote_call
+  call_type: resolved
+- caller: urisysnode.remote.call_uri
+  callee: urisysnode.remote.default_route_map
+  call_type: resolved
+- caller: urisysnode.remote.call_uri
+  callee: urisysnode.remote.default_nodes_registry
+  call_type: resolved
+- caller: urisysnode.remote.pip_install
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.install_pack
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.spawn_worker
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.restart_worker
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.stop_worker
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.workers
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.schedule_restart
+  callee: urisysnode.remote.call_uri
+  call_type: resolved
+- caller: urisysnode.remote.wheel_url
+  callee: urisysnode.remote.default_wheel_host
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.build_wheel
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.serve_wheels
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.default_wheel_host
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.default_endpoint
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.health
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.pip_install
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_node
+  callee: urisysnode.remote.schedule_restart
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.build_wheel
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.serve_wheels
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.default_wheel_host
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.health
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.pip_install
+  call_type: resolved
+- caller: urisysnode.remote.upgrade_lenovo_kv
+  callee: urisysnode.remote.schedule_restart
+  call_type: resolved
+- caller: urisysnode.router.resolve_remote_route
+  callee: urisysnode.router._match_pattern
+  call_type: resolved
+- caller: urisysnode.display_bootstrap._agent_up
+  callee: urisysnode.display_bootstrap._agent_url
+  call_type: resolved
+- caller: urisysnode.display_bootstrap._screencast_ready
+  callee: urisysnode.display_bootstrap._agent_url
+  call_type: resolved
+- caller: urisysnode.display_bootstrap._start_agent
+  callee: urisysnode.display_bootstrap._agent_up
+  call_type: resolved
+- caller: urisysnode.display_bootstrap._start_screencast
+  callee: urisysnode.display_bootstrap._screencast_ready
+  call_type: resolved
+- caller: urisysnode.display_bootstrap._start_screencast
+  callee: urisysnode.display_bootstrap._agent_url
+  call_type: resolved
+- caller: urisysnode.display_bootstrap.bootstrap_wayland_capture
+  callee: urisysnode.display_bootstrap._ensure_session_env
+  call_type: resolved
+- caller: urisysnode.display_bootstrap.bootstrap_wayland_capture
+  callee: urisysnode.display_bootstrap._agent_url
+  call_type: resolved
+- caller: urisysnode.display_bootstrap.bootstrap_wayland_capture
+  callee: urisysnode.display_bootstrap._agent_up
+  call_type: resolved
+- caller: urisysnode.display_bootstrap.bootstrap_wayland_capture
+  callee: urisysnode.display_bootstrap._start_agent
+  call_type: resolved
+- caller: urisysnode.pack_resolver.github_wheel_url
+  callee: urisysnode.pack_resolver.github_owner
+  call_type: resolved
+- caller: urisysnode.pack_resolver.resolve_pack_spec
+  callee: urisysnode.pack_resolver.github_wheel_url
+  call_type: resolved
+- caller: urisysnode.pack_resolver.resolve_pack_spec
+  callee: urisysnode.pack_resolver.pack_install_source
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_pip_specs
+  callee: urisysnode.pack_resolver._pip_install
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_pip_specs
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.pack_resolver.pack_install_specs
+  callee: urisysnode.pack_resolver.resolve_pack_spec
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_pack_pypi
+  callee: urisysnode.pack_resolver.pack_install_specs
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_pack_pypi
+  callee: urisysnode.pack_resolver.ensure_pip_specs
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_pack_pypi
+  callee: urisysnode.pack_resolver.pack_install_source
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_boot_pack
+  callee: urisysnode.pack_resolver.github_wheel_url
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_boot_pack
+  callee: urisysnode.pack_resolver._pip_install
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_boot_pack
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.pack_resolver.ensure_real_deps
+  callee: urisysnode.pack_resolver.ensure_pip_specs
+  call_type: resolved
+- caller: urisysnode.pack_resolver.github_wheel_urls
+  callee: urisysnode.pack_resolver.resolve_pack_spec
+  call_type: resolved
+- caller: urisysnode.pack_resolver.import_pack_module
+  callee: urisysnode.pack_resolver.pack_module
+  call_type: resolved
+- caller: urisysnode.pack_resolver.pack_importable
+  callee: urisysnode.pack_resolver.import_pack_module
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.fetch_json
+  callee: urisysnode.artifact_resolver._auth_opener
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.fetch_text
+  callee: urisysnode.artifact_resolver._auth_opener
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.parse_contract_spec
+  callee: urisysnode.artifact_resolver._contract_yaml_block
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.contract_spec_from_release
+  callee: urisysnode.artifact_resolver.contract_url_from_release
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.contract_spec_from_release
+  callee: urisysnode.artifact_resolver.parse_contract_spec
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.contract_spec_from_release
+  callee: urisysnode.artifact_resolver.fetch_text
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.load_artifact_index
+  callee: urisysnode.artifact_resolver.is_url
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.load_artifact_index
+  callee: urisysnode.artifact_resolver.fetch_json
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.fetch_release
+  callee: urisysnode.artifact_resolver.fetch_json
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.fetch_release
+  callee: urisysnode.artifact_resolver.release_api_url
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.load_artifact_index
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.load_node_profile
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.select_artifact
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.docker_pull
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.docker_run_worker
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_and_run
+  callee: urisysnode.artifact_resolver.wait_health
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.load_artifact_index
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.load_node_profile
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.select_artifact
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.docker_pull
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.docker_run_worker
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.run_release
+  callee: urisysnode.artifact_resolver.wait_health
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_from_release
+  callee: urisysnode.artifact_resolver.fetch_release
+  call_type: resolved
+- caller: urisysnode.artifact_resolver.resolve_from_release
+  callee: urisysnode.artifact_resolver.run_release
+  call_type: resolved
+- caller: urisysnode.app_data.default_app_chat_path
+  callee: urisysnode.identity.core.default_data_root
+  call_type: resolved
+- caller: urisysnode.app_data.AppChatStore.__init__
+  callee: urisysnode.app_data.default_app_chat_path
+  call_type: resolved
+- caller: urisysnode.app_handlers.query_chat_messages
+  callee: urisysnode.app_handlers._store
+  call_type: resolved
+- caller: urisysnode.app_handlers.command_chat_append
+  callee: urisysnode.app_handlers._store
+  call_type: resolved
+- caller: urisysnode.app_handlers.query_chat_channels
+  callee: urisysnode.app_handlers._store
+  call_type: resolved
+- caller: urisysnode.worker._load_node_profile
+  callee: urisysnode.runtime.config.resolve_node_config
+  call_type: resolved
+- caller: urisysnode.worker._wire_router_callback
+  callee: urisysnode.worker._local_schemes
+  call_type: resolved
+- caller: urisysnode.worker._wire_router_callback
+  callee: urisysnode.client.remote_call
+  call_type: resolved
+- caller: urisysnode.worker.build_worker_runtime
+  callee: urisysnode.worker._wire_router_callback
+  call_type: resolved
+- caller: urisysnode.worker.build_worker_runtime
+  callee: urisysnode.identity.core.default_events_path
+  call_type: resolved
+- caller: urisysnode.worker.build_worker_runtime
+  callee: urisysnode.worker._load_node_profile
+  call_type: resolved
+- caller: urisysnode.worker.build_worker_runtime
+  callee: urisysnode.runtime.packs.load_pack_into_runtime
+  call_type: resolved
+- caller: urisysnode.worker.serve_worker
+  callee: urisysnode.worker.build_worker_runtime
+  call_type: resolved
+- caller: urisysnode.worker.serve_worker
+  callee: urisysnode.serve.make_handler
+  call_type: resolved
+- caller: urisysnode.worker.main
+  callee: urisysnode.worker.serve_worker
+  call_type: resolved
+- caller: urisysnode.port.manager._kill_pid
+  callee: urisysnode.port.utils._pid_alive
+  call_type: resolved
+- caller: urisysnode.port.manager._worker_pids_from_state
+  callee: urisysnode.port.utils._pid_alive
+  call_type: resolved
+- caller: urisysnode.port.manager._is_node_serve_process
+  callee: urisysnode.port.utils._read_cmdline
+  call_type: resolved
+- caller: urisysnode.port.manager._collect_takeover_targets
+  callee: urisysnode.port.utils._pidfile_path
+  call_type: resolved
+- caller: urisysnode.port.manager._collect_takeover_targets
+  callee: urisysnode.port.utils._pid_alive
+  call_type: resolved
+- caller: urisysnode.port.manager._collect_takeover_targets
+  callee: urisysnode.port.manager._worker_pids_from_state
+  call_type: resolved
+- caller: urisysnode.port.manager._collect_takeover_targets
+  callee: urisysnode.port.manager._pids_on_port
+  call_type: resolved
+- caller: urisysnode.port.manager._collect_takeover_targets
+  callee: urisysnode.port.utils._pids_on_port_ss
+  call_type: resolved
+- caller: urisysnode.port.manager.takeover_port
+  callee: urisysnode.port.manager._wait_port_free
+  call_type: resolved
+- caller: urisysnode.port.manager.takeover_port
+  callee: urisysnode.port.manager._collect_takeover_targets
+  call_type: resolved
+- caller: urisysnode.port.manager.takeover_port
+  callee: urisysnode.port.utils._fuser_kill_port
+  call_type: resolved
+- caller: urisysnode.port.utils._pidfile_path
+  callee: urisysnode.identity.core.default_events_path
+  call_type: resolved
+- caller: urisysnode.port.utils._pids_serve_cmdline
+  callee: urisysnode.port.utils._read_cmdline
+  call_type: resolved
+- caller: urisysnode.identity.pairing._pairing_path
+  callee: urisysnode.identity.core._data_dir
+  call_type: resolved
+- caller: urisysnode.identity.pairing.load_pairing
+  callee: urisysnode.identity.pairing._pairing_path
+  call_type: resolved
+- caller: urisysnode.identity.pairing.save_pairing
+  callee: urisysnode.identity.pairing._pairing_path
+  call_type: resolved
+- caller: urisysnode.identity.pairing.enroll
+  callee: urisysnode.identity.core.load_identity
+  call_type: resolved
+- caller: urisysnode.identity.pairing.enroll
+  callee: urisysnode.identity.pairing.save_pairing
+  call_type: resolved
+- caller: urisysnode.identity.pairing.set_remote_control
+  callee: urisysnode.identity.pairing.load_pairing
+  call_type: resolved
+- caller: urisysnode.identity.pairing.set_remote_control
+  callee: urisysnode.identity.pairing.save_pairing
+  call_type: resolved
+- caller: urisysnode.identity.pairing.require_paired
+  callee: urisysnode.identity.pairing.load_pairing
+  call_type: resolved
+- caller: urisysnode.identity.health._get_pairing_info
+  callee: urisysnode.identity.pairing.load_pairing
+  call_type: resolved
+- caller: urisysnode.identity.health._get_him_driver
+  callee: urisysnode.identity.health._detect_him_driver
+  call_type: resolved
+- caller: urisysnode.identity.health._get_runtime_info
+  callee: urisysnode.identity.health._get_driver_info
+  call_type: resolved
+- caller: urisysnode.identity.health._get_runtime_info
+  callee: urisysnode.identity.health._get_config_source
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.core.load_identity
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.health._get_uricontrol_version
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.health._get_him_driver
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.health._get_urisys_version
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.health._get_python_info
+  call_type: resolved
+- caller: urisysnode.identity.health.health_payload
+  callee: urisysnode.identity.health._get_pairing_info
+  call_type: resolved
+- caller: urisysnode.identity.core.default_events_path
+  callee: urisysnode.identity.core.default_data_root
+  call_type: resolved
+- caller: urisysnode.identity.core._data_dir
+  callee: urisysnode.identity.core.default_data_root
+  call_type: resolved
+- caller: urisysnode.identity.core._identity_path
+  callee: urisysnode.identity.core._data_dir
+  call_type: resolved
+- caller: urisysnode.identity.core.load_identity
+  callee: urisysnode.identity.core._identity_path
+  call_type: resolved
+- caller: urisysnode.identity.core.load_identity
+  callee: urisysnode.identity.core.save_identity
+  call_type: resolved
+- caller: urisysnode.identity.core.load_identity
+  callee: urisysnode.identity.core._hostname
+  call_type: resolved
+- caller: urisysnode.identity.core.save_identity
+  callee: urisysnode.identity.core._identity_path
+  call_type: resolved
+- caller: urisysnode.supervisor.Worker.alive
+  callee: urisysnode.supervisor._http_get
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor.spawn
+  callee: urisysnode.supervisor._free_port
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor.call_ephemeral
+  callee: urisysnode.supervisor._free_port
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor._needs_install
+  callee: urisysnode.pack_resolver.pack_importable
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor._wait_health
+  callee: urisysnode.supervisor._http_get
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor._fetch_patterns
+  callee: urisysnode.supervisor._http_get
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor._wire
+  callee: urisysnode.serve.register_forward_pack
+  call_type: resolved
+- caller: urisysnode.supervisor.PackSupervisor._wire
+  callee: urisysnode.supervisor._schemes_of
+  call_type: resolved
+- caller: urisysnode.serve._register_pack
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.serve.call_uri
+  callee: urisysnode.runtime.packs.apply_host_trust
+  call_type: resolved
+- caller: urisysnode.serve.call_uri
+  callee: urisysnode.runtime.packs.ensure_isolated_pack
+  call_type: resolved
+- caller: urisysnode.serve.call_uri
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.serve.call_uri
+  callee: urisysnode.runtime.packs.ensure_pack_for_uri
+  call_type: resolved
+- caller: urisysnode.serve.call_uri
+  callee: urisysnode.pack_resolver.scheme_for_uri
+  call_type: resolved
+- caller: urisysnode.serve._release_forward_spec
+  callee: urisysnode.artifact_resolver.contract_spec_from_release
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.release_verify.verify_release
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.serve.register_forward_pack
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.identity.pairing.require_paired
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.artifact_resolver.fetch_release
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.serve._release_forward_spec
+  call_type: resolved
+- caller: urisysnode.serve.hotload_release_pack
+  callee: urisysnode.artifact_resolver.run_release
+  call_type: resolved
+- caller: urisysnode.serve._app_chat_get
+  callee: urisysnode.serve._app_chat_store
+  call_type: resolved
+- caller: urisysnode.serve._app_chat_post
+  callee: urisysnode.serve._app_chat_store
+  call_type: resolved
+- caller: urisysnode.serve.serve
+  callee: urisysnode.port.utils._pidfile_path
+  call_type: resolved
+- caller: urisysnode.serve.serve
+  callee: urisysnode.identity.core.load_identity
+  call_type: resolved
+- caller: urisysnode.handlers.query_health
+  callee: urisysnode.identity.health.health_payload
+  call_type: resolved
+- caller: urisysnode.handlers.query_identity
+  callee: urisysnode.identity.core.load_identity
+  call_type: resolved
+- caller: urisysnode.handlers.query_identity
+  callee: urisysnode.identity.pairing.load_pairing
+  call_type: resolved
+- caller: urisysnode.handlers.command_indicator_on
+  callee: urisysnode.identity.pairing.require_paired
+  call_type: resolved
+- caller: urisysnode.handlers.command_indicator_on
+  callee: urisysnode.identity.pairing.set_remote_control
+  call_type: resolved
+- caller: urisysnode.handlers.command_indicator_off
+  callee: urisysnode.identity.pairing.require_paired
+  call_type: resolved
+- caller: urisysnode.handlers.command_indicator_off
+  callee: urisysnode.identity.pairing.set_remote_control
+  call_type: resolved
+- caller: urisysnode.handlers.query_packs
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.handlers.command_install_pack
+  callee: urisysnode.runtime.packs.load_pack_into_runtime
+  call_type: resolved
+- caller: urisysnode.handlers._get_supervisor
+  callee: urisysnode.runtime.packs.get_supervisor
+  call_type: resolved
+- caller: urisysnode.handlers.command_spawn_worker
+  callee: urisysnode.handlers._get_supervisor
+  call_type: resolved
+- caller: urisysnode.handlers.query_workers
+  callee: urisysnode.handlers._get_supervisor
+  call_type: resolved
+- caller: urisysnode.handlers.command_restart_worker
+  callee: urisysnode.handlers._get_supervisor
+  call_type: resolved
+- caller: urisysnode.handlers.command_stop_worker
+  callee: urisysnode.handlers._get_supervisor
+  call_type: resolved
+- caller: urisysnode.handlers.command_register_forward
+  callee: urisysnode.serve.register_forward_pack
+  call_type: resolved
+- caller: urisysnode.runtime.packs.load_pack_into_runtime
+  callee: urisysnode.pack_resolver.ensure_pack_pypi
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_isolated_pack
+  callee: urisysnode.runtime.packs.isolation_mode
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_isolated_pack
+  callee: urisysnode.pack_resolver.scheme_for_uri
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_isolated_pack
+  callee: urisysnode.pack_resolver.pack_for_scheme
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_isolated_pack
+  callee: urisysnode.runtime.packs.get_supervisor
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_isolated_pack
+  callee: urisysnode.pack_resolver.pack_importable
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_pack_for_uri
+  callee: urisysnode.pack_resolver.scheme_for_uri
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_pack_for_uri
+  callee: urisysnode.pack_resolver.pack_for_scheme
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_pack_for_uri
+  callee: urisysnode.runtime.packs.load_pack_into_runtime
+  call_type: resolved
+- caller: urisysnode.runtime.packs.ensure_pack_for_uri
+  callee: urisysnode.pack_resolver.pack_importable
+  call_type: resolved
+- caller: urisysnode.runtime.builder._register_pack
+  callee: urisysnode.pack_resolver.auto_install_enabled
+  call_type: resolved
+- caller: urisysnode.runtime.builder.build_runtime
+  callee: urisysnode.runtime.builder._extend_pack_paths
+  call_type: resolved
+- caller: urisysnode.runtime.builder.build_runtime
+  callee: urisysnode.runtime.config.resolve_node_config
+  call_type: resolved
+- caller: urisysnode.runtime.builder.build_runtime
+  callee: urisysnode.runtime.builder._register_pack
+  call_type: resolved
+- caller: urisysnode.runtime.builder.build_runtime
+  callee: urisysnode.forward_config.load_forward_entries
+  call_type: resolved
+- caller: urisysnode.runtime.builder.build_runtime
+  callee: urisysnode.forward_config.load_release_forward_entries
+  call_type: resolved
+modules:
+  urisysnode.app_data:
+  - urisysnode.app_data.AppChatStore.__init__
+  - urisysnode.app_data.default_app_chat_path
+  urisysnode.app_handlers:
+  - urisysnode.app_handlers._store
+  - urisysnode.app_handlers.command_chat_append
+  - urisysnode.app_handlers.query_chat_channels
+  - urisysnode.app_handlers.query_chat_messages
+  urisysnode.artifact_resolver:
+  - urisysnode.artifact_resolver._auth_opener
+  - urisysnode.artifact_resolver._contract_yaml_block
+  - urisysnode.artifact_resolver.contract_spec_from_release
+  - urisysnode.artifact_resolver.contract_url_from_release
+  - urisysnode.artifact_resolver.docker_pull
+  - urisysnode.artifact_resolver.docker_run_worker
+  - urisysnode.artifact_resolver.fetch_json
+  - urisysnode.artifact_resolver.fetch_release
+  - urisysnode.artifact_resolver.fetch_text
+  - urisysnode.artifact_resolver.is_url
+  - urisysnode.artifact_resolver.load_artifact_index
+  - urisysnode.artifact_resolver.load_node_profile
+  - urisysnode.artifact_resolver.parse_contract_spec
+  - urisysnode.artifact_resolver.release_api_url
+  - urisysnode.artifact_resolver.resolve_and_run
+  - urisysnode.artifact_resolver.resolve_from_release
+  - urisysnode.artifact_resolver.run_release
+  - urisysnode.artifact_resolver.select_artifact
+  - urisysnode.artifact_resolver.wait_health
+  urisysnode.client:
+  - urisysnode.client.call_via_route_map
+  - urisysnode.client.remote_call
+  urisysnode.display_bootstrap:
+  - urisysnode.display_bootstrap._agent_up
+  - urisysnode.display_bootstrap._agent_url
+  - urisysnode.display_bootstrap._ensure_session_env
+  - urisysnode.display_bootstrap._screencast_ready
+  - urisysnode.display_bootstrap._start_agent
+  - urisysnode.display_bootstrap._start_screencast
+  - urisysnode.display_bootstrap.bootstrap_wayland_capture
+  urisysnode.forward:
+  - urisysnode.forward.forward_call
+  urisysnode.forward_config:
+  - urisysnode.forward_config._normalize_entry
+  - urisysnode.forward_config._normalize_release_entry
+  - urisysnode.forward_config.load_forward_entries
+  - urisysnode.forward_config.load_release_forward_entries
+  - urisysnode.forward_config.wire_forward_packs
+  - urisysnode.forward_config.wire_release_forward_packs
+  urisysnode.handlers:
+  - urisysnode.handlers._get_supervisor
+  - urisysnode.handlers.command_indicator_off
+  - urisysnode.handlers.command_indicator_on
+  - urisysnode.handlers.command_install_pack
+  - urisysnode.handlers.command_register_forward
+  - urisysnode.handlers.command_restart_worker
+  - urisysnode.handlers.command_spawn_worker
+  - urisysnode.handlers.command_stop_worker
+  - urisysnode.handlers.query_health
+  - urisysnode.handlers.query_identity
+  - urisysnode.handlers.query_packs
+  - urisysnode.handlers.query_workers
+  urisysnode.identity.core:
+  - urisysnode.identity.core._data_dir
+  - urisysnode.identity.core._hostname
+  - urisysnode.identity.core._identity_path
+  - urisysnode.identity.core.default_data_root
+  - urisysnode.identity.core.default_events_path
+  - urisysnode.identity.core.load_identity
+  - urisysnode.identity.core.save_identity
+  urisysnode.identity.health:
+  - urisysnode.identity.health._detect_him_driver
+  - urisysnode.identity.health._get_config_source
+  - urisysnode.identity.health._get_driver_info
+  - urisysnode.identity.health._get_him_driver
+  - urisysnode.identity.health._get_pairing_info
+  - urisysnode.identity.health._get_python_info
+  - urisysnode.identity.health._get_runtime_info
+  - urisysnode.identity.health._get_uricontrol_version
+  - urisysnode.identity.health._get_urisys_version
+  - urisysnode.identity.health.health_payload
+  urisysnode.identity.pairing:
+  - urisysnode.identity.pairing._pairing_path
+  - urisysnode.identity.pairing.enroll
+  - urisysnode.identity.pairing.load_pairing
+  - urisysnode.identity.pairing.require_paired
+  - urisysnode.identity.pairing.save_pairing
+  - urisysnode.identity.pairing.set_remote_control
+  urisysnode.pack_resolver:
+  - urisysnode.pack_resolver._pip_install
+  - urisysnode.pack_resolver.auto_install_enabled
+  - urisysnode.pack_resolver.ensure_boot_pack
+  - urisysnode.pack_resolver.ensure_pack_pypi
+  - urisysnode.pack_resolver.ensure_pip_specs
+  - urisysnode.pack_resolver.ensure_real_deps
+  - urisysnode.pack_resolver.github_owner
+  - urisysnode.pack_resolver.github_wheel_url
+  - urisysnode.pack_resolver.github_wheel_urls
+  - urisysnode.pack_resolver.import_pack_module
+  - urisysnode.pack_resolver.pack_for_scheme
+  - urisysnode.pack_resolver.pack_importable
+  - urisysnode.pack_resolver.pack_install_source
+  - urisysnode.pack_resolver.pack_install_specs
+  - urisysnode.pack_resolver.pack_module
+  - urisysnode.pack_resolver.resolve_pack_spec
+  - urisysnode.pack_resolver.scheme_for_uri
+  urisysnode.port.manager:
+  - urisysnode.port.manager._collect_takeover_targets
+  - urisysnode.port.manager._is_node_serve_process
+  - urisysnode.port.manager._kill_pid
+  - urisysnode.port.manager._pids_on_port
+  - urisysnode.port.manager._wait_port_free
+  - urisysnode.port.manager._worker_pids_from_state
+  - urisysnode.port.manager.takeover_port
+  urisysnode.port.utils:
+  - urisysnode.port.utils._fuser_kill_port
+  - urisysnode.port.utils._pid_alive
+  - urisysnode.port.utils._pidfile_path
+  - urisysnode.port.utils._pids_on_port_ss
+  - urisysnode.port.utils._pids_serve_cmdline
+  - urisysnode.port.utils._read_cmdline
+  urisysnode.release_verify:
+  - urisysnode.release_verify._ed25519_verify
+  - urisysnode.release_verify.canonical_digest
+  - urisysnode.release_verify.signature_required
+  - urisysnode.release_verify.verify_release
+  urisysnode.remote:
+  - urisysnode.remote.build_wheel
+  - urisysnode.remote.call_uri
+  - urisysnode.remote.default_endpoint
+  - urisysnode.remote.default_nodes_registry
+  - urisysnode.remote.default_route_map
+  - urisysnode.remote.default_wheel_host
+  - urisysnode.remote.health
+  - urisysnode.remote.install_pack
+  - urisysnode.remote.pip_install
+  - urisysnode.remote.restart_worker
+  - urisysnode.remote.schedule_restart
+  - urisysnode.remote.serve_wheels
+  - urisysnode.remote.spawn_worker
+  - urisysnode.remote.stop_worker
+  - urisysnode.remote.upgrade_lenovo_kv
+  - urisysnode.remote.upgrade_lenovo_node
+  - urisysnode.remote.wait_health
+  - urisysnode.remote.wheel_url
+  - urisysnode.remote.workers
+  urisysnode.router:
+  - urisysnode.router._match_pattern
+  - urisysnode.router.load_route_map
+  - urisysnode.router.node_endpoint
+  - urisysnode.router.resolve_remote_route
+  - urisysnode.router.rewrite_uri_for_slave
+  urisysnode.runtime.builder:
+  - urisysnode.runtime.builder._extend_pack_paths
+  - urisysnode.runtime.builder._register_pack
+  - urisysnode.runtime.builder.build_runtime
+  urisysnode.runtime.config:
+  - urisysnode.runtime.config.resolve_node_config
+  urisysnode.runtime.packs:
+  - urisysnode.runtime.packs.apply_host_trust
+  - urisysnode.runtime.packs.ensure_isolated_pack
+  - urisysnode.runtime.packs.ensure_pack_for_uri
+  - urisysnode.runtime.packs.get_supervisor
+  - urisysnode.runtime.packs.isolation_mode
+  - urisysnode.runtime.packs.load_pack_into_runtime
+  urisysnode.serve:
+  - urisysnode.serve._app_chat_get
+  - urisysnode.serve._app_chat_post
+  - urisysnode.serve._app_chat_store
+  - urisysnode.serve._register_pack
+  - urisysnode.serve._release_forward_spec
+  - urisysnode.serve.call_uri
+  - urisysnode.serve.hotload_release_pack
+  - urisysnode.serve.make_handler
+  - urisysnode.serve.register_forward_pack
+  - urisysnode.serve.serve
+  urisysnode.supervisor:
+  - urisysnode.supervisor.PackSupervisor._fetch_patterns
+  - urisysnode.supervisor.PackSupervisor._needs_install
+  - urisysnode.supervisor.PackSupervisor._wait_health
+  - urisysnode.supervisor.PackSupervisor._wire
+  - urisysnode.supervisor.PackSupervisor.call_ephemeral
+  - urisysnode.supervisor.PackSupervisor.spawn
+  - urisysnode.supervisor.Worker.alive
+  - urisysnode.supervisor._free_port
+  - urisysnode.supervisor._http_get
+  - urisysnode.supervisor._schemes_of
+  urisysnode.worker:
+  - urisysnode.worker._load_node_profile
+  - urisysnode.worker._local_schemes
+  - urisysnode.worker._wire_router_callback
+  - urisysnode.worker.build_worker_runtime
+  - urisysnode.worker.main
+  - urisysnode.worker.serve_worker
+entry_points:
+- docker.entrypoint.show_gui_target
+- docker.entrypoint.start_xvfb
+- docker.entrypoint.verify_cli
+- urisysnode.app_data.AppChatStore.__init__
+- urisysnode.app_data.AppChatStore.append
+- urisysnode.app_data.AppChatStore.list_channels
+- urisysnode.app_data.AppChatStore.list_messages
+- urisysnode.app_handlers.command_chat_append
+- urisysnode.app_handlers.query_chat_channels
+- urisysnode.app_handlers.query_chat_messages
+- urisysnode.artifact_resolver._GitHubHeaderAuth.__init__
+- urisysnode.artifact_resolver._GitHubHeaderAuth.https_request
+- urisysnode.cli.main
+- urisysnode.forward.forward_call
+- urisysnode.handlers.command_indicator_off
+- urisysnode.handlers.command_indicator_on
+- urisysnode.handlers.command_install_pack
+- urisysnode.handlers.command_register_forward
+- urisysnode.handlers.command_restart_worker
+- urisysnode.handlers.command_spawn_worker
+- urisysnode.handlers.command_stop_worker
+- urisysnode.handlers.query_health
+- urisysnode.handlers.query_identity
+- urisysnode.handlers.query_packs
+- urisysnode.handlers.query_workers
+- urisysnode.pack_resolver.ensure_boot_pack
+- urisysnode.pack_resolver.github_wheel_urls
+- urisysnode.port.utils._pids_serve_cmdline
+- urisysnode.remote.main
+- urisysnode.routes.register
+- urisysnode.runtime.builder._pack_modules
+- urisysnode.serve._extend_pack_paths
+- urisysnode.supervisor.PackSupervisor.__init__
+- urisysnode.supervisor.PackSupervisor._default_worker_env
+- urisysnode.supervisor.PackSupervisor._fetch_patterns
+- urisysnode.supervisor.PackSupervisor._needs_install
+- urisysnode.supervisor.PackSupervisor._persist
+- urisysnode.supervisor.PackSupervisor._reap
+- urisysnode.supervisor.PackSupervisor._terminate
+- urisysnode.supervisor.PackSupervisor._wait_health
+- urisysnode.supervisor.PackSupervisor._wire
+- urisysnode.supervisor.PackSupervisor.call_ephemeral
+- urisysnode.supervisor.PackSupervisor.restart
+- urisysnode.supervisor.PackSupervisor.restore
+- urisysnode.supervisor.PackSupervisor.shutdown
+- urisysnode.supervisor.PackSupervisor.spawn
+- urisysnode.supervisor.PackSupervisor.start_monitor
+- urisysnode.supervisor.PackSupervisor.status
+- urisysnode.supervisor.PackSupervisor.stop
+- urisysnode.supervisor.Worker.alive
+- urisysnode.supervisor.Worker.to_record
+- urisysnode.worker.main

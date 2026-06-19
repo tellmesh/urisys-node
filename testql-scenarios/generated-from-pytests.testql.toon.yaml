@@ -1,0 +1,90 @@
+# SCENARIO: Auto-generated from Python Tests
+# TYPE: integration
+# GENERATED: true
+
+CONFIG[2]{key, value}:
+  base_url, ${api_url:-http://localhost:8101}
+  timeout_ms, 10000
+
+# Converted 80 assertions from pytest
+ASSERT[80]{field, operator, expected}:
+  seen.endpoint, ==, "http://192.168.188.201:8790"
+  env.URISYS_NODE_CONFIG, ==, str(prof.resolve())
+  env.URISYS_ALLOW_REAL, ==, "1"
+  env.URISYS_NODE_ROUTER, ==, "http://127.0.0.1:8790"
+  calls, ==, [("http://127.0.0.1:8790"
+  load_pairing().controller, ==, "https://controller.local"
+  docker_stack.service, ==, "urisys-node"
+  len(entries), ==, 1
+  entries[0].scheme, ==, "imgl"
+  entries[0].scheme, ==, "vql"
+  len(entries), ==, 2
+  entries[0].contract, ==, "urihim.contract"
+  entries[0].catalog, ==, fc.DEFAULT_CATALOG_URL
+  entries[1].catalog, ==, "https://cat"
+  calls, ==, [("urihim.contract"
+  rt.config.forward_targets.stepper, ==, "http://127.0.0.1:8791"
+  move.approval, ==, "required" and move.side_effects is True
+  pos.approval, ==, "not_required"
+  captured.endpoint, ==, "http://worker:8791"
+  captured.uri, ==, "stepper://x/query/position"
+  captured.payload, ==, {"unit": "mm"}
+  out.result.type, ==, "forward_no_target"
+  url, ==, "https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"
+  url, ==, "https://github.com/tellmesh/uristt/releases/download/v0.1.0/uristt-0.1.0-py3-none-any.whl"
+  url, ==, "https://github.com/tellmesh/uriwebrtc/releases/download/v0.1.0/uriwebrtc-0.1.0-py3-none-any.whl"
+  out.stage, ==, "pairing"
+  out.stage, ==, "registered"
+  out.scheme, ==, "stepper"
+  out.endpoint, ==, "http://127.0.0.1:8791"
+  rt.config.forward_targets.stepper, ==, "http://127.0.0.1:8791"
+  move.approval, ==, "required" and move.side_effects is True
+  out.stage, ==, "verify"
+  out.stage, ==, "spec"
+  out.scheme, ==, "him"
+  rt.config.forward_targets.him, ==, "http://127.0.0.1:8792"
+  click.approval, ==, "required" and click.side_effects is True
+  artifacts[0].ref, ==, "img:1"
+  captured.container_port, ==, 8794
+  captured.host_port, ==, 8895
+  out.container_port, ==, 8794
+  seen.endpoint, ==, "http://192.168.188.201:8790"
+  env.URISYS_NODE_CONFIG, ==, str(prof.resolve())
+  env.URISYS_ALLOW_REAL, ==, "1"
+  env.URISYS_NODE_ROUTER, ==, "http://127.0.0.1:8790"
+  calls, ==, [("http://127.0.0.1:8790"
+  load_pairing().controller, ==, "https://controller.local"
+  docker_stack.service, ==, "urisys-node"
+  len(entries), ==, 1
+  entries[0].scheme, ==, "imgl"
+  entries[0].scheme, ==, "vql"
+  len(entries), ==, 2
+  entries[0].contract, ==, "urihim.contract"
+  entries[0].catalog, ==, fc.DEFAULT_CATALOG_URL
+  entries[1].catalog, ==, "https://cat"
+  calls, ==, [("urihim.contract"
+  rt.config.forward_targets.stepper, ==, "http://127.0.0.1:8791"
+  move.approval, ==, "required" and move.side_effects is True
+  pos.approval, ==, "not_required"
+  captured.endpoint, ==, "http://worker:8791"
+  captured.uri, ==, "stepper://x/query/position"
+  captured.payload, ==, {"unit": "mm"}
+  out.result.type, ==, "forward_no_target"
+  url, ==, "https://github.com/tellmesh/urihim/releases/download/v0.1.3/urihim-0.1.3-py3-none-any.whl"
+  url, ==, "https://github.com/tellmesh/uristt/releases/download/v0.1.0/uristt-0.1.0-py3-none-any.whl"
+  url, ==, "https://github.com/tellmesh/uriwebrtc/releases/download/v0.1.0/uriwebrtc-0.1.0-py3-none-any.whl"
+  out.stage, ==, "pairing"
+  out.stage, ==, "registered"
+  out.scheme, ==, "stepper"
+  out.endpoint, ==, "http://127.0.0.1:8791"
+  rt.config.forward_targets.stepper, ==, "http://127.0.0.1:8791"
+  move.approval, ==, "required" and move.side_effects is True
+  out.stage, ==, "verify"
+  out.stage, ==, "spec"
+  out.scheme, ==, "him"
+  rt.config.forward_targets.him, ==, "http://127.0.0.1:8792"
+  click.approval, ==, "required" and click.side_effects is True
+  artifacts[0].ref, ==, "img:1"
+  captured.container_port, ==, 8794
+  captured.host_port, ==, 8895
+  out.container_port, ==, 8794

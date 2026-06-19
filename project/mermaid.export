@@ -1,0 +1,470 @@
+flowchart TD
+%% generated in 0.00s
+    subgraph docker__entrypoint
+        docker__entrypoint__start_xvfb["start_xvfb"]
+        docker__entrypoint__show_gui_target["show_gui_target"]
+        docker__entrypoint__verify_cli["verify_cli"]
+    end
+    subgraph urisysnode__app_data
+        urisysnode__app_data__default_app_chat_path["default_app_chat_path"]
+        urisysnode__app_data__AppChatStore____init__["__init__"]
+        urisysnode__app_data__AppChatStore__append["append"]
+        urisysnode__app_data__AppChatStore__list_messages["list_messages"]
+        urisysnode__app_data__AppChatStore__list_channels("list_channels CC=9")
+    end
+    subgraph urisysnode__app_handlers
+        urisysnode__app_handlers___store["_store"]
+        urisysnode__app_handlers__query_chat_messages["query_chat_messages"]
+        urisysnode__app_handlers__command_chat_append("command_chat_append CC=9")
+        urisysnode__app_handlers__query_chat_channels["query_chat_channels"]
+    end
+    subgraph urisysnode__artifact_resolver
+        urisysnode__artifact_resolver__is_url["is_url"]
+        urisysnode__artifact_resolver___auth_opener["_auth_opener"]
+        urisysnode__artifact_resolver___GitHubHeaderAuth____init__["__init__"]
+        urisysnode__artifact_resolver___GitHubHeaderAuth__https_request["https_request"]
+        urisysnode__artifact_resolver__fetch_json["fetch_json"]
+        urisysnode__artifact_resolver__fetch_text["fetch_text"]
+        urisysnode__artifact_resolver___contract_yaml_block["_contract_yaml_block"]
+        urisysnode__artifact_resolver__parse_contract_spec("parse_contract_spec CC=12")
+        urisysnode__artifact_resolver__contract_url_from_release["contract_url_from_release"]
+        urisysnode__artifact_resolver__contract_spec_from_release["contract_spec_from_release"]
+        urisysnode__artifact_resolver__load_node_profile["load_node_profile"]
+        urisysnode__artifact_resolver__load_artifact_index["load_artifact_index"]
+        urisysnode__artifact_resolver__release_api_url["release_api_url"]
+        urisysnode__artifact_resolver__fetch_release["fetch_release"]
+        urisysnode__artifact_resolver__select_artifact{{select_artifact CC=15}}
+        urisysnode__artifact_resolver__docker_pull["docker_pull"]
+        urisysnode__artifact_resolver__docker_run_worker["docker_run_worker"]
+        urisysnode__artifact_resolver__wait_health["wait_health"]
+        urisysnode__artifact_resolver__resolve_and_run["resolve_and_run"]
+        urisysnode__artifact_resolver__run_release("run_release CC=8")
+        urisysnode__artifact_resolver__resolve_from_release["resolve_from_release"]
+    end
+    subgraph urisysnode__cli
+        urisysnode__cli__main{{main CC=22}}
+    end
+    subgraph urisysnode__client
+        urisysnode__client__discover_mdns["discover_mdns"]
+        urisysnode__client__remote_call["remote_call"]
+        urisysnode__client__call_via_route_map["call_via_route_map"]
+    end
+    subgraph urisysnode__display_bootstrap
+        urisysnode__display_bootstrap___ensure_session_env["_ensure_session_env"]
+        urisysnode__display_bootstrap___agent_url["_agent_url"]
+        urisysnode__display_bootstrap___agent_up["_agent_up"]
+        urisysnode__display_bootstrap___screencast_ready["_screencast_ready"]
+        urisysnode__display_bootstrap___start_agent["_start_agent"]
+        urisysnode__display_bootstrap___start_screencast["_start_screencast"]
+        urisysnode__display_bootstrap__bootstrap_wayland_capture["bootstrap_wayland_capture"]
+    end
+    subgraph urisysnode__forward
+        urisysnode__forward__forward_call("forward_call CC=9")
+    end
+    subgraph urisysnode__forward_config
+        urisysnode__forward_config___normalize_entry("_normalize_entry CC=11")
+        urisysnode__forward_config__load_forward_entries{{load_forward_entries CC=15}}
+        urisysnode__forward_config__wire_forward_packs["wire_forward_packs"]
+        urisysnode__forward_config___normalize_release_entry("_normalize_release_entry CC=11")
+        urisysnode__forward_config__load_release_forward_entries("load_release_forward_entries CC=11")
+        urisysnode__forward_config__wire_release_forward_packs["wire_release_forward_packs"]
+    end
+    subgraph urisysnode__handlers
+        urisysnode__handlers__query_health["query_health"]
+        urisysnode__handlers__query_identity["query_identity"]
+        urisysnode__handlers__command_indicator_on["command_indicator_on"]
+        urisysnode__handlers__command_indicator_off["command_indicator_off"]
+        urisysnode__handlers__query_packs["query_packs"]
+        urisysnode__handlers__command_install_pack["command_install_pack"]
+        urisysnode__handlers___get_supervisor["_get_supervisor"]
+        urisysnode__handlers__command_spawn_worker("command_spawn_worker CC=11")
+        urisysnode__handlers__query_workers["query_workers"]
+        urisysnode__handlers__command_restart_worker["command_restart_worker"]
+        urisysnode__handlers__command_stop_worker["command_stop_worker"]
+        urisysnode__handlers__command_register_forward["command_register_forward"]
+    end
+    subgraph urisysnode__identity
+        urisysnode__identity__pairing___pairing_path["_pairing_path"]
+        urisysnode__identity__pairing__load_pairing["load_pairing"]
+        urisysnode__identity__pairing__save_pairing["save_pairing"]
+        urisysnode__identity__pairing__enroll["enroll"]
+        urisysnode__identity__pairing__set_remote_control["set_remote_control"]
+        urisysnode__identity__pairing__require_paired["require_paired"]
+        urisysnode__identity__health___detect_him_driver["_detect_him_driver"]
+        urisysnode__identity__health___get_urisys_version["_get_urisys_version"]
+        urisysnode__identity__health___get_uricontrol_version["_get_uricontrol_version"]
+        urisysnode__identity__health___get_python_info["_get_python_info"]
+        urisysnode__identity__health___get_pairing_info["_get_pairing_info"]
+        urisysnode__identity__health___get_him_driver["_get_him_driver"]
+        urisysnode__identity__health___get_config_source["_get_config_source"]
+        urisysnode__identity__health___get_driver_info["_get_driver_info"]
+        urisysnode__identity__health___get_runtime_info["_get_runtime_info"]
+        urisysnode__identity__health__health_payload["health_payload"]
+        urisysnode__identity__core__default_data_root["default_data_root"]
+        urisysnode__identity__core__default_events_path["default_events_path"]
+        urisysnode__identity__core___data_dir["_data_dir"]
+        urisysnode__identity__core___identity_path["_identity_path"]
+        urisysnode__identity__core___hostname["_hostname"]
+        urisysnode__identity__core__load_identity["load_identity"]
+        urisysnode__identity__core__save_identity["save_identity"]
+    end
+    subgraph urisysnode__pack_resolver
+        urisysnode__pack_resolver__auto_install_enabled["auto_install_enabled"]
+        urisysnode__pack_resolver__pack_install_source["pack_install_source"]
+        urisysnode__pack_resolver__github_owner["github_owner"]
+        urisysnode__pack_resolver__github_wheel_url["github_wheel_url"]
+        urisysnode__pack_resolver__resolve_pack_spec("resolve_pack_spec CC=10")
+        urisysnode__pack_resolver__pack_module["pack_module"]
+        urisysnode__pack_resolver__scheme_for_uri["scheme_for_uri"]
+        urisysnode__pack_resolver__pack_for_scheme["pack_for_scheme"]
+        urisysnode__pack_resolver___pip_install["_pip_install"]
+        urisysnode__pack_resolver__ensure_pip_specs["ensure_pip_specs"]
+        urisysnode__pack_resolver__pack_install_specs("pack_install_specs CC=8")
+        urisysnode__pack_resolver__ensure_pack_pypi["ensure_pack_pypi"]
+        urisysnode__pack_resolver__ensure_boot_pack["ensure_boot_pack"]
+        urisysnode__pack_resolver__ensure_real_deps["ensure_real_deps"]
+        urisysnode__pack_resolver__github_wheel_urls["github_wheel_urls"]
+        urisysnode__pack_resolver__import_pack_module["import_pack_module"]
+        urisysnode__pack_resolver__pack_importable["pack_importable"]
+    end
+    subgraph urisysnode__port
+        urisysnode__port__manager___pids_on_port{{_pids_on_port CC=16}}
+        urisysnode__port__manager___kill_pid("_kill_pid CC=9")
+        urisysnode__port__manager___worker_pids_from_state("_worker_pids_from_state CC=10")
+        urisysnode__port__manager___wait_port_free["_wait_port_free"]
+        urisysnode__port__manager___is_node_serve_process{{_is_node_serve_process CC=16}}
+        urisysnode__port__manager___collect_takeover_targets("_collect_takeover_targets CC=12")
+        urisysnode__port__manager__takeover_port["takeover_port"]
+        urisysnode__port__utils___pidfile_path["_pidfile_path"]
+        urisysnode__port__utils___pid_alive["_pid_alive"]
+        urisysnode__port__utils___read_cmdline["_read_cmdline"]
+        urisysnode__port__utils___pids_serve_cmdline["_pids_serve_cmdline"]
+        urisysnode__port__utils___pids_on_port_ss["_pids_on_port_ss"]
+        urisysnode__port__utils___fuser_kill_port["_fuser_kill_port"]
+    end
+    subgraph urisysnode__release_verify
+        urisysnode__release_verify__signature_required["signature_required"]
+        urisysnode__release_verify__canonical_digest["canonical_digest"]
+        urisysnode__release_verify__load_trusted_keys["load_trusted_keys"]
+        urisysnode__release_verify___ed25519_verify["_ed25519_verify"]
+        urisysnode__release_verify__verify_release("verify_release CC=14")
+    end
+    subgraph urisysnode__remote
+        urisysnode__remote__default_route_map["default_route_map"]
+        urisysnode__remote__default_nodes_registry["default_nodes_registry"]
+        urisysnode__remote__default_endpoint["default_endpoint"]
+        urisysnode__remote__default_wheel_host["default_wheel_host"]
+        urisysnode__remote__health["health"]
+        urisysnode__remote__wait_health["wait_health"]
+        urisysnode__remote__call_uri["call_uri"]
+        urisysnode__remote__pip_install["pip_install"]
+        urisysnode__remote__install_pack["install_pack"]
+        urisysnode__remote__spawn_worker["spawn_worker"]
+        urisysnode__remote__restart_worker["restart_worker"]
+        urisysnode__remote__stop_worker["stop_worker"]
+        urisysnode__remote__workers["workers"]
+        urisysnode__remote__schedule_restart["schedule_restart"]
+        urisysnode__remote___restart_scheduled["_restart_scheduled"]
+        urisysnode__remote__build_wheel["build_wheel"]
+        urisysnode__remote__serve_wheels["serve_wheels"]
+        urisysnode__remote__wheel_url["wheel_url"]
+        urisysnode__remote__upgrade_lenovo_node["upgrade_lenovo_node"]
+        urisysnode__remote__upgrade_lenovo_kv["upgrade_lenovo_kv"]
+        urisysnode__remote__main{{main CC=26}}
+    end
+    subgraph urisysnode__router
+        urisysnode__router__load_route_map["load_route_map"]
+        urisysnode__router___match_pattern["_match_pattern"]
+        urisysnode__router__resolve_remote_route["resolve_remote_route"]
+        urisysnode__router__rewrite_uri_for_slave("rewrite_uri_for_slave CC=8")
+        urisysnode__router__node_endpoint["node_endpoint"]
+    end
+    subgraph urisysnode__routes
+        urisysnode__routes__register["register"]
+    end
+    subgraph urisysnode__runtime
+        urisysnode__runtime__config__resolve_node_config["resolve_node_config"]
+        urisysnode__runtime__config___default_real_config["_default_real_config"]
+        urisysnode__runtime__packs___bootstrap_worker_packs["_bootstrap_worker_packs"]
+        urisysnode__runtime__packs__load_pack_into_runtime{{load_pack_into_runtime CC=30}}
+        urisysnode__runtime__packs__isolation_mode["isolation_mode"]
+        urisysnode__runtime__packs__get_supervisor["get_supervisor"]
+        urisysnode__runtime__packs__ensure_isolated_pack("ensure_isolated_pack CC=9")
+        urisysnode__runtime__packs__ensure_pack_for_uri["ensure_pack_for_uri"]
+        urisysnode__runtime__packs__apply_host_trust("apply_host_trust CC=10")
+        urisysnode__runtime__builder___extend_pack_paths["_extend_pack_paths"]
+        urisysnode__runtime__builder___pack_modules["_pack_modules"]
+        urisysnode__runtime__builder___register_pack("_register_pack CC=14")
+        urisysnode__runtime__builder__build_runtime{{build_runtime CC=18}}
+    end
+    subgraph urisysnode__serve
+        urisysnode__serve___extend_pack_paths["_extend_pack_paths"]
+        urisysnode__serve___pack_modules["_pack_modules"]
+        urisysnode__serve___register_pack("_register_pack CC=14")
+        urisysnode__serve__call_uri{{call_uri CC=22}}
+        urisysnode__serve__register_forward_pack("register_forward_pack CC=13")
+        urisysnode__serve___release_forward_spec("_release_forward_spec CC=11")
+        urisysnode__serve__hotload_release_pack("hotload_release_pack CC=14")
+        urisysnode__serve___app_chat_store["_app_chat_store"]
+        urisysnode__serve___app_chat_get("_app_chat_get CC=10")
+        urisysnode__serve___app_chat_post("_app_chat_post CC=9")
+        urisysnode__serve__make_handler["make_handler"]
+        urisysnode__serve__serve{{serve CC=16}}
+    end
+    subgraph urisysnode__supervisor
+        urisysnode__supervisor___free_port["_free_port"]
+        urisysnode__supervisor___http_get["_http_get"]
+        urisysnode__supervisor___schemes_of["_schemes_of"]
+        urisysnode__supervisor__Worker__alive["alive"]
+        urisysnode__supervisor__Worker__to_record["to_record"]
+        urisysnode__supervisor__PackSupervisor____init__["__init__"]
+        urisysnode__supervisor__PackSupervisor___default_worker_env("_default_worker_env CC=8")
+        urisysnode__supervisor__PackSupervisor__spawn{{spawn CC=15}}
+        urisysnode__supervisor__PackSupervisor__call_ephemeral{{call_ephemeral CC=16}}
+        urisysnode__supervisor__PackSupervisor__restart["restart"]
+        urisysnode__supervisor__PackSupervisor___needs_install["_needs_install"]
+        urisysnode__supervisor__PackSupervisor__stop["stop"]
+        urisysnode__supervisor__PackSupervisor__status["status"]
+        urisysnode__supervisor__PackSupervisor__shutdown["shutdown"]
+        urisysnode__supervisor__PackSupervisor__start_monitor["start_monitor"]
+        urisysnode__supervisor__PackSupervisor___reap["_reap"]
+        urisysnode__supervisor__PackSupervisor__restore("restore CC=11")
+        urisysnode__supervisor__PackSupervisor___wait_health["_wait_health"]
+        urisysnode__supervisor__PackSupervisor___fetch_patterns["_fetch_patterns"]
+        urisysnode__supervisor__PackSupervisor___wire["_wire"]
+        urisysnode__supervisor__PackSupervisor___terminate["_terminate"]
+        urisysnode__supervisor__PackSupervisor___persist["_persist"]
+    end
+    subgraph urisysnode__worker
+        urisysnode__worker___load_node_profile["_load_node_profile"]
+        urisysnode__worker___local_schemes["_local_schemes"]
+        urisysnode__worker___wire_router_callback["_wire_router_callback"]
+        urisysnode__worker__build_worker_runtime["build_worker_runtime"]
+        urisysnode__worker__serve_worker["serve_worker"]
+        urisysnode__worker__main["main"]
+    end
+    urisysnode__release_verify__verify_release --> urisysnode__release_verify__signature_required
+    urisysnode__release_verify__verify_release --> urisysnode__release_verify__canonical_digest
+    urisysnode__release_verify__verify_release --> urisysnode__release_verify___ed25519_verify
+    urisysnode__release_verify__verify_release --> urisysnode__release_verify__load_trusted_keys
+    urisysnode__forward_config__load_forward_entries --> urisysnode__forward_config___normalize_entry
+    urisysnode__forward_config__wire_forward_packs --> urisysnode__serve__register_forward_pack
+    urisysnode__forward_config__load_release_forward_entries --> urisysnode__forward_config___normalize_release_entry
+    urisysnode__forward_config__wire_release_forward_packs --> urisysnode__serve__hotload_release_pack
+    urisysnode__client__call_via_route_map --> urisysnode__router__load_route_map
+    urisysnode__client__call_via_route_map --> urisysnode__router__resolve_remote_route
+    urisysnode__client__call_via_route_map --> urisysnode__router__node_endpoint
+    urisysnode__client__call_via_route_map --> urisysnode__router__rewrite_uri_for_slave
+    urisysnode__client__call_via_route_map --> urisysnode__client__remote_call
+    urisysnode__forward__forward_call --> urisysnode__client__remote_call
+    urisysnode__remote__health --> urisysnode__remote__default_endpoint
+    urisysnode__remote__wait_health --> urisysnode__remote__default_endpoint
+    urisysnode__remote__wait_health --> urisysnode__remote__health
+    urisysnode__remote__call_uri --> urisysnode__client__call_via_route_map
+    urisysnode__remote__call_uri --> urisysnode__client__remote_call
+    urisysnode__remote__call_uri --> urisysnode__remote__default_route_map
+    urisysnode__remote__call_uri --> urisysnode__remote__default_nodes_registry
+    urisysnode__remote__pip_install --> urisysnode__remote__call_uri
+    urisysnode__remote__install_pack --> urisysnode__remote__call_uri
+    urisysnode__remote__spawn_worker --> urisysnode__remote__call_uri
+    urisysnode__remote__restart_worker --> urisysnode__remote__call_uri
+    urisysnode__remote__stop_worker --> urisysnode__remote__call_uri
+    urisysnode__remote__workers --> urisysnode__remote__call_uri
+    urisysnode__remote__schedule_restart --> urisysnode__remote__call_uri
+    urisysnode__remote__wheel_url --> urisysnode__remote__default_wheel_host
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__build_wheel
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__serve_wheels
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__default_wheel_host
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__default_endpoint
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__health
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__pip_install
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__schedule_restart
+    urisysnode__remote__upgrade_lenovo_node --> urisysnode__remote__wait_health
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__build_wheel
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__serve_wheels
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__default_wheel_host
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__health
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__pip_install
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__schedule_restart
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__wait_health
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__install_pack
+    urisysnode__remote__upgrade_lenovo_kv --> urisysnode__remote__call_uri
+    urisysnode__router__resolve_remote_route --> urisysnode__router___match_pattern
+    urisysnode__display_bootstrap___agent_up --> urisysnode__display_bootstrap___agent_url
+    urisysnode__display_bootstrap___screencast_ready --> urisysnode__display_bootstrap___agent_url
+    urisysnode__display_bootstrap___start_agent --> urisysnode__display_bootstrap___agent_up
+    urisysnode__display_bootstrap___start_screencast --> urisysnode__display_bootstrap___screencast_ready
+    urisysnode__display_bootstrap___start_screencast --> urisysnode__display_bootstrap___agent_url
+    urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisysnode__display_bootstrap___ensure_session_env
+    urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisysnode__display_bootstrap___agent_url
+    urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisysnode__display_bootstrap___agent_up
+    urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisysnode__display_bootstrap___start_agent
+    urisysnode__display_bootstrap__bootstrap_wayland_capture --> urisysnode__display_bootstrap___start_screencast
+    urisysnode__pack_resolver__github_wheel_url --> urisysnode__pack_resolver__github_owner
+    urisysnode__pack_resolver__resolve_pack_spec --> urisysnode__pack_resolver__github_wheel_url
+    urisysnode__pack_resolver__resolve_pack_spec --> urisysnode__pack_resolver__pack_install_source
+    urisysnode__pack_resolver__ensure_pip_specs --> urisysnode__pack_resolver___pip_install
+    urisysnode__pack_resolver__ensure_pip_specs --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__pack_resolver__pack_install_specs --> urisysnode__pack_resolver__resolve_pack_spec
+    urisysnode__pack_resolver__ensure_pack_pypi --> urisysnode__pack_resolver__pack_install_specs
+    urisysnode__pack_resolver__ensure_pack_pypi --> urisysnode__pack_resolver__ensure_pip_specs
+    urisysnode__pack_resolver__ensure_pack_pypi --> urisysnode__pack_resolver__pack_install_source
+    urisysnode__pack_resolver__ensure_boot_pack --> urisysnode__pack_resolver__github_wheel_url
+    urisysnode__pack_resolver__ensure_boot_pack --> urisysnode__pack_resolver___pip_install
+    urisysnode__pack_resolver__ensure_boot_pack --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__pack_resolver__ensure_real_deps --> urisysnode__pack_resolver__ensure_pip_specs
+    urisysnode__pack_resolver__github_wheel_urls --> urisysnode__pack_resolver__resolve_pack_spec
+    urisysnode__pack_resolver__import_pack_module --> urisysnode__pack_resolver__pack_module
+    urisysnode__pack_resolver__pack_importable --> urisysnode__pack_resolver__import_pack_module
+    urisysnode__artifact_resolver__fetch_json --> urisysnode__artifact_resolver___auth_opener
+    urisysnode__artifact_resolver__fetch_text --> urisysnode__artifact_resolver___auth_opener
+    urisysnode__artifact_resolver__parse_contract_spec --> urisysnode__artifact_resolver___contract_yaml_block
+    urisysnode__artifact_resolver__contract_spec_from_release --> urisysnode__artifact_resolver__contract_url_from_release
+    urisysnode__artifact_resolver__contract_spec_from_release --> urisysnode__artifact_resolver__parse_contract_spec
+    urisysnode__artifact_resolver__contract_spec_from_release --> urisysnode__artifact_resolver__fetch_text
+    urisysnode__artifact_resolver__load_artifact_index --> urisysnode__artifact_resolver__is_url
+    urisysnode__artifact_resolver__load_artifact_index --> urisysnode__artifact_resolver__fetch_json
+    urisysnode__artifact_resolver__fetch_release --> urisysnode__artifact_resolver__fetch_json
+    urisysnode__artifact_resolver__fetch_release --> urisysnode__artifact_resolver__release_api_url
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__load_artifact_index
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__load_node_profile
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__select_artifact
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__docker_pull
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__docker_run_worker
+    urisysnode__artifact_resolver__resolve_and_run --> urisysnode__artifact_resolver__wait_health
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__load_artifact_index
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__load_node_profile
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__select_artifact
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__docker_pull
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__docker_run_worker
+    urisysnode__artifact_resolver__run_release --> urisysnode__artifact_resolver__wait_health
+    urisysnode__artifact_resolver__resolve_from_release --> urisysnode__artifact_resolver__fetch_release
+    urisysnode__artifact_resolver__resolve_from_release --> urisysnode__artifact_resolver__run_release
+    urisysnode__app_data__default_app_chat_path --> urisysnode__identity__core__default_data_root
+    urisysnode__app_data__AppChatStore____init__ --> urisysnode__app_data__default_app_chat_path
+    urisysnode__app_handlers__query_chat_messages --> urisysnode__app_handlers___store
+    urisysnode__app_handlers__command_chat_append --> urisysnode__app_handlers___store
+    urisysnode__app_handlers__query_chat_channels --> urisysnode__app_handlers___store
+    urisysnode__worker___load_node_profile --> urisysnode__runtime__config__resolve_node_config
+    urisysnode__worker___wire_router_callback --> urisysnode__worker___local_schemes
+    urisysnode__worker___wire_router_callback --> urisysnode__client__remote_call
+    urisysnode__worker__build_worker_runtime --> urisysnode__worker___wire_router_callback
+    urisysnode__worker__build_worker_runtime --> urisysnode__identity__core__default_events_path
+    urisysnode__worker__build_worker_runtime --> urisysnode__worker___load_node_profile
+    urisysnode__worker__build_worker_runtime --> urisysnode__runtime__packs__load_pack_into_runtime
+    urisysnode__worker__serve_worker --> urisysnode__worker__build_worker_runtime
+    urisysnode__worker__serve_worker --> urisysnode__serve__make_handler
+    urisysnode__worker__main --> urisysnode__worker__serve_worker
+    urisysnode__worker__main --> urisysnode__worker__build_worker_runtime
+    urisysnode__port__manager___kill_pid --> urisysnode__port__utils___pid_alive
+    urisysnode__port__manager___worker_pids_from_state --> urisysnode__port__utils___pid_alive
+    urisysnode__port__manager___worker_pids_from_state --> urisysnode__identity__core__default_events_path
+    urisysnode__port__manager___is_node_serve_process --> urisysnode__port__utils___read_cmdline
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__utils___pidfile_path
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__utils___pid_alive
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__manager___worker_pids_from_state
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__manager___pids_on_port
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__utils___pids_on_port_ss
+    urisysnode__port__manager___collect_takeover_targets --> urisysnode__port__manager___is_node_serve_process
+    urisysnode__port__manager__takeover_port --> urisysnode__port__manager___wait_port_free
+    urisysnode__port__manager__takeover_port --> urisysnode__port__manager___collect_takeover_targets
+    urisysnode__port__manager__takeover_port --> urisysnode__port__utils___fuser_kill_port
+    urisysnode__port__manager__takeover_port --> urisysnode__port__manager___kill_pid
+    urisysnode__port__utils___pidfile_path --> urisysnode__identity__core__default_events_path
+    urisysnode__port__utils___pids_serve_cmdline --> urisysnode__port__utils___read_cmdline
+    urisysnode__identity__pairing___pairing_path --> urisysnode__identity__core___data_dir
+    urisysnode__identity__pairing__load_pairing --> urisysnode__identity__pairing___pairing_path
+    urisysnode__identity__pairing__save_pairing --> urisysnode__identity__pairing___pairing_path
+    urisysnode__identity__pairing__enroll --> urisysnode__identity__core__load_identity
+    urisysnode__identity__pairing__enroll --> urisysnode__identity__pairing__save_pairing
+    urisysnode__identity__pairing__set_remote_control --> urisysnode__identity__pairing__load_pairing
+    urisysnode__identity__pairing__set_remote_control --> urisysnode__identity__pairing__save_pairing
+    urisysnode__identity__pairing__require_paired --> urisysnode__identity__pairing__load_pairing
+    urisysnode__identity__health___get_pairing_info --> urisysnode__identity__pairing__load_pairing
+    urisysnode__identity__health___get_him_driver --> urisysnode__identity__health___detect_him_driver
+    urisysnode__identity__health___get_runtime_info --> urisysnode__identity__health___get_driver_info
+    urisysnode__identity__health___get_runtime_info --> urisysnode__identity__health___get_config_source
+    urisysnode__identity__health__health_payload --> urisysnode__identity__core__load_identity
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_uricontrol_version
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_him_driver
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_urisys_version
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_python_info
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_pairing_info
+    urisysnode__identity__health__health_payload --> urisysnode__identity__health___get_runtime_info
+    urisysnode__identity__core__default_events_path --> urisysnode__identity__core__default_data_root
+    urisysnode__identity__core___data_dir --> urisysnode__identity__core__default_data_root
+    urisysnode__identity__core___identity_path --> urisysnode__identity__core___data_dir
+    urisysnode__identity__core__load_identity --> urisysnode__identity__core___identity_path
+    urisysnode__identity__core__load_identity --> urisysnode__identity__core__save_identity
+    urisysnode__identity__core__load_identity --> urisysnode__identity__core___hostname
+    urisysnode__identity__core__save_identity --> urisysnode__identity__core___identity_path
+    urisysnode__supervisor__Worker__alive --> urisysnode__supervisor___http_get
+    urisysnode__supervisor__PackSupervisor__spawn --> urisysnode__supervisor___free_port
+    urisysnode__supervisor__PackSupervisor__call_ephemeral --> urisysnode__supervisor___free_port
+    urisysnode__supervisor__PackSupervisor__call_ephemeral --> urisysnode__client__remote_call
+    urisysnode__supervisor__PackSupervisor___needs_install --> urisysnode__pack_resolver__pack_importable
+    urisysnode__supervisor__PackSupervisor___wait_health --> urisysnode__supervisor___http_get
+    urisysnode__supervisor__PackSupervisor___fetch_patterns --> urisysnode__supervisor___http_get
+    urisysnode__supervisor__PackSupervisor___wire --> urisysnode__serve__register_forward_pack
+    urisysnode__supervisor__PackSupervisor___wire --> urisysnode__supervisor___schemes_of
+    urisysnode__serve___register_pack --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__serve__call_uri --> urisysnode__runtime__packs__apply_host_trust
+    urisysnode__serve__call_uri --> urisysnode__runtime__packs__ensure_isolated_pack
+    urisysnode__serve__call_uri --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__serve__call_uri --> urisysnode__runtime__packs__ensure_pack_for_uri
+    urisysnode__serve__call_uri --> urisysnode__pack_resolver__scheme_for_uri
+    urisysnode__serve___release_forward_spec --> urisysnode__artifact_resolver__contract_spec_from_release
+    urisysnode__serve__hotload_release_pack --> urisysnode__release_verify__verify_release
+    urisysnode__serve__hotload_release_pack --> urisysnode__serve__register_forward_pack
+    urisysnode__serve__hotload_release_pack --> urisysnode__identity__pairing__require_paired
+    urisysnode__serve__hotload_release_pack --> urisysnode__artifact_resolver__fetch_release
+    urisysnode__serve__hotload_release_pack --> urisysnode__serve___release_forward_spec
+    urisysnode__serve__hotload_release_pack --> urisysnode__artifact_resolver__run_release
+    urisysnode__serve___app_chat_get --> urisysnode__serve___app_chat_store
+    urisysnode__serve___app_chat_post --> urisysnode__serve___app_chat_store
+    urisysnode__serve__make_handler --> urisysnode__serve__call_uri
+    urisysnode__serve__make_handler --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__serve__serve --> urisysnode__port__utils___pidfile_path
+    urisysnode__serve__serve --> urisysnode__identity__core__load_identity
+    urisysnode__serve__serve --> urisysnode__port__manager__takeover_port
+    urisysnode__serve__serve --> urisysnode__display_bootstrap__bootstrap_wayland_capture
+    urisysnode__handlers__query_health --> urisysnode__identity__health__health_payload
+    urisysnode__handlers__query_identity --> urisysnode__identity__core__load_identity
+    urisysnode__handlers__query_identity --> urisysnode__identity__pairing__load_pairing
+    urisysnode__handlers__command_indicator_on --> urisysnode__identity__pairing__require_paired
+    urisysnode__handlers__command_indicator_on --> urisysnode__identity__pairing__set_remote_control
+    urisysnode__handlers__command_indicator_off --> urisysnode__identity__pairing__require_paired
+    urisysnode__handlers__command_indicator_off --> urisysnode__identity__pairing__set_remote_control
+    urisysnode__handlers__query_packs --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__handlers__command_install_pack --> urisysnode__runtime__packs__load_pack_into_runtime
+    urisysnode__handlers___get_supervisor --> urisysnode__runtime__packs__get_supervisor
+    urisysnode__handlers__command_spawn_worker --> urisysnode__handlers___get_supervisor
+    urisysnode__handlers__query_workers --> urisysnode__handlers___get_supervisor
+    urisysnode__handlers__command_restart_worker --> urisysnode__handlers___get_supervisor
+    urisysnode__handlers__command_stop_worker --> urisysnode__handlers___get_supervisor
+    urisysnode__handlers__command_register_forward --> urisysnode__serve__register_forward_pack
+    urisysnode__runtime__packs___bootstrap_worker_packs --> urisysnode__pack_resolver__pack_importable
+    urisysnode__runtime__packs__load_pack_into_runtime --> urisysnode__pack_resolver__ensure_pack_pypi
+    urisysnode__runtime__packs__load_pack_into_runtime --> urisysnode__serve___register_pack
+    urisysnode__runtime__packs__ensure_isolated_pack --> urisysnode__runtime__packs__isolation_mode
+    urisysnode__runtime__packs__ensure_isolated_pack --> urisysnode__pack_resolver__scheme_for_uri
+    urisysnode__runtime__packs__ensure_isolated_pack --> urisysnode__pack_resolver__pack_for_scheme
+    urisysnode__runtime__packs__ensure_isolated_pack --> urisysnode__runtime__packs__get_supervisor
+    urisysnode__runtime__packs__ensure_isolated_pack --> urisysnode__pack_resolver__pack_importable
+    urisysnode__runtime__packs__ensure_pack_for_uri --> urisysnode__pack_resolver__scheme_for_uri
+    urisysnode__runtime__packs__ensure_pack_for_uri --> urisysnode__pack_resolver__pack_for_scheme
+    urisysnode__runtime__packs__ensure_pack_for_uri --> urisysnode__runtime__packs__load_pack_into_runtime
+    urisysnode__runtime__packs__ensure_pack_for_uri --> urisysnode__pack_resolver__pack_importable
+    urisysnode__runtime__builder___register_pack --> urisysnode__pack_resolver__auto_install_enabled
+    urisysnode__runtime__builder__build_runtime --> urisysnode__runtime__builder___extend_pack_paths
+    urisysnode__runtime__builder__build_runtime --> urisysnode__runtime__config__resolve_node_config
+    urisysnode__runtime__builder__build_runtime --> urisysnode__runtime__builder___register_pack
+    urisysnode__runtime__builder__build_runtime --> urisysnode__forward_config__load_forward_entries
+    urisysnode__runtime__builder__build_runtime --> urisysnode__forward_config__load_release_forward_entries
+    urisysnode__runtime__builder__build_runtime --> urisysnode__runtime__packs___bootstrap_worker_packs
+    urisysnode__runtime__builder__build_runtime --> urisysnode__runtime__config___default_real_config
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class urisysnode__cli__main,urisysnode__forward_config__load_forward_entries,urisysnode__remote__main,urisysnode__artifact_resolver__select_artifact,urisysnode__port__manager___pids_on_port,urisysnode__port__manager___is_node_serve_process,urisysnode__supervisor__PackSupervisor__spawn,urisysnode__supervisor__PackSupervisor__call_ephemeral,urisysnode__serve__call_uri,urisysnode__serve__serve,urisysnode__runtime__packs__load_pack_into_runtime,urisysnode__runtime__builder__build_runtime highCC
+    class urisysnode__release_verify__verify_release,urisysnode__forward_config___normalize_entry,urisysnode__forward_config___normalize_release_entry,urisysnode__forward_config__load_release_forward_entries,urisysnode__forward__forward_call,urisysnode__router__rewrite_uri_for_slave,urisysnode__pack_resolver__resolve_pack_spec,urisysnode__pack_resolver__pack_install_specs,urisysnode__artifact_resolver__parse_contract_spec,urisysnode__artifact_resolver__run_release,urisysnode__app_data__AppChatStore__list_channels,urisysnode__app_handlers__command_chat_append,urisysnode__port__manager___kill_pid,urisysnode__port__manager___worker_pids_from_state,urisysnode__port__manager___collect_takeover_targets,urisysnode__supervisor__PackSupervisor___default_worker_env,urisysnode__supervisor__PackSupervisor__restore,urisysnode__serve___register_pack,urisysnode__serve__register_forward_pack,urisysnode__serve___release_forward_spec,urisysnode__serve__hotload_release_pack,urisysnode__serve___app_chat_get,urisysnode__serve___app_chat_post,urisysnode__handlers__command_spawn_worker,urisysnode__runtime__packs__ensure_isolated_pack,urisysnode__runtime__packs__apply_host_trust,urisysnode__runtime__builder___register_pack medCC

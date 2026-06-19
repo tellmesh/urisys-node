@@ -1,0 +1,212 @@
+# code2llm | 61f 7784L | python:30,yaml:15,json:7,shell:5,yml:1,gui:1,toml:1 | 2026-06-19
+# generated in 0.01s
+# CC̅=4.9 | critical:12/201 | dups:0 | cycles:0
+
+HEALTH[12]:
+  🟡 CC    main CC=22 (limit:15)
+  🟡 CC    load_forward_entries CC=15 (limit:15)
+  🟡 CC    main CC=26 (limit:15)
+  🟡 CC    select_artifact CC=15 (limit:15)
+  🟡 CC    _pids_on_port CC=16 (limit:15)
+  🟡 CC    _is_node_serve_process CC=16 (limit:15)
+  🟡 CC    spawn CC=15 (limit:15)
+  🟡 CC    call_ephemeral CC=16 (limit:15)
+  🟡 CC    call_uri CC=22 (limit:15)
+  🟡 CC    serve CC=16 (limit:15)
+  🟡 CC    load_pack_into_runtime CC=30 (limit:15)
+  🟡 CC    build_runtime CC=18 (limit:15)
+
+REFACTOR[1]:
+  1. split 12 high-CC methods  (CC>15)
+
+PIPELINES[46]:
+  [1] Src [main]: main → build_runtime → _extend_pack_paths
+      PURITY: 100% pure
+  [2] Src [register]: register
+      PURITY: 100% pure
+  [3] Src [forward_call]: forward_call → remote_call
+      PURITY: 100% pure
+  [4] Src [main]: main → call_uri → call_via_route_map → load_route_map
+      PURITY: 100% pure
+  [5] Src [ensure_boot_pack]: ensure_boot_pack → github_wheel_url → github_owner
+      PURITY: 100% pure
+  [6] Src [github_wheel_urls]: github_wheel_urls → resolve_pack_spec → github_wheel_url → github_owner
+      PURITY: 100% pure
+  [7] Src [https_request]: https_request
+      PURITY: 100% pure
+  [8] Src [__init__]: __init__ → default_app_chat_path → default_data_root
+      PURITY: 100% pure
+  [9] Src [append]: append
+      PURITY: 100% pure
+  [10] Src [list_messages]: list_messages
+      PURITY: 100% pure
+  [11] Src [list_channels]: list_channels
+      PURITY: 100% pure
+  [12] Src [query_chat_messages]: query_chat_messages → _store
+      PURITY: 100% pure
+  [13] Src [command_chat_append]: command_chat_append → _store
+      PURITY: 100% pure
+  [14] Src [query_chat_channels]: query_chat_channels → _store
+      PURITY: 100% pure
+  [15] Src [main]: main → serve_worker → build_worker_runtime → _wire_router_callback → ...(1 more)
+      PURITY: 100% pure
+  [16] Src [_pids_serve_cmdline]: _pids_serve_cmdline → _read_cmdline
+      PURITY: 100% pure
+  [17] Src [alive]: alive → _http_get
+      PURITY: 100% pure
+  [18] Src [__init__]: __init__
+      PURITY: 100% pure
+  [19] Src [_default_worker_env]: _default_worker_env
+      PURITY: 100% pure
+  [20] Src [spawn]: spawn → _free_port
+      PURITY: 100% pure
+  [21] Src [call_ephemeral]: call_ephemeral → _free_port
+      PURITY: 100% pure
+  [22] Src [restart]: restart
+      PURITY: 100% pure
+  [23] Src [_needs_install]: _needs_install → pack_importable → import_pack_module → pack_module
+      PURITY: 100% pure
+  [24] Src [stop]: stop
+      PURITY: 100% pure
+  [25] Src [status]: status
+      PURITY: 100% pure
+  [26] Src [shutdown]: shutdown
+      PURITY: 100% pure
+  [27] Src [start_monitor]: start_monitor
+      PURITY: 100% pure
+  [28] Src [_reap]: _reap
+      PURITY: 100% pure
+  [29] Src [restore]: restore
+      PURITY: 100% pure
+  [30] Src [_wait_health]: _wait_health → _http_get
+      PURITY: 100% pure
+  [31] Src [_fetch_patterns]: _fetch_patterns → _http_get
+      PURITY: 100% pure
+  [32] Src [_wire]: _wire → register_forward_pack
+      PURITY: 100% pure
+  [33] Src [_terminate]: _terminate
+      PURITY: 100% pure
+  [34] Src [_persist]: _persist
+      PURITY: 100% pure
+  [35] Src [query_health]: query_health → health_payload → load_identity → _identity_path → ...(2 more)
+      PURITY: 100% pure
+  [36] Src [query_identity]: query_identity → load_identity → _identity_path → _data_dir → ...(1 more)
+      PURITY: 100% pure
+  [37] Src [command_indicator_on]: command_indicator_on → require_paired → load_pairing → _pairing_path → ...(2 more)
+      PURITY: 100% pure
+  [38] Src [command_indicator_off]: command_indicator_off → require_paired → load_pairing → _pairing_path → ...(2 more)
+      PURITY: 100% pure
+  [39] Src [query_packs]: query_packs → auto_install_enabled
+      PURITY: 100% pure
+  [40] Src [command_install_pack]: command_install_pack → load_pack_into_runtime → ensure_pack_pypi → pack_install_specs → ...(3 more)
+      PURITY: 100% pure
+  [41] Src [command_spawn_worker]: command_spawn_worker → _get_supervisor → get_supervisor
+      PURITY: 100% pure
+  [42] Src [query_workers]: query_workers → _get_supervisor → get_supervisor
+      PURITY: 100% pure
+  [43] Src [command_restart_worker]: command_restart_worker → _get_supervisor → get_supervisor
+      PURITY: 100% pure
+  [44] Src [command_stop_worker]: command_stop_worker → _get_supervisor → get_supervisor
+      PURITY: 100% pure
+  [45] Src [command_register_forward]: command_register_forward → register_forward_pack
+      PURITY: 100% pure
+  [46] Src [_pack_modules]: _pack_modules
+      PURITY: 100% pure
+
+LAYERS:
+  urisysnode/                     CC̄=5.0    ←in:18  →out:30  !! split
+  │ !! serve                      529L  1C   12m  CC=22     ←6
+  │ !! remote                     516L  0C   21m  CC=26     ←0
+  │ !! supervisor                 420L  2C   22m  CC=16     ←0
+  │ pack_resolver              323L  0C   17m  CC=10     ←5
+  │ !! artifact_resolver          305L  1C   21m  CC=15     ←2
+  │ !! packs                      236L  0C    7m  CC=30     ←4
+  │ !! manager                    211L  0C    7m  CC=16     ←1
+  │ !! cli                        196L  0C    1m  CC=22     ←0
+  │ health                     195L  0C   10m  CC=7      ←2
+  │ worker                     186L  0C    6m  CC=5      ←0
+  │ !! builder                    169L  0C    4m  CC=18     ←1
+  │ handlers                   154L  0C   12m  CC=11     ←0
+  │ !! forward_config             144L  0C    6m  CC=15     ←1
+  │ release_verify             138L  0C    5m  CC=14     ←1
+  │ display_bootstrap          114L  0C    7m  CC=7      ←1
+  │ pairing                    100L  0C    6m  CC=4      ←4
+  │ manifest.yaml               96L  0C    0m  CC=0.0    ←0
+  │ client                      92L  0C    3m  CC=6      ←5
+  │ utils                       92L  0C    6m  CC=7      ←2
+  │ routes                      90L  0C    1m  CC=1      ←0
+  │ app_data                    85L  1C    5m  CC=9      ←0
+  │ core                        81L  0C    7m  CC=4      ←10
+  │ router                      52L  0C    5m  CC=8      ←2
+  │ config                      52L  0C    2m  CC=7      ←2
+  │ app_handlers                44L  0C    4m  CC=9      ←0
+  │ __init__                    38L  0C    0m  CC=0.0    ←0
+  │ __init__                    37L  0C    0m  CC=0.0    ←0
+  │ __init__                    35L  0C    0m  CC=0.0    ←0
+  │ forward                     33L  0C    1m  CC=9      ←0
+  │ env                          5L  0C    0m  CC=0.0    ←0
+  │ __init__                     0L  0C    0m  CC=0.0    ←0
+  │
+  docker/                         CC̄=0.0    ←in:0  →out:0
+  │ entrypoint.sh               63L  0C    3m  CC=0.0    ←0
+  │ Dockerfile.gui              61L  0C    0m  CC=0.0    ←0
+  │ docker-compose.gui.yml      33L  0C    0m  CC=0.0    ←0
+  │ node-profile.docker.json    33L  0C    0m  CC=0.0    ←0
+  │ route-map.host.yaml         23L  0C    0m  CC=0.0    ←0
+  │ nodes.registry.host.json     9L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! planfile.yaml             1319L  0C    0m  CC=0.0    ←0
+  │ !! goal.yaml                  525L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              99L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
+  │ Makefile                    74L  0C    0m  CC=0.0    ←0
+  │ project.sh                  63L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+  scripts/                        CC̄=0.0    ←in:0  →out:0
+  │ enable-host-trust.sh       142L  0C    0m  CC=0.0    ←0
+  │ install-linux.sh            16L  0C    0m  CC=0.0    ←0
+  │
+  testql-scenarios/               CC̄=0.0    ←in:0  →out:0
+  │ generated-from-pytests.testql.toon.yaml    90L  0C    0m  CC=0.0    ←0
+  │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
+  │
+  config/                         CC̄=0.0    ←in:0  →out:0
+  │ route-map.lenovo.yaml       72L  0C    0m  CC=0.0    ←0
+  │ node-profile.lenovo.json    68L  0C    0m  CC=0.0    ←0
+  │ node-profile.json           32L  0C    0m  CC=0.0    ←0
+  │ node-profile.full-trust.json    24L  0C    0m  CC=0.0    ←0
+  │ route-map.master.yaml       19L  0C    0m  CC=0.0    ←0
+  │ nodes.registry.json         18L  0C    0m  CC=0.0    ←0
+  │ route-map.slave.yaml        14L  0C    0m  CC=0.0    ←0
+  │
+  data/                           CC̄=0.0    ←in:0  →out:0
+  │ workers.json                16L  0C    0m  CC=0.0    ←0
+  │
+  flows/                          CC̄=0.0    ←in:0  →out:0
+  │ bootstrap-kvm-github.uri.flow.yaml    28L  0C    0m  CC=0.0    ←0
+  │ bootstrap-kvm-pypi.uri.flow.yaml    18L  0C    0m  CC=0.0    ←0
+  │ remote-probe.uri.flow.yaml    17L  0C    0m  CC=0.0    ←0
+  │ slave-kvm-demo.uri.flow.yaml    13L  0C    0m  CC=0.0    ←0
+  │ screen-capture-mss.uri.flow.yaml    12L  0C    0m  CC=0.0    ←0
+  │
+  ── zero ──
+     urisysnode/__init__.py                    0L
+
+COUPLING:
+                                urisysnode   urisysnode.runtime  urisysnode.identity      urisysnode.port
+           urisysnode                   ──                   10                   17                    3  hub
+   urisysnode.runtime                   18                   ──                    1                       hub
+  urisysnode.identity                  ←17                   ←1                   ──                   ←2  hub
+      urisysnode.port                   ←3                                         2                   ──
+  CYCLES: none
+  HUB: urisysnode.runtime/ (fan-in=10)
+  HUB: urisysnode.identity/ (fan-in=20)
+  HUB: urisysnode/ (fan-in=18)
+  SMELL: urisysnode.runtime/ fan-out=19 → split needed
+  SMELL: urisysnode/ fan-out=30 → split needed
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

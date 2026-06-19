@@ -1,0 +1,54 @@
+flowchart TD
+%% generated in 0.01s
+    urisysnode__app_data["urisysnode.app_data<br/>5 funcs"]
+    urisysnode__artifact_resolver["urisysnode.artifact_resolver<br/>21 funcs"]
+    urisysnode__cli["urisysnode.cli<br/>1 funcs"]
+    urisysnode__client["urisysnode.client<br/>3 funcs"]
+    urisysnode__display_bootstrap["urisysnode.display_bootstrap<br/>7 funcs"]
+    urisysnode__forward["urisysnode.forward<br/>1 funcs"]
+    urisysnode__forward_config["urisysnode.forward_config<br/>6 funcs"]
+    urisysnode__handlers["urisysnode.handlers<br/>12 funcs"]
+    urisysnode__identity["urisysnode.identity<br/>23 funcs"]
+    urisysnode__pack_resolver["urisysnode.pack_resolver<br/>17 funcs"]
+    urisysnode__port["urisysnode.port<br/>13 funcs"]
+    urisysnode__release_verify["urisysnode.release_verify<br/>5 funcs"]
+    urisysnode__remote["urisysnode.remote<br/>21 funcs"]
+    urisysnode__router["urisysnode.router<br/>5 funcs"]
+    urisysnode__runtime["urisysnode.runtime<br/>13 funcs"]
+    urisysnode__serve["urisysnode.serve<br/>12 funcs"]
+    urisysnode__supervisor["urisysnode.supervisor<br/>22 funcs"]
+    urisysnode__worker["urisysnode.worker<br/>6 funcs"]
+    urisysnode__runtime ==>|12| urisysnode__pack_resolver
+    urisysnode__serve ==>|9| urisysnode__pack_resolver
+    urisysnode__cli ==>|7| urisysnode__artifact_resolver
+    urisysnode__handlers ==>|7| urisysnode__identity
+    urisysnode__cli ==>|5| urisysnode__identity
+    urisysnode__client ==>|4| urisysnode__router
+    urisysnode__serve ==>|4| urisysnode__runtime
+    urisysnode__runtime ==>|4| urisysnode__forward_config
+    urisysnode__serve -->|3| urisysnode__artifact_resolver
+    urisysnode__serve -->|3| urisysnode__identity
+    urisysnode__serve -->|3| urisysnode__port
+    urisysnode__cli -->|2| urisysnode__runtime
+    urisysnode__cli -->|2| urisysnode__client
+    urisysnode__forward_config -->|2| urisysnode__serve
+    urisysnode__remote -->|2| urisysnode__client
+    urisysnode__worker -->|2| urisysnode__runtime
+    urisysnode__port -->|2| urisysnode__identity
+    urisysnode__handlers -->|2| urisysnode__runtime
+    urisysnode__runtime -->|2| urisysnode__serve
+    urisysnode__cli -->|1| urisysnode__serve
+    urisysnode__cli -->|1| urisysnode__router
+    urisysnode__forward -->|1| urisysnode__client
+    urisysnode__app_data -->|1| urisysnode__identity
+    urisysnode__worker -->|1| urisysnode__client
+    urisysnode__worker -->|1| urisysnode__identity
+    urisysnode__worker -->|1| urisysnode__serve
+    urisysnode__supervisor -->|1| urisysnode__client
+    urisysnode__supervisor -->|1| urisysnode__pack_resolver
+    urisysnode__supervisor -->|1| urisysnode__serve
+    urisysnode__serve -->|1| urisysnode__release_verify
+    urisysnode__serve -->|1| urisysnode__display_bootstrap
+    urisysnode__handlers -->|1| urisysnode__pack_resolver
+    urisysnode__handlers -->|1| urisysnode__serve
+    urisysnode__runtime -->|1| urisysnode__identity

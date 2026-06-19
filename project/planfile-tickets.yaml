@@ -1,0 +1,1281 @@
+source: code2llm
+# generated in 0.04s
+schema: code2llm.planfile_tickets.v1
+project_root: /home/tom/github/tellmesh/urisys-node
+tickets:
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.remote.main (CC=26)'
+  description: 'code2llm reports `urisysnode.remote.main` at `urisysnode/remote.py:354`
+    with cyclomatic complexity 26 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/remote.py
+  dedupe_key: code2llm:cc:urisysnode/remote.py:urisysnode.remote.main
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.runtime.packs.load_pack_into_runtime
+    (CC=30)'
+  description: 'code2llm reports `urisysnode.runtime.packs.load_pack_into_runtime`
+    at `urisysnode/runtime/packs.py:43` with cyclomatic complexity 30 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: code2llm:cc:urisysnode/runtime/packs.py:urisysnode.runtime.packs.load_pack_into_runtime
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: cmd'
+  description: 'code2llm reports `Shotgun Surgery: cmd` in `urisysnode/port/utils.py:38`.
+
+
+    Mutation of variable ''cmd'' spans 6 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/port/utils.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/port/utils.py:38:Shotgun
+    Surgery: cmd'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: ctx'
+  description: 'code2llm reports `Shotgun Surgery: ctx` in `urisysnode/runtime/packs.py:209`.
+
+
+    Mutation of variable ''ctx'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/runtime/packs.py:209:Shotgun
+    Surgery: ctx'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: data'
+  description: 'code2llm reports `Shotgun Surgery: data` in `urisysnode/router.py:11`.
+
+
+    Mutation of variable ''data'' spans 14 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/router.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/router.py:11:Shotgun Surgery:
+    data'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: endpoint'
+  description: 'code2llm reports `Shotgun Surgery: endpoint` in `urisysnode/forward_config.py:15`.
+
+
+    Mutation of variable ''endpoint'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/forward_config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/forward_config.py:15:Shotgun
+    Surgery: endpoint'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: identity'
+  description: 'code2llm reports `Shotgun Surgery: identity` in `urisysnode/identity/health.py:152`.
+
+
+    Mutation of variable ''identity'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/identity/health.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/identity/health.py:152:Shotgun
+    Surgery: identity'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: loaded'
+  description: 'code2llm reports `Shotgun Surgery: loaded` in `urisysnode/identity/health.py:111`.
+
+
+    Mutation of variable ''loaded'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/identity/health.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/identity/health.py:111:Shotgun
+    Surgery: loaded'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: name'
+  description: 'code2llm reports `Shotgun Surgery: name` in `urisysnode/worker.py:124`.
+
+
+    Mutation of variable ''name'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/worker.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/worker.py:124:Shotgun Surgery:
+    name'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: out'
+  description: 'code2llm reports `Shotgun Surgery: out` in `urisysnode/pack_resolver.py:245`.
+
+
+    Mutation of variable ''out'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/pack_resolver.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/pack_resolver.py:245:Shotgun
+    Surgery: out'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: override'
+  description: 'code2llm reports `Shotgun Surgery: override` in `urisysnode/handlers.py:56`.
+
+
+    Mutation of variable ''override'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/handlers.py:56:Shotgun Surgery:
+    override'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: pack'
+  description: 'code2llm reports `Shotgun Surgery: pack` in `urisysnode/runtime/packs.py:43`.
+
+
+    Mutation of variable ''pack'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/runtime/packs.py:43:Shotgun
+    Surgery: pack'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: pairing'
+  description: 'code2llm reports `Shotgun Surgery: pairing` in `urisysnode/identity/pairing.py:37`.
+
+
+    Mutation of variable ''pairing'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/identity/pairing.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/identity/pairing.py:37:Shotgun
+    Surgery: pairing'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: parsed'
+  description: 'code2llm reports `Shotgun Surgery: parsed` in `urisysnode/serve.py:311`.
+
+
+    Mutation of variable ''parsed'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/serve.py:311:Shotgun Surgery:
+    parsed'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: payload'
+  description: 'code2llm reports `Shotgun Surgery: payload` in `urisysnode/remote.py:121`.
+
+
+    Mutation of variable ''payload'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/remote.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/remote.py:121:Shotgun Surgery:
+    payload'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: proc'
+  description: 'code2llm reports `Shotgun Surgery: proc` in `urisysnode/display_bootstrap.py:47`.
+
+
+    Mutation of variable ''proc'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/display_bootstrap.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/display_bootstrap.py:47:Shotgun
+    Surgery: proc'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: req'
+  description: 'code2llm reports `Shotgun Surgery: req` in `urisysnode/artifact_resolver.py:51`.
+
+
+    Mutation of variable ''req'' spans 5 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/artifact_resolver.py:51:Shotgun
+    Surgery: req'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: result'
+  description: 'code2llm reports `Shotgun Surgery: result` in `urisysnode/identity/health.py:111`.
+
+
+    Mutation of variable ''result'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/identity/health.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/identity/health.py:111:Shotgun
+    Surgery: result'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: rt'
+  description: 'code2llm reports `Shotgun Surgery: rt` in `urisysnode/runtime/packs.py:20`.
+
+
+    Mutation of variable ''rt'' spans 5 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/runtime/packs.py:20:Shotgun
+    Surgery: rt'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: runtime'
+  description: 'code2llm reports `Shotgun Surgery: runtime` in `urisysnode/worker.py:55`.
+
+
+    Mutation of variable ''runtime'' spans 11 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/worker.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/worker.py:55:Shotgun Surgery:
+    runtime'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: scheme'
+  description: 'code2llm reports `Shotgun Surgery: scheme` in `urisysnode/forward_config.py:15`.
+
+
+    Mutation of variable ''scheme'' spans 11 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/forward_config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/forward_config.py:15:Shotgun
+    Surgery: scheme'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: specs'
+  description: 'code2llm reports `Shotgun Surgery: specs` in `urisysnode/handlers.py:56`.
+
+
+    Mutation of variable ''specs'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/handlers.py:56:Shotgun Surgery:
+    specs'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: sup'
+  description: 'code2llm reports `Shotgun Surgery: sup` in `urisysnode/handlers.py:109`.
+
+
+    Mutation of variable ''sup'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:urisysnode/handlers.py:109:Shotgun Surgery:
+    sup'
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.artifact_resolver.select_artifact
+    (CC=15)'
+  description: 'code2llm reports `urisysnode.artifact_resolver.select_artifact` at
+    `urisysnode/artifact_resolver.py:155` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: code2llm:cc:urisysnode/artifact_resolver.py:urisysnode.artifact_resolver.select_artifact
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.cli.main (CC=22)'
+  description: 'code2llm reports `urisysnode.cli.main` at `urisysnode/cli.py:24` with
+    cyclomatic complexity 22 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/cli.py
+  dedupe_key: code2llm:cc:urisysnode/cli.py:urisysnode.cli.main
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.forward_config.load_forward_entries
+    (CC=15)'
+  description: 'code2llm reports `urisysnode.forward_config.load_forward_entries`
+    at `urisysnode/forward_config.py:29` with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/forward_config.py
+  dedupe_key: code2llm:cc:urisysnode/forward_config.py:urisysnode.forward_config.load_forward_entries
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.port.manager._is_node_serve_process
+    (CC=16)'
+  description: 'code2llm reports `urisysnode.port.manager._is_node_serve_process`
+    at `urisysnode/port/manager.py:128` with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/port/manager.py
+  dedupe_key: code2llm:cc:urisysnode/port/manager.py:urisysnode.port.manager._is_node_serve_process
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.port.manager._pids_on_port (CC=16)'
+  description: 'code2llm reports `urisysnode.port.manager._pids_on_port` at `urisysnode/port/manager.py:18`
+    with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/port/manager.py
+  dedupe_key: code2llm:cc:urisysnode/port/manager.py:urisysnode.port.manager._pids_on_port
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.runtime.builder.build_runtime (CC=18)'
+  description: 'code2llm reports `urisysnode.runtime.builder.build_runtime` at `urisysnode/runtime/builder.py:86`
+    with cyclomatic complexity 18 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/runtime/builder.py
+  dedupe_key: code2llm:cc:urisysnode/runtime/builder.py:urisysnode.runtime.builder.build_runtime
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.serve.call_uri (CC=22)'
+  description: 'code2llm reports `urisysnode.serve.call_uri` at `urisysnode/serve.py:128`
+    with cyclomatic complexity 22 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/serve.py
+  dedupe_key: code2llm:cc:urisysnode/serve.py:urisysnode.serve.call_uri
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.serve.serve (CC=16)'
+  description: 'code2llm reports `urisysnode.serve.serve` at `urisysnode/serve.py:457`
+    with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/serve.py
+  dedupe_key: code2llm:cc:urisysnode/serve.py:urisysnode.serve.serve
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.supervisor.PackSupervisor.call_ephemeral
+    (CC=16)'
+  description: 'code2llm reports `urisysnode.supervisor.PackSupervisor.call_ephemeral`
+    at `urisysnode/supervisor.py:200` with cyclomatic complexity 16 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/supervisor.py
+  dedupe_key: code2llm:cc:urisysnode/supervisor.py:urisysnode.supervisor.PackSupervisor.call_ephemeral
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: urisysnode.supervisor.PackSupervisor.spawn
+    (CC=15)'
+  description: 'code2llm reports `urisysnode.supervisor.PackSupervisor.spawn` at `urisysnode/supervisor.py:129`
+    with cyclomatic complexity 15 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - urisysnode/supervisor.py
+  dedupe_key: code2llm:cc:urisysnode/supervisor.py:urisysnode.supervisor.PackSupervisor.spawn
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: context, uri, payload, runtime'
+  description: 'code2llm reports `Data Clump: context, uri, payload, runtime` in `urisysnode/serve.py:128`.
+
+
+    Arguments (context, uri, payload, runtime) are used together in multiple functions:
+    urisysnode.serve.call_uri, urisysnode.runtime.packs.ensure_isolated_pack.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:data_clump:urisysnode/serve.py:128:Data Clump: context,
+    uri, payload, runtime'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: context, uri, payload, runtime'
+  description: 'code2llm reports `Data Clump: context, uri, payload, runtime` in `urisysnode/runtime/packs.py:149`.
+
+
+    Arguments (context, uri, payload, runtime) are used together in multiple functions:
+    urisysnode.serve.call_uri, urisysnode.runtime.packs.ensure_isolated_pack.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:data_clump:urisysnode/runtime/packs.py:149:Data Clump:
+    context, uri, payload, runtime'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: contract_id, version, catalog_url'
+  description: 'code2llm reports `Data Clump: contract_id, version, catalog_url` in
+    `urisysnode/artifact_resolver.py:136`.
+
+
+    Arguments (contract_id, version, catalog_url) are used together in multiple functions:
+    urisysnode.artifact_resolver.release_api_url, urisysnode.artifact_resolver.fetch_release.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:data_clump:urisysnode/artifact_resolver.py:136:Data
+    Clump: contract_id, version, catalog_url'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: contract_id, version, catalog_url'
+  description: 'code2llm reports `Data Clump: contract_id, version, catalog_url` in
+    `urisysnode/artifact_resolver.py:143`.
+
+
+    Arguments (contract_id, version, catalog_url) are used together in multiple functions:
+    urisysnode.artifact_resolver.release_api_url, urisysnode.artifact_resolver.fetch_release.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:data_clump:urisysnode/artifact_resolver.py:143:Data
+    Clump: contract_id, version, catalog_url'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _app_chat_get'
+  description: 'code2llm reports `God Function: _app_chat_get` in `urisysnode/serve.py:311`.
+
+
+    Function ''_app_chat_get'' is oversized: CC=10, fan-out=8, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/serve.py:311:God Function: _app_chat_get'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _auth_opener'
+  description: 'code2llm reports `God Function: _auth_opener` in `urisysnode/artifact_resolver.py:22`.
+
+
+    Function ''_auth_opener'' is oversized: CC=4, fan-out=7, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/artifact_resolver.py:22:God
+    Function: _auth_opener'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _collect_takeover_targets'
+  description: 'code2llm reports `God Function: _collect_takeover_targets` in `urisysnode/port/manager.py:156`.
+
+
+    Function ''_collect_takeover_targets'' is oversized: CC=12, fan-out=11, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/port/manager.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/port/manager.py:156:God Function:
+    _collect_takeover_targets'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _get_runtime_info'
+  description: 'code2llm reports `God Function: _get_runtime_info` in `urisysnode/identity/health.py:111`.
+
+
+    Function ''_get_runtime_info'' is oversized: CC=7, fan-out=8, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/identity/health.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/identity/health.py:111:God Function:
+    _get_runtime_info'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _register_pack'
+  description: 'code2llm reports `God Function: _register_pack` in `urisysnode/serve.py:76`.
+
+
+    Function ''_register_pack'' is oversized: CC=14, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/serve.py:76:God Function: _register_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _register_pack'
+  description: 'code2llm reports `God Function: _register_pack` in `urisysnode/runtime/builder.py:36`.
+
+
+    Function ''_register_pack'' is oversized: CC=14, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/runtime/builder.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/runtime/builder.py:36:God Function:
+    _register_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _worker_pids_from_state'
+  description: 'code2llm reports `God Function: _worker_pids_from_state` in `urisysnode/port/manager.py:87`.
+
+
+    Function ''_worker_pids_from_state'' is oversized: CC=10, fan-out=11, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/port/manager.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/port/manager.py:87:God Function:
+    _worker_pids_from_state'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: apply_host_trust'
+  description: 'code2llm reports `God Function: apply_host_trust` in `urisysnode/runtime/packs.py:209`.
+
+
+    Function ''apply_host_trust'' is oversized: CC=10, fan-out=8, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/runtime/packs.py:209:God Function:
+    apply_host_trust'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: bootstrap_wayland_capture'
+  description: 'code2llm reports `God Function: bootstrap_wayland_capture` in `urisysnode/display_bootstrap.py:91`.
+
+
+    Function ''bootstrap_wayland_capture'' is oversized: CC=7, fan-out=12, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/display_bootstrap.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/display_bootstrap.py:91:God
+    Function: bootstrap_wayland_capture'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: build_worker_runtime'
+  description: 'code2llm reports `God Function: build_worker_runtime` in `urisysnode/worker.py:86`.
+
+
+    Function ''build_worker_runtime'' is oversized: CC=5, fan-out=13, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/worker.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/worker.py:86:God Function: build_worker_runtime'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: call_via_route_map'
+  description: 'code2llm reports `God Function: call_via_route_map` in `urisysnode/client.py:71`.
+
+
+    Function ''call_via_route_map'' is oversized: CC=6, fan-out=12, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/client.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/client.py:71:God Function: call_via_route_map'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: command_spawn_worker'
+  description: 'code2llm reports `God Function: command_spawn_worker` in `urisysnode/handlers.py:87`.
+
+
+    Function ''command_spawn_worker'' is oversized: CC=11, fan-out=9, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/handlers.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/handlers.py:87:God Function:
+    command_spawn_worker'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: discover_mdns'
+  description: 'code2llm reports `God Function: discover_mdns` in `urisysnode/client.py:12`.
+
+
+    Function ''discover_mdns'' is oversized: CC=2, fan-out=14, mutations=2.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/client.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/client.py:12:God Function: discover_mdns'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: ensure_boot_pack'
+  description: 'code2llm reports `God Function: ensure_boot_pack` in `urisysnode/pack_resolver.py:258`.
+
+
+    Function ''ensure_boot_pack'' is oversized: CC=7, fan-out=6, mutations=14.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/pack_resolver.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/pack_resolver.py:258:God Function:
+    ensure_boot_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: ensure_isolated_pack'
+  description: 'code2llm reports `God Function: ensure_isolated_pack` in `urisysnode/runtime/packs.py:149`.
+
+
+    Function ''ensure_isolated_pack'' is oversized: CC=9, fan-out=12, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/runtime/packs.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/runtime/packs.py:149:God Function:
+    ensure_isolated_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: health_payload'
+  description: 'code2llm reports `God Function: health_payload` in `urisysnode/identity/health.py:152`.
+
+
+    Function ''health_payload'' is oversized: CC=4, fan-out=10, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/identity/health.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/identity/health.py:152:God Function:
+    health_payload'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: hotload_release_pack'
+  description: 'code2llm reports `God Function: hotload_release_pack` in `urisysnode/serve.py:228`.
+
+
+    Function ''hotload_release_pack'' is oversized: CC=14, fan-out=11, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/serve.py:228:God Function: hotload_release_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: list_channels'
+  description: 'code2llm reports `God Function: list_channels` in `urisysnode/app_data.py:62`.
+
+
+    Function ''list_channels'' is oversized: CC=9, fan-out=15, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/app_data.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/app_data.py:62:God Function:
+    list_channels'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: load_identity'
+  description: 'code2llm reports `God Function: load_identity` in `urisysnode/identity/core.py:55`.
+
+
+    Function ''load_identity'' is oversized: CC=4, fan-out=14, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/identity/core.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/identity/core.py:55:God Function:
+    load_identity'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: load_release_forward_entries'
+  description: 'code2llm reports `God Function: load_release_forward_entries` in `urisysnode/forward_config.py:101`.
+
+
+    Function ''load_release_forward_entries'' is oversized: CC=11, fan-out=10, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/forward_config.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/forward_config.py:101:God Function:
+    load_release_forward_entries'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: load_trusted_keys'
+  description: 'code2llm reports `God Function: load_trusted_keys` in `urisysnode/release_verify.py:50`.
+
+
+    Function ''load_trusted_keys'' is oversized: CC=6, fan-out=11, mutations=4.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/release_verify.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/release_verify.py:50:God Function:
+    load_trusted_keys'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: main'
+  description: 'code2llm reports `God Function: main` in `urisysnode/worker.py:156`.
+
+
+    Function ''main'' is oversized: CC=4, fan-out=7, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/worker.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/worker.py:156:God Function:
+    main'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: make_handler'
+  description: 'code2llm reports `God Function: make_handler` in `urisysnode/serve.py:345`.
+
+
+    Function ''make_handler'' is oversized: CC=2, fan-out=30, mutations=1.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/serve.py:345:God Function: make_handler'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: register_forward_pack'
+  description: 'code2llm reports `God Function: register_forward_pack` in `urisysnode/serve.py:168`.
+
+
+    Function ''register_forward_pack'' is oversized: CC=13, fan-out=7, mutations=12.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/serve.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/serve.py:168:God Function: register_forward_pack'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: resolve_node_config'
+  description: 'code2llm reports `God Function: resolve_node_config` in `urisysnode/runtime/config.py:10`.
+
+
+    Function ''resolve_node_config'' is oversized: CC=7, fan-out=9, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/runtime/config.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/runtime/config.py:10:God Function:
+    resolve_node_config'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: restore'
+  description: 'code2llm reports `God Function: restore` in `urisysnode/supervisor.py:342`.
+
+
+    Function ''restore'' is oversized: CC=11, fan-out=13, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/supervisor.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/supervisor.py:342:God Function:
+    restore'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: run_release'
+  description: 'code2llm reports `God Function: run_release` in `urisysnode/artifact_resolver.py:253`.
+
+
+    Function ''run_release'' is oversized: CC=8, fan-out=12, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/artifact_resolver.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/artifact_resolver.py:253:God
+    Function: run_release'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: upgrade_lenovo_kv'
+  description: 'code2llm reports `God Function: upgrade_lenovo_kv` in `urisysnode/remote.py:320`.
+
+
+    Function ''upgrade_lenovo_kv'' is oversized: CC=4, fan-out=15, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/remote.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/remote.py:320:God Function:
+    upgrade_lenovo_kv'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: upgrade_lenovo_node'
+  description: 'code2llm reports `God Function: upgrade_lenovo_node` in `urisysnode/remote.py:276`.
+
+
+    Function ''upgrade_lenovo_node'' is oversized: CC=7, fan-out=21, mutations=16.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/remote.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/remote.py:276:God Function:
+    upgrade_lenovo_node'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: verify_release'
+  description: 'code2llm reports `God Function: verify_release` in `urisysnode/release_verify.py:89`.
+
+
+    Function ''verify_release'' is oversized: CC=14, fan-out=10, mutations=9.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - urisysnode/release_verify.py
+  dedupe_key: 'code2llm:smell:god_function:urisysnode/release_verify.py:89:God Function:
+    verify_release'
+applied: []
+skipped: []

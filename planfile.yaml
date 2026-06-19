@@ -1,0 +1,1319 @@
+name: Code Quality Improvement
+project_name: ''
+project_type: prefactoring
+domain: dev-tools
+goal: Improve code quality using prefact
+goals:
+- Fix all prefact-detected issues
+- Improve code maintainability
+- Ensure consistent code style
+quality_gates:
+- metric: Prefact Issues
+  threshold: '0'
+sprints:
+- id: sprint-1
+  name: Code Quality Improvements
+  duration: 2 weeks
+  objectives:
+  - Fix code quality issues
+  task_patterns:
+  - id: ticket-66fecfa9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/_fakepack.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/_fakepack.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6a82eb62
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/integration/test_artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_artifact_resolver.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0e122199
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_artifact_resolver.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-269900d2
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in tests/integration/test_artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_artifact_resolver.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d8cc3ebf
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/integration/test_core_pack_boot_install.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_core_pack_boot_install.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fdc57e74
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_core_pack_boot_install.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_core_pack_boot_install.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2cbd32d9
+    name: Fix smart-return-type issues
+    description: Resolve 11 smart-return-type issues in tests/integration/test_forward_config.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - tests/integration/test_forward_config.py
+    rule_id: smart-return-type
+    count: 11
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8a57088a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_forward_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_forward_config.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e599612c
+    name: Fix llm-hallucinations issues
+    description: Resolve 2 llm-hallucinations issues in tests/integration/test_forward_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_forward_config.py
+    rule_id: llm-hallucinations
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-67de1dd8
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/integration/test_forward_pack.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_forward_pack.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b602c064
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_forward_pack.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_forward_pack.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9de4ddb5
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in tests/integration/test_forward_pack.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_forward_pack.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6356b8da
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/integration/test_host_trust.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_host_trust.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5ce91c2a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_host_trust.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_host_trust.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-88871d0c
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in tests/integration/test_docker_host_e2e.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_docker_host_e2e.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b14a1464
+    name: Fix smart-return-type issues
+    description: Resolve 6 smart-return-type issues in tests/integration/test_docker_host_e2e.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/integration/test_docker_host_e2e.py
+    rule_id: smart-return-type
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9798cb2a
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in tests/integration/test_docker_host_e2e.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_docker_host_e2e.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5a4c9129
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_docker_host_e2e.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_docker_host_e2e.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bed6543b
+    name: Fix smart-return-type issues
+    description: Resolve 8 smart-return-type issues in tests/integration/test_pack_auto_install.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/integration/test_pack_auto_install.py
+    rule_id: smart-return-type
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-950facef
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in tests/integration/test_pack_auto_install.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/integration/test_pack_auto_install.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e2e09039
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in tests/integration/test_pack_github.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_pack_github.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c52082f1
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_pack_github.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_github.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f6085f4c
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/integration/test_pack_hotload.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_pack_hotload.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bcd6546b
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in tests/integration/test_pack_hotload.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/integration/test_pack_hotload.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9b89cd8e
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/integration/test_pack_office_mail.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_office_mail.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-aa68c94c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_pack_office_mail.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_office_mail.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-714f7e21
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/integration/test_pack_rdpedge.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_rdpedge.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-84098f41
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/integration/test_pack_webrtc_hotload.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_webrtc_hotload.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8e179035
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_pack_webrtc_hotload.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_pack_webrtc_hotload.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bf92789d
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/integration/test_serve_takeover.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_serve_takeover.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c127cf2e
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in tests/integration/test_serve_takeover.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_serve_takeover.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-107c0352
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_serve_takeover.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_serve_takeover.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a0eb35f4
+    name: Fix smart-return-type issues
+    description: Resolve 18 smart-return-type issues in tests/integration/test_release_hotload.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - tests/integration/test_release_hotload.py
+    rule_id: smart-return-type
+    count: 18
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-56897afd
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_release_hotload.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_release_hotload.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fb3036c1
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in tests/integration/test_release_hotload.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_release_hotload.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a536334f
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/integration/test_uriscreen_auto.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_uriscreen_auto.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ae0f34c9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_uriscreen_auto.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_uriscreen_auto.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c800aef9
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in tests/integration/test_urisys_node.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_urisys_node.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-42c31c0d
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in tests/integration/test_urisys_node.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/integration/test_urisys_node.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-77bc794a
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/integration/test_worker_supervisor.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/integration/test_worker_supervisor.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b7f65936
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_worker_supervisor.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_worker_supervisor.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-05bd3d0e
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/integration/test_urishell.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_urishell.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-907cc7e0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_urishell.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_urishell.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-29306916
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_health_profile_visibility.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_health_profile_visibility.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4f630c92
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_health_profile_visibility.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_health_profile_visibility.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a3dc3145
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/test_import_urisysnode.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_import_urisysnode.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-22ed3bc6
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_invalid_profile_tolerated.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_invalid_profile_tolerated.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ae3c5736
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_invalid_profile_tolerated.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_invalid_profile_tolerated.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-62ee65d6
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/test_app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_app_data.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9a99872f
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_app_data.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6f48b706
+    name: Fix smart-return-type issues
+    description: Resolve 6 smart-return-type issues in tests/test_node_config_discovery.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_node_config_discovery.py
+    rule_id: smart-return-type
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8bb1fe1b
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_node_config_discovery.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_node_config_discovery.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ed865a15
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_pack_resolver_browser.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_pack_resolver_browser.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-67acf450
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/test_pack_resolver_kv.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_pack_resolver_kv.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-22850c58
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/test_pack_resolver_webrtc.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_pack_resolver_webrtc.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-725f800d
+    name: Fix smart-return-type issues
+    description: Resolve 6 smart-return-type issues in tests/test_remote_restart.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_remote_restart.py
+    rule_id: smart-return-type
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bb1365fb
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_remote_restart.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_remote_restart.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-42cfe8c7
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in tests/test_remote_restart.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_remote_restart.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8a4dd2eb
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/test_supervisor_worker_env.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_supervisor_worker_env.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8cb67c70
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in tests/test_supervisor_worker_env.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_supervisor_worker_env.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2d38cad4
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/test_worker_profile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_worker_profile.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-edbe5138
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_worker_profile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_worker_profile.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-04060b74
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/test_worker_router_callback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_worker_router_callback.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-637774d7
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_worker_router_callback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_worker_router_callback.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5f8446a0
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in tests/test_worker_router_callback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_worker_router_callback.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-73896396
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urisysnode/app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_data.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ff856b42
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in urisysnode/app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_data.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2ff43187
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_data.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5dcacc6f
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in urisysnode/app_data.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urisysnode/app_data.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-be645fff
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urisysnode/app_handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_handlers.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f4dc8c39
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/app_handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f429df62
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in urisysnode/app_handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/app_handlers.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b98f9c29
+    name: Fix unused-imports issues
+    description: Resolve 18 unused-imports issues in urisysnode/cli.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - urisysnode/cli.py
+    rule_id: unused-imports
+    count: 18
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c43c75ed
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in urisysnode/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4d1842cd
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e5392ef4
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c19decf9
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6ff19a5e
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-85dfcbcc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4871e8de
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in urisysnode/client.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/client.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-24e840a8
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in urisysnode/display_bootstrap.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/display_bootstrap.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-90e2c0f9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/display_bootstrap.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/display_bootstrap.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-50ac6db9
+    name: Fix magic-numbers issues
+    description: Resolve 6 magic-numbers issues in urisysnode/display_bootstrap.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urisysnode/display_bootstrap.py
+    rule_id: magic-numbers
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-83610f76
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urisysnode/forward.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/forward.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4634b5c5
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/forward.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/forward.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d04c2bb3
+    name: Fix duplicate-imports issues
+    description: Resolve 4 duplicate-imports issues in urisysnode/artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - urisysnode/artifact_resolver.py
+    rule_id: duplicate-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b1468343
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urisysnode/artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/artifact_resolver.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1321f94e
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in urisysnode/artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/artifact_resolver.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a9917725
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/artifact_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/artifact_resolver.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-59570352
+    name: Fix magic-numbers issues
+    description: Resolve 12 magic-numbers issues in urisysnode/artifact_resolver.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - urisysnode/artifact_resolver.py
+    rule_id: magic-numbers
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bf04eea3
+    name: Fix relative-imports issues
+    description: Resolve 2 relative-imports issues in urisysnode/forward_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/forward_config.py
+    rule_id: relative-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fcd3aad2
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/forward_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/forward_config.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eeb97a6d
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-08a13f59
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in urisysnode/pack_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/pack_resolver.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5e47ccbb
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/pack_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/pack_resolver.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-95efa325
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in urisysnode/pack_resolver.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/pack_resolver.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-99ad6fe8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/release_verify.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/release_verify.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-46afc57e
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in urisysnode/router.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/router.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8b8f58d1
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in urisysnode/router.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - urisysnode/router.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-396daf58
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in urisysnode/identity/__init__.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - urisysnode/identity/__init__.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced

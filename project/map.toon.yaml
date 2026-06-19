@@ -1,0 +1,339 @@
+# urisys-node | 61f 7784L | yaml:15,shell:5,yml:1,gui:1,json:7,python:30,toml:1 | 2026-06-19
+# generated in 0.01s
+# stats: 201 func | 0 cls | 61 mod | CC̄=4.9 | critical:12 | cycles:0
+# alerts[5]: fan-out main=48; fan-out main=36; CC load_pack_into_runtime=30; fan-out make_handler=30; CC main=26
+# hotspots[5]: main fan=48; main fan=36; make_handler fan=30; serve fan=26; build_runtime fan=25
+# evolution: CC̄ 5.1→4.9 (improved -0.2)
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[61]:
+  Makefile,74
+  config/node-profile.json,32
+  config/node-profile.full-trust.json,24
+  config/node-profile.lenovo.json,68
+  config/nodes.registry.json,18
+  config/route-map.lenovo.yaml,72
+  config/route-map.master.yaml,19
+  config/route-map.slave.yaml,14
+  data/workers.json,16
+  docker/Dockerfile.gui,61
+  docker/config/node-profile.docker.json,33
+  docker/config/nodes.registry.host.json,9
+  docker/config/route-map.host.yaml,23
+  docker/docker-compose.gui.yml,33
+  docker/entrypoint.sh,63
+  flows/bootstrap-kvm-github.uri.flow.yaml,28
+  flows/bootstrap-kvm-pypi.uri.flow.yaml,18
+  flows/remote-probe.uri.flow.yaml,17
+  flows/screen-capture-mss.uri.flow.yaml,12
+  flows/slave-kvm-demo.uri.flow.yaml,13
+  goal.yaml,525
+  planfile.yaml,1319
+  prefact.yaml,94
+  project.sh,63
+  pyproject.toml,99
+  scripts/enable-host-trust.sh,142
+  scripts/install-linux.sh,16
+  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
+  testql-scenarios/generated-from-pytests.testql.toon.yaml,90
+  tree.sh,1
+  urisysnode/__init__.py,0
+  urisysnode/app_data.py,85
+  urisysnode/app_handlers.py,44
+  urisysnode/artifact_resolver.py,305
+  urisysnode/cli.py,196
+  urisysnode/client.py,92
+  urisysnode/display_bootstrap.py,114
+  urisysnode/env.py,5
+  urisysnode/forward.py,33
+  urisysnode/forward_config.py,144
+  urisysnode/handlers.py,154
+  urisysnode/identity/__init__.py,38
+  urisysnode/identity/core.py,81
+  urisysnode/identity/health.py,195
+  urisysnode/identity/pairing.py,100
+  urisysnode/manifest.yaml,96
+  urisysnode/pack_resolver.py,323
+  urisysnode/port/__init__.py,35
+  urisysnode/port/manager.py,211
+  urisysnode/port/utils.py,92
+  urisysnode/release_verify.py,138
+  urisysnode/remote.py,516
+  urisysnode/router.py,52
+  urisysnode/routes.py,90
+  urisysnode/runtime/__init__.py,37
+  urisysnode/runtime/builder.py,169
+  urisysnode/runtime/config.py,52
+  urisysnode/runtime/packs.py,236
+  urisysnode/serve.py,529
+  urisysnode/supervisor.py,420
+  urisysnode/worker.py,186
+D:
+  urisysnode/runtime/packs.py:
+    e: _bootstrap_worker_packs,load_pack_into_runtime,isolation_mode,get_supervisor,ensure_isolated_pack,ensure_pack_for_uri,apply_host_trust
+    _bootstrap_worker_packs(rt)
+    load_pack_into_runtime(runtime;pack)
+    isolation_mode(context)
+    get_supervisor(runtime)
+    ensure_isolated_pack(runtime;uri;payload;context)
+    ensure_pack_for_uri(runtime;uri)
+    apply_host_trust(runtime;uri;context)
+  urisysnode/remote.py:
+    e: default_route_map,default_nodes_registry,default_endpoint,default_wheel_host,health,wait_health,call_uri,pip_install,install_pack,spawn_worker,restart_worker,stop_worker,workers,schedule_restart,_restart_scheduled,build_wheel,serve_wheels,wheel_url,upgrade_lenovo_node,upgrade_lenovo_kv,main
+    default_route_map()
+    default_nodes_registry()
+    default_endpoint()
+    default_wheel_host()
+    health()
+    wait_health()
+    call_uri(uri)
+    pip_install(specs)
+    install_pack(pack)
+    spawn_worker(pack)
+    restart_worker(name)
+    stop_worker(name)
+    workers()
+    schedule_restart()
+    _restart_scheduled(out)
+    build_wheel(project_dir)
+    serve_wheels(directory)
+    wheel_url(wheel_path)
+    upgrade_lenovo_node()
+    upgrade_lenovo_kv()
+    main(argv)
+  urisysnode/cli.py:
+    e: main
+    main(argv)
+  urisysnode/serve.py:
+    e: _ReuseHTTPServer,_extend_pack_paths,_pack_modules,_register_pack,call_uri,register_forward_pack,_release_forward_spec,hotload_release_pack,_app_chat_store,_app_chat_get,_app_chat_post,make_handler,serve
+    _ReuseHTTPServer(ThreadingHTTPServer):
+    _extend_pack_paths()
+    _pack_modules()
+    _register_pack(rt;pack)
+    call_uri(runtime;uri;payload;context)
+    register_forward_pack(runtime;scheme;endpoint;patterns)
+    _release_forward_spec(release;scheme;patterns)
+    hotload_release_pack(runtime;contract_id;version)
+    _app_chat_store(runtime)
+    _app_chat_get(path;runtime)
+    _app_chat_post(body;runtime)
+    make_handler(runtime)
+    serve(runtime;host;port)
+  urisysnode/runtime/builder.py:
+    e: _extend_pack_paths,_pack_modules,_register_pack,build_runtime
+    _extend_pack_paths()
+    _pack_modules()
+    _register_pack(rt;pack)
+    build_runtime(config_path)
+  urisysnode/port/manager.py:
+    e: _pids_on_port,_kill_pid,_worker_pids_from_state,_wait_port_free,_is_node_serve_process,_collect_takeover_targets,takeover_port
+    _pids_on_port(port)
+    _kill_pid(pid)
+    _worker_pids_from_state()
+    _wait_port_free(host;port)
+    _is_node_serve_process(pid;port)
+    _collect_takeover_targets(port;self_pid)
+    takeover_port(host;port)
+  urisysnode/supervisor.py:
+    e: Worker,PackSupervisor,_free_port,_http_get,_schemes_of
+    Worker: alive(0),to_record(0)
+    PackSupervisor: __init__(1),_default_worker_env(0),spawn(0),call_ephemeral(3),restart(1),_needs_install(1),stop(1),status(0),shutdown(0),start_monitor(1),_reap(0),restore(0),_wait_health(1),_fetch_patterns(1),_wire(1),_terminate(1),_persist(0)
+    _free_port(host)
+    _http_get(url;timeout)
+    _schemes_of(patterns)
+  urisysnode/forward_config.py:
+    e: _normalize_entry,load_forward_entries,wire_forward_packs,_normalize_release_entry,load_release_forward_entries,wire_release_forward_packs
+    _normalize_entry(raw)
+    load_forward_entries()
+    wire_forward_packs(runtime;entries)
+    _normalize_release_entry(raw)
+    load_release_forward_entries()
+    wire_release_forward_packs(runtime;entries)
+  urisysnode/artifact_resolver.py:
+    e: _GitHubHeaderAuth,is_url,_auth_opener,fetch_json,fetch_text,_contract_yaml_block,parse_contract_spec,contract_url_from_release,contract_spec_from_release,load_node_profile,load_artifact_index,release_api_url,fetch_release,select_artifact,docker_pull,docker_run_worker,wait_health,resolve_and_run,run_release,resolve_from_release
+    _GitHubHeaderAuth(urllib.request.BaseHandler): __init__(1),https_request(1)
+    is_url(source)
+    _auth_opener(for_url)
+    fetch_json(url)
+    fetch_text(url)
+    _contract_yaml_block(contract_text)
+    parse_contract_spec(contract_text)
+    contract_url_from_release(release)
+    contract_spec_from_release(release)
+    load_node_profile(path)
+    load_artifact_index(source)
+    release_api_url(catalog_url;contract_id;version)
+    fetch_release(catalog_url;contract_id;version)
+    select_artifact(index;node_profile)
+    docker_pull(ref)
+    docker_run_worker(ref)
+    wait_health(port;attempts;container)
+    resolve_and_run(index_source;profile_path)
+    run_release(release;profile_path)
+    resolve_from_release(catalog_url;contract_id;version;profile_path)
+  urisysnode/release_verify.py:
+    e: signature_required,canonical_digest,load_trusted_keys,_ed25519_verify,verify_release
+    signature_required(context)
+    canonical_digest(release)
+    load_trusted_keys()
+    _ed25519_verify(public_key_b64;message;signature_b64)
+    verify_release(release)
+  urisysnode/handlers.py:
+    e: query_health,query_identity,command_indicator_on,command_indicator_off,query_packs,command_install_pack,_get_supervisor,command_spawn_worker,query_workers,command_restart_worker,command_stop_worker,command_register_forward
+    query_health(payload;context)
+    query_identity(payload;context)
+    command_indicator_on(payload;context)
+    command_indicator_off(payload;context)
+    query_packs(payload;context)
+    command_install_pack(payload;context)
+    _get_supervisor(context)
+    command_spawn_worker(payload;context)
+    query_workers(payload;context)
+    command_restart_worker(payload;context)
+    command_stop_worker(payload;context)
+    command_register_forward(payload;context)
+  urisysnode/pack_resolver.py:
+    e: auto_install_enabled,pack_install_source,github_owner,github_wheel_url,resolve_pack_spec,pack_module,scheme_for_uri,pack_for_scheme,_pip_install,ensure_pip_specs,pack_install_specs,ensure_pack_pypi,ensure_boot_pack,ensure_real_deps,github_wheel_urls,import_pack_module,pack_importable
+    auto_install_enabled()
+    pack_install_source()
+    github_owner()
+    github_wheel_url(pack)
+    resolve_pack_spec(pack)
+    pack_module(pack)
+    scheme_for_uri(uri)
+    pack_for_scheme(scheme)
+    _pip_install(specs)
+    ensure_pip_specs(specs)
+    pack_install_specs(pack;override_specs)
+    ensure_pack_pypi(pack)
+    ensure_boot_pack(pack)
+    ensure_real_deps(pack)
+    github_wheel_urls()
+    import_pack_module(pack)
+    pack_importable(pack)
+  urisysnode/forward.py:
+    e: forward_call
+    forward_call(payload;context)
+  urisysnode/app_data.py:
+    e: AppChatStore,default_app_chat_path
+    AppChatStore: __init__(1),append(3),list_messages(1),list_channels(0)
+    default_app_chat_path()
+  urisysnode/app_handlers.py:
+    e: _store,query_chat_messages,command_chat_append,query_chat_channels
+    _store(context)
+    query_chat_messages(payload;context)
+    command_chat_append(payload;context)
+    query_chat_channels(payload;context)
+  urisysnode/router.py:
+    e: load_route_map,_match_pattern,resolve_remote_route,rewrite_uri_for_slave,node_endpoint
+    load_route_map(path)
+    _match_pattern(pattern;uri)
+    resolve_remote_route(uri;route_map)
+    rewrite_uri_for_slave(uri;node_id;target_node)
+    node_endpoint(route;nodes_registry)
+  urisysnode/display_bootstrap.py:
+    e: _ensure_session_env,_agent_url,_agent_up,_screencast_ready,_start_agent,_start_screencast,bootstrap_wayland_capture
+    _ensure_session_env()
+    _agent_url()
+    _agent_up()
+    _screencast_ready()
+    _start_agent(port)
+    _start_screencast()
+    bootstrap_wayland_capture()
+  urisysnode/port/utils.py:
+    e: _pidfile_path,_pid_alive,_read_cmdline,_pids_serve_cmdline,_pids_on_port_ss,_fuser_kill_port
+    _pidfile_path(port)
+    _pid_alive(pid)
+    _read_cmdline(pid)
+    _pids_serve_cmdline(port)
+    _pids_on_port_ss(port)
+    _fuser_kill_port(port)
+  urisysnode/identity/health.py:
+    e: _detect_him_driver,_get_urisys_version,_get_uricontrol_version,_get_python_info,_get_pairing_info,_detect_him_driver,_get_him_driver,_get_config_source,_get_driver_info,_get_runtime_info,health_payload
+    _detect_him_driver()
+    _get_urisys_version()
+    _get_uricontrol_version()
+    _get_python_info()
+    _get_pairing_info()
+    _detect_him_driver()
+    _get_him_driver(config)
+    _get_config_source(config;config_path)
+    _get_driver_info(config)
+    _get_runtime_info(runtime)
+    health_payload(version;runtime)
+  urisysnode/runtime/config.py:
+    e: resolve_node_config,_default_real_config
+    resolve_node_config(config_path)
+    _default_real_config()
+  urisysnode/client.py:
+    e: discover_mdns,remote_call,call_via_route_map
+    discover_mdns(timeout_s)
+    remote_call(endpoint;uri;payload;context)
+    call_via_route_map(uri)
+  urisysnode/worker.py:
+    e: _load_node_profile,_local_schemes,_wire_router_callback,build_worker_runtime,serve_worker,main
+    _load_node_profile()
+    _local_schemes(runtime)
+    _wire_router_callback(runtime)
+    build_worker_runtime()
+    serve_worker()
+    main(argv)
+  urisysnode/identity/pairing.py:
+    e: _pairing_path,load_pairing,save_pairing,enroll,set_remote_control,require_paired
+    _pairing_path()
+    load_pairing()
+    save_pairing(data)
+    enroll(controller;code;token)
+    set_remote_control(active;message)
+    require_paired(context)
+  urisysnode/identity/core.py:
+    e: default_data_root,default_events_path,_data_dir,_identity_path,_hostname,load_identity,save_identity
+    default_data_root()
+    default_events_path()
+    _data_dir()
+    _identity_path()
+    _hostname()
+    load_identity()
+    save_identity(data)
+  urisysnode/routes.py:
+    e: register
+    register(rt)
+  goal.yaml:
+  planfile.yaml:
+  Makefile:
+  tree.sh:
+  prefact.yaml:
+  project.sh:
+  docker/entrypoint.sh:
+    e: start_xvfb,show_gui_target,verify_cli
+    start_xvfb()
+    show_gui_target()
+    verify_cli()
+  docker/docker-compose.gui.yml:
+  docker/Dockerfile.gui:
+  docker/config/nodes.registry.host.json:
+  docker/config/route-map.host.yaml:
+  docker/config/node-profile.docker.json:
+  scripts/enable-host-trust.sh:
+  scripts/install-linux.sh:
+  testql-scenarios/generated-from-pytests.testql.toon.yaml:
+  testql-scenarios/generated-cli-tests.testql.toon.yaml:
+  config/nodes.registry.json:
+  config/node-profile.json:
+  config/node-profile.lenovo.json:
+  config/route-map.lenovo.yaml:
+  config/route-map.master.yaml:
+  config/route-map.slave.yaml:
+  config/node-profile.full-trust.json:
+  urisysnode/runtime/__init__.py:
+  urisysnode/manifest.yaml:
+  urisysnode/__init__.py:
+  urisysnode/identity/__init__.py:
+  urisysnode/env.py:
+  urisysnode/port/__init__.py:
+  data/workers.json:
+  flows/remote-probe.uri.flow.yaml:
+  flows/bootstrap-kvm-github.uri.flow.yaml:
+  flows/slave-kvm-demo.uri.flow.yaml:
+  flows/bootstrap-kvm-pypi.uri.flow.yaml:
+  flows/screen-capture-mss.uri.flow.yaml:
+  pyproject.toml:
