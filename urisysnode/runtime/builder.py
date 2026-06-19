@@ -13,6 +13,7 @@ from uri_control.edge.runtime import Runtime, load_json
 
 from urisysnode.identity import default_events_path
 from urisysnode.pack_resolver import (
+    CONTROL_PACKS,
     CORE_PACKS,
     PACK_MODULES,
     auto_install_enabled,
@@ -86,7 +87,7 @@ def _register_pack(
 def build_runtime(config_path: str | None = None) -> Runtime:
     """Build and configure a Runtime instance for urisys-node."""
     from urisysnode.runtime.config import _default_real_config, resolve_node_config
-    from urisysnode.runtime.packs import _bootstrap_worker_packs
+    from urisysnode.runtime.packs import _bootstrap_worker_packs, isolation_mode
 
     _extend_pack_paths()
     from urisysnode.env import load_urisys_env
@@ -127,8 +128,15 @@ def build_runtime(config_path: str | None = None) -> Runtime:
     packs = os.environ.get("URISYS_NODE_PACKS", "node,screen,shell").split(",")
     packs = [p.strip() for p in packs if p.strip()]
 
+    # Comms/execution separation (default): in isolated mode only the control plane
+    # (node) is loaded in-process; every execution pack is spawned as a worker on
+    # first use (see runtime.packs.ensure_isolated_pack), so the router/comms layer
+    # survives any execution crash. URISYS_NODE_ISOLATION=off restores legacy boot.
+    isolated = isolation_mode() != "off"
     rt._loaded_packs = set()  # type: ignore[attr-defined]
     for pack in packs:
+        if isolated and pack not in CONTROL_PACKS:
+            continue
         if _register_pack(rt, pack, try_install=auto_install_enabled()):
             rt._loaded_packs.add(pack)  # type: ignore[attr-defined]
 
