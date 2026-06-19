@@ -151,17 +151,131 @@ def auto_install_enabled() -> bool:
 
 
 def pack_install_source() -> str:
-    """pypi | github | auto (github for him/ocr/llm, else pypi)."""
+    """local | github | pypi | auto.
+
+    ``auto`` (default) is registry-independent and resolves in priority order:
+    **local wheelhouse → GitHub Releases → PyPI**. This means a freshly *built*
+    wheel is always preferred, GitHub is used before PyPI (PyPI publishing is
+    rate-limited / name-squatted), and PyPI is only a last resort. Force a single
+    channel with ``URISYS_PACK_SOURCE=local|github|pypi``.
+    """
     return os.environ.get("URISYS_PACK_SOURCE", "auto").strip().lower()
+
+
+# ── Local wheelhouse (registry-independent, build-first) ─────────────────────
+def wheelhouse_dir() -> str:
+    """Directory of locally built wheels, preferred over any registry.
+
+    Populate it with ``scripts/build-wheelhouse.sh``. Default ``~/.urisys/wheelhouse``;
+    override with ``URISYS_WHEELHOUSE``. When it exists, every pip install gets
+    ``--find-links <dir>`` so locally built wheels win without touching a registry."""
+    return os.path.expanduser(os.environ.get("URISYS_WHEELHOUSE", "~/.urisys/wheelhouse"))
+
+
+def wheelhouse_offline() -> bool:
+    """When set, installs use ``--no-index`` — fully offline, wheelhouse only."""
+    return os.environ.get("URISYS_WHEELHOUSE_OFFLINE", "").strip() not in ("", "0", "false", "no")
+
+
+def _dist_name(pack: str) -> str:
+    """PyPI/GitHub distribution name for a pack alias (no version constraint)."""
+    pypi = PACK_PYPI.get(pack)
+    if pypi:
+        # "urillm[vision]>=0.1.0" → "urillm"
+        return pypi.split("[", 1)[0].split(">", 1)[0].split("=", 1)[0].split("<", 1)[0].strip()
+    return PACK_GITHUB_REPO.get(pack) or PACK_GITHUB_WHEEL.get(pack) or pack
+
+
+def local_wheel(pack: str) -> str | None:
+    """Newest locally built wheel for ``pack`` in the wheelhouse, or ``None``.
+
+    Matches the dist name normalised to PEP 427 (hyphens → underscores) and picks
+    the highest version, so a rebuilt wheel supersedes older copies automatically."""
+    wh = wheelhouse_dir()
+    if not os.path.isdir(wh):
+        return None
+    base = _dist_name(pack).replace("-", "_").lower()
+    best: tuple[tuple[int, ...], str] | None = None
+    for name in os.listdir(wh):
+        low = name.lower()
+        if not low.endswith(".whl") or not low.startswith(base + "-"):
+            continue
+        ver = name[len(base) + 1 :].split("-", 1)[0]
+        key = _parse_ver(ver)
+        if best is None or key > best[0]:
+            best = (key, name)
+    return os.path.join(wh, best[1]) if best else None
+
+
+def _parse_ver(text: str) -> tuple[int, ...]:
+    parts: list[int] = []
+    for piece in (text or "").strip().lstrip("v").split("."):
+        num = ""
+        for ch in piece:
+            if ch.isdigit():
+                num += ch
+            else:
+                break
+        parts.append(int(num) if num else 0)
+    return tuple(parts) or (0,)
 
 
 def github_owner() -> str:
     return os.environ.get("URISYS_PACK_GITHUB_OWNER", "tellmesh").strip()
 
 
-def github_wheel_url(pack: str) -> str | None:
+_gh_latest_cache: dict[str, str | None] = {}
+
+
+def github_dynamic_enabled() -> bool:
+    """Query GitHub for the *latest* release tag instead of the pinned version.
+
+    On by default (the point is to respect whatever is newest on GitHub). Disabled
+    by ``URISYS_OFFLINE`` or ``URISYS_PACK_GITHUB_DYNAMIC=0`` so installs/tests never
+    block on the network — the pinned ``PACK_GITHUB_VERSION`` is the fallback."""
+    if os.environ.get("URISYS_OFFLINE", "").strip():
+        return False
+    return os.environ.get("URISYS_PACK_GITHUB_DYNAMIC", "1").strip() not in ("0", "false", "no")
+
+
+def github_latest_version(pack: str) -> str | None:
+    """Newest release version on GitHub for ``pack`` (best-effort, cached)."""
     repo = PACK_GITHUB_REPO.get(pack)
-    version = os.environ.get(f"URISYS_PACK_GITHUB_{pack.upper()}_VERSION") or PACK_GITHUB_VERSION.get(pack)
+    if not repo or not github_dynamic_enabled():
+        return None
+    if repo in _gh_latest_cache:
+        return _gh_latest_cache[repo]
+    import json
+    import urllib.request
+
+    url = f"https://api.github.com/repos/{github_owner()}/{repo}/releases/latest"
+    headers = {"Accept": "application/json", "User-Agent": "urisys-node"}
+    token = (
+        os.environ.get("URISYS_GITHUB_TOKEN")
+        or os.environ.get("GH_TOKEN")
+        or os.environ.get("GITHUB_TOKEN")
+    )
+    if token:
+        headers["Authorization"] = f"Bearer {token.strip()}"
+    version: str | None = None
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=6) as resp:  # nosec - fixed host
+            tag = (json.loads(resp.read().decode("utf-8")) or {}).get("tag_name")
+            version = tag.lstrip("v") if tag else None
+    except Exception:
+        version = None
+    _gh_latest_cache[repo] = version
+    return version
+
+
+def github_wheel_url(pack: str, *, version: str | None = None) -> str | None:
+    repo = PACK_GITHUB_REPO.get(pack)
+    version = (
+        version
+        or os.environ.get(f"URISYS_PACK_GITHUB_{pack.upper()}_VERSION")
+        or PACK_GITHUB_VERSION.get(pack)
+    )
     if not repo or not version:
         return None
     ver = version.lstrip("v")
@@ -171,19 +285,58 @@ def github_wheel_url(pack: str) -> str | None:
     return f"https://github.com/{github_owner()}/{repo}/releases/download/{tag}/{wheel}"
 
 
-def resolve_pack_spec(pack: str) -> str | None:
-    pypi = PACK_PYPI.get(pack)
-    github = github_wheel_url(pack)
+def github_best_url(pack: str) -> str | None:
+    """GitHub wheel URL using the latest release when reachable, else the pinned
+    version. This is what makes the node respect a newer GitHub publish."""
+    latest = github_latest_version(pack)
+    pinned = os.environ.get(f"URISYS_PACK_GITHUB_{pack.upper()}_VERSION") or PACK_GITHUB_VERSION.get(pack)
+    if latest and (pinned is None or _parse_ver(latest) >= _parse_ver(pinned)):
+        return github_wheel_url(pack, version=latest)
+    return github_wheel_url(pack)
+
+
+def resolve_pack_source(pack: str) -> dict[str, Any] | None:
+    """Resolve where to install ``pack`` from, registry-independent.
+
+    Returns ``{"kind", "spec", "find_links"?, "no_index"?}`` or ``None``. Priority
+    in ``auto``: **local wheelhouse → GitHub → PyPI**. A forced ``URISYS_PACK_SOURCE``
+    pins one channel (with sensible fallback when that channel has nothing)."""
     source = pack_install_source()
+    wh = wheelhouse_dir() if os.path.isdir(wheelhouse_dir()) else None
+    local = local_wheel(pack) if wh else None
+    pypi = PACK_PYPI.get(pack)
+
+    def _local() -> dict[str, Any] | None:
+        if not local:
+            return None
+        out: dict[str, Any] = {"kind": "local", "spec": local, "find_links": wh}
+        if wheelhouse_offline():
+            out["no_index"] = True
+        return out
+
+    def _github() -> dict[str, Any] | None:
+        url = github_best_url(pack)
+        return {"kind": "github", "spec": url, "find_links": wh} if url else None
+
+    def _pypi() -> dict[str, Any] | None:
+        return {"kind": "pypi", "spec": pypi, "find_links": wh} if pypi else None
+
+    if source == "local":
+        return _local() or _github() or _pypi()
     if source == "github":
-        return github or pypi
+        return _github() or _local() or _pypi()
     if source == "pypi":
-        return pypi or github
-    if pack in CORE_RUNTIME_PACKS and github:
-        return github
-    if pack in GITHUB_PREFERRED_PACKS and github:
-        return github
-    return pypi or github
+        return _pypi() or _local() or _github()
+    # auto: build-first, then GitHub-first, PyPI last.
+    if pack in CORE_RUNTIME_PACKS or pack in GITHUB_PREFERRED_PACKS:
+        return _local() or _github() or _pypi()
+    return _local() or _pypi() or _github()
+
+
+def resolve_pack_spec(pack: str) -> str | None:
+    """Back-compat: the pip spec string only (URL, wheel path or ``dist>=x``)."""
+    src = resolve_pack_source(pack)
+    return src["spec"] if src else None
 
 
 def pack_module(pack: str) -> str:
@@ -198,10 +351,25 @@ def pack_for_scheme(scheme: str) -> str | None:
     return SCHEME_TO_PACK.get(scheme)
 
 
-def _pip_install(specs: list[str], *, no_deps: bool = False) -> dict[str, Any]:
+def _pip_install(
+    specs: list[str],
+    *,
+    no_deps: bool = False,
+    find_links: str | None = None,
+    no_index: bool = False,
+) -> dict[str, Any]:
     cmd = [sys.executable, "-m", "pip", "install", "-U"]
     if no_deps:
         cmd.append("--no-deps")
+    # Build-first: prefer locally built wheels so installs never enumerate a registry
+    # (this is what kills pip's PyPI version backtracking) and work registry-free.
+    links = find_links if find_links is not None else (
+        wheelhouse_dir() if os.path.isdir(wheelhouse_dir()) else None
+    )
+    if links:
+        cmd += ["--find-links", links]
+    if no_index or (links and wheelhouse_offline()):
+        cmd.append("--no-index")
     cmd.extend(specs)
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     return {
@@ -262,28 +430,31 @@ def ensure_boot_pack(pack: str, *, install: bool = True) -> dict[str, Any]:
     if not install or not auto_install_enabled():
         return {"ok": False, "pack": pack, "error": "auto install disabled (URISYS_NODE_AUTO_INSTALL=0)"}
 
-    github = github_wheel_url(pack)
-    pypi = PACK_PYPI.get(pack)
     attempts: list[dict[str, Any]] = []
+    # Try sources in registry-independent priority order; a local wheel or GitHub
+    # wheel is installed --no-deps (its 3rd-party deps come from the wheelhouse/index
+    # via the dep walk of the pack itself), PyPI as a normal resolved install.
+    local = local_wheel(pack)
+    github = github_best_url(pack)
+    pypi = PACK_PYPI.get(pack)
+    candidates: list[tuple[str, str, bool]] = []
+    for kind, spec in (("local", local), ("github", github), ("pypi", pypi)):
+        if spec:
+            candidates.append((kind, spec, kind != "pypi"))
+    # Honour a forced single channel.
+    forced = pack_install_source()
+    if forced in ("local", "github", "pypi"):
+        candidates.sort(key=lambda c: 0 if c[0] == forced else 1)
 
-    if github:
-        out = _pip_install([github], no_deps=True)
-        attempts.append({"spec": github, "no_deps": True, **out})
+    for kind, spec, no_deps in candidates:
+        out = _pip_install([spec], no_deps=no_deps)
+        attempts.append({"spec": spec, "source": kind, "no_deps": no_deps, **out})
         if out.get("ok"):
             out["pack"] = pack
-            out["specs"] = [github]
+            out["specs"] = [spec]
             out["attempts"] = attempts
-            out["source"] = "github"
+            out["source"] = kind
             return out
-
-    if pypi:
-        out = _pip_install([pypi])
-        attempts.append({"spec": pypi, **out})
-        out["pack"] = pack
-        out["specs"] = [pypi]
-        out["attempts"] = attempts
-        out["source"] = "pypi"
-        return out
 
     return {"ok": False, "pack": pack, "error": f"no install mapping for pack {pack!r}", "attempts": attempts}
 

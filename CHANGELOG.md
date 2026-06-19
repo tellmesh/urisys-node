@@ -116,6 +116,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.42] - 2026-06-19
+
+### Docs
+- Update README.md
+
+### Test
+- Update tests/test_pack_resolver_wheelhouse.py
+
+### Other
+- Update data/events.jsonl
+- Update scripts/build-wheelhouse.sh
+- Update urisysnode/pack_resolver.py
+- Update uv.lock
+
 ## [0.1.41] - 2026-06-19
 
 ### Docs
