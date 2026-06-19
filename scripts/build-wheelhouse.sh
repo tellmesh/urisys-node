@@ -21,6 +21,9 @@ NODE_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TELLMESH_ROOT="${TELLMESH_ROOT:-$(dirname "$NODE_ROOT")}"
 WHEELHOUSE="${URISYS_WHEELHOUSE:-$HOME/.urisys/wheelhouse}"
 WHEELHOUSE="${WHEELHOUSE/#\~/$HOME}"
+# Use an interpreter that has pip/build; override with PYTHON=... if `python3` on
+# PATH is a venv without pip.
+PYTHON="${PYTHON:-python3}"
 
 # Control-plane first (uricontrol provides uri_control), then capability packs.
 DEFAULT_PKGS=(
@@ -32,7 +35,7 @@ DEFAULT_PKGS=(
 PKGS=("${@:-${DEFAULT_PKGS[@]}}")
 
 mkdir -p "$WHEELHOUSE"
-python3 -m pip install -q build 2>/dev/null || python3 -m pip install --user -q build
+$PYTHON -m pip install -q build 2>/dev/null || $PYTHON -m pip install --user -q build
 
 built=0 skipped=0 failed=0
 for pkg in "${PKGS[@]}"; do
@@ -43,7 +46,7 @@ for pkg in "${PKGS[@]}"; do
     continue
   fi
   echo "build $pkg → $WHEELHOUSE"
-  if python3 -m build -w -o "$WHEELHOUSE" "$dir" >/tmp/build-"$pkg".log 2>&1; then
+  if $PYTHON -m build -w -o "$WHEELHOUSE" "$dir" >/tmp/build-"$pkg".log 2>&1; then
     built=$((built + 1))
   else
     echo "FAIL $pkg (see /tmp/build-$pkg.log)" >&2

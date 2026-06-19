@@ -8,7 +8,7 @@ from typing import Any
 
 
 from urisysnode.pack_resolver import (
-    CORE_PACKS,
+    CONTROL_PACKS,
     PACK_MODULES,
     auto_install_enabled,
     ensure_pack_pypi,
@@ -167,7 +167,7 @@ def ensure_isolated_pack(
         return None
     scheme = scheme_for_uri(uri)
     pack = pack_for_scheme(scheme)
-    if not pack or pack in CORE_PACKS:
+    if not pack or pack in CONTROL_PACKS:
         return None
     loaded = getattr(runtime, "_loaded_packs", set()) or set()
     if pack in loaded or scheme in loaded:

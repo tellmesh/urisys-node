@@ -52,7 +52,8 @@ def test_query_packs(tmp_path):
 
 def test_call_uri_lazy_pack_route_not_found(tmp_path):
     rt = _node_only_runtime(tmp_path)
-    with patch("urisysnode.serve.ensure_pack_for_uri") as ensure:
+    # call_uri lives in serve.server and binds ensure_pack_for_uri there.
+    with patch("urisysnode.serve.server.ensure_pack_for_uri") as ensure:
         ensure.return_value = {"ok": True, "loaded": True, "pack": "kvm"}
         with patch.object(rt, "call", side_effect=[
             {"ok": False, "type": "route_not_found", "uri": "kvm://local/monitor/1/query/screenshot"},

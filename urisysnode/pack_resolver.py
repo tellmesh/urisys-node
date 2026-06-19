@@ -37,6 +37,11 @@ PACK_MODULES: dict[str, str] = {
 }
 
 CORE_PACKS = frozenset({"node", "screen", "shell"})
+# CONTROL_PACKS: the communication / control plane that runs IN-PROCESS in the
+# router. Everything else (all execution — shell, screen, kvm, …) is isolated into
+# worker processes so an execution crash can never take the router (and therefore
+# /health, /events and worker supervision) down. Keep this minimal: just `node`.
+CONTROL_PACKS = frozenset({"node"})
 BUNDLED_PACKS = frozenset({"node"})
 CORE_RUNTIME_PACKS = ("uricontrol",)
 PACK_PYPI: dict[str, str] = {
@@ -177,6 +182,20 @@ def wheelhouse_offline() -> bool:
     return os.environ.get("URISYS_WHEELHOUSE_OFFLINE", "").strip() not in ("", "0", "false", "no")
 
 
+def wheelhouse_find_links() -> str | None:
+    """Value for ``pip --find-links``: a local dir OR an ``http(s)://`` URL.
+
+    A URL lets a node pull built wheels from a wheel server (e.g. the
+    ``wheel_server`` in session.manifest.yaml — ``python -m http.server`` over a
+    wheelhouse) with zero copying. Returns ``None`` when neither a dir exists nor a
+    URL is configured."""
+    wh = os.environ.get("URISYS_WHEELHOUSE", "~/.urisys/wheelhouse")
+    if wh.startswith(("http://", "https://")):
+        return wh
+    d = os.path.expanduser(wh)
+    return d if os.path.isdir(d) else None
+
+
 def _dist_name(pack: str) -> str:
     """PyPI/GitHub distribution name for a pack alias (no version constraint)."""
     pypi = PACK_PYPI.get(pack)
@@ -302,8 +321,8 @@ def resolve_pack_source(pack: str) -> dict[str, Any] | None:
     in ``auto``: **local wheelhouse → GitHub → PyPI**. A forced ``URISYS_PACK_SOURCE``
     pins one channel (with sensible fallback when that channel has nothing)."""
     source = pack_install_source()
-    wh = wheelhouse_dir() if os.path.isdir(wheelhouse_dir()) else None
-    local = local_wheel(pack) if wh else None
+    wh = wheelhouse_find_links()  # local dir or http(s):// wheel server, else None
+    local = local_wheel(pack)  # only matches a local dir wheel (None for URL)
     pypi = PACK_PYPI.get(pack)
 
     def _local() -> dict[str, Any] | None:
@@ -363,9 +382,7 @@ def _pip_install(
         cmd.append("--no-deps")
     # Build-first: prefer locally built wheels so installs never enumerate a registry
     # (this is what kills pip's PyPI version backtracking) and work registry-free.
-    links = find_links if find_links is not None else (
-        wheelhouse_dir() if os.path.isdir(wheelhouse_dir()) else None
-    )
+    links = find_links if find_links is not None else wheelhouse_find_links()
     if links:
         cmd += ["--find-links", links]
     if no_index or (links and wheelhouse_offline()):
