@@ -8,6 +8,8 @@ import pytest
 os.environ["URISYS_NODE_SKIP_PAIRING"] = "1"
 os.environ["URISYS_NODE_DATA"] = tempfile.mkdtemp()
 os.environ["URISYS_NODE_PACKS"] = "node,screen"
+os.environ["URISYS_NODE_ISOLATION"] = "off"
+
 
 
 def test_identity_and_enroll():
