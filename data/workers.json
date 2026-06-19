@@ -1,8 +1,8 @@
 [
   {
     "name": "shell",
-    "endpoint": "http://127.0.0.1:42873",
-    "port": 42873,
+    "endpoint": "http://127.0.0.1:35579",
+    "port": 35579,
     "pack": "shell",
     "module": null,
     "patterns": [
@@ -11,6 +11,6 @@
     "schemes": [
       "shell"
     ],
-    "pid": 1805069
+    "pid": 489304
   }
 ]
