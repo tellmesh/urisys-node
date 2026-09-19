@@ -29,7 +29,7 @@ PYTHON="${PYTHON:-python3}"
 DEFAULT_PKGS=(
   uricontrol uriguard uriresolver urisys urisys-node
   urishell uriscreen urikvm urihim uriocr urillm urioffice urimail
-  urivql uriimg2nl uribrowser urikv uristt uriwebrtc urimessage urichat
+  urivql uriimg2nl uribrowser urikv uristt uriwebrtc urimessage
   urirdp urirdpedge urienv
 )
 PKGS=("${@:-${DEFAULT_PKGS[@]}}")

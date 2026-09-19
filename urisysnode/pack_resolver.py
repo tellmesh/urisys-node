@@ -8,6 +8,10 @@ import subprocess
 import sys
 from typing import Any
 
+# Archived chat execution is replaced by explicit planning and target execution.
+RETIRED_PACKS = frozenset({"chat", "urichat"})
+RETIRED_PACK_ERROR = "urichat is retired; use llm planning and the target URI, or message for notifications"
+
 # pack alias -> module exposing register(runtime)
 PACK_MODULES: dict[str, str] = {
     "node": "urisysnode.routes",
@@ -30,7 +34,6 @@ PACK_MODULES: dict[str, str] = {
     "webrtc": "uriwebrtc",
     "uriwebrtc": "uriwebrtc",
     "message": "urimessage",
-    "chat": "urichat",
     "rdp": "urirdp",
     "rdpedge": "urirdpedge",
     "env": "urienv",
@@ -60,7 +63,6 @@ PACK_PYPI: dict[str, str] = {
     "stt": "uristt>=0.1.0",
     "webrtc": "uriwebrtc>=0.1.0",
     "message": "urimessage>=0.1.0",
-    "chat": "urichat>=0.1.0",
     "rdp": "urirdp>=0.1.0",
     "rdpedge": "urirdpedge>=0.1.0",
     "env": "urienv>=0.1.0",
@@ -84,7 +86,6 @@ PACK_GITHUB_VERSION: dict[str, str] = {
     "stt": "0.1.0",
     "webrtc": "0.1.0",
     "message": "0.1.0",
-    "chat": "0.1.0",
     "rdp": "0.1.0",
     "rdpedge": "0.1.0",
     "env": "0.1.0",
@@ -106,7 +107,6 @@ PACK_GITHUB_REPO: dict[str, str] = {
     "stt": "uristt",
     "webrtc": "uriwebrtc",
     "message": "urimessage",
-    "chat": "urichat",
     "rdp": "urirdp",
     "rdpedge": "urirdpedge",
     "env": "urienv",
@@ -114,7 +114,7 @@ PACK_GITHUB_REPO: dict[str, str] = {
 # PyPI wheel basename when it differs from repo name (e.g. underscores).
 PACK_GITHUB_WHEEL: dict[str, str] = {}
 # Prefer GitHub in auto mode until PyPI publish succeeds
-GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv", "stt", "webrtc", "message", "chat", "rdp", "rdpedge", "env", "screen"})
+GITHUB_PREFERRED_PACKS = frozenset({"him", "ocr", "llm", "office", "mail", "vql", "img2nl", "browser", "kv", "stt", "webrtc", "message", "rdp", "rdpedge", "env", "screen"})
 
 # URI scheme -> pack alias (node only bundled; screen/shell via pip deps)
 SCHEME_TO_PACK: dict[str, str] = {
@@ -136,7 +136,6 @@ SCHEME_TO_PACK: dict[str, str] = {
     "voice": "stt",
     "webrtc": "webrtc",
     "message": "message",
-    "chat": "chat",
     "rdp": "rdp",
     "env": "env",
 }
@@ -320,6 +319,8 @@ def resolve_pack_source(pack: str) -> dict[str, Any] | None:
     Returns ``{"kind", "spec", "find_links"?, "no_index"?}`` or ``None``. Priority
     in ``auto``: **local wheelhouse → GitHub → PyPI**. A forced ``URISYS_PACK_SOURCE``
     pins one channel (with sensible fallback when that channel has nothing)."""
+    if pack in RETIRED_PACKS:
+        return None
     source = pack_install_source()
     wh = wheelhouse_find_links()  # local dir or http(s):// wheel server, else None
     local = local_wheel(pack)  # only matches a local dir wheel (None for URL)
@@ -413,6 +414,8 @@ def ensure_pip_specs(specs: list[str], *, install: bool = True) -> dict[str, Any
 
 
 def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> list[str]:
+    if pack in RETIRED_PACKS:
+        return []
     if override_specs:
         return [str(s).strip() for s in override_specs if str(s).strip()]
     specs: list[str] = []
@@ -429,6 +432,8 @@ def pack_install_specs(pack: str, override_specs: list[str] | None = None) -> li
 
 def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None = None) -> dict[str, Any]:
     """Install pack + uricontrol from GitHub Releases when import would fail."""
+    if pack in RETIRED_PACKS:
+        return {"ok": False, "pack": pack, "error": RETIRED_PACK_ERROR}
     resolved = pack_install_specs(pack, specs)
     if not resolved:
         if pack in BUNDLED_PACKS:
@@ -442,6 +447,8 @@ def ensure_pack_pypi(pack: str, *, install: bool = True, specs: list[str] | None
 
 def ensure_boot_pack(pack: str, *, install: bool = True) -> dict[str, Any]:
     """Install screen/shell only — uricontrol is already a urisys-node dependency."""
+    if pack in RETIRED_PACKS:
+        return {"ok": False, "pack": pack, "error": RETIRED_PACK_ERROR}
     if pack in BUNDLED_PACKS:
         return {"ok": True, "pack": pack, "skipped": True, "reason": "bundled in urisys-node"}
     if not install or not auto_install_enabled():
@@ -499,6 +506,8 @@ def github_wheel_urls(*packs: str) -> list[str]:
 
 
 def import_pack_module(pack: str):
+    if pack in RETIRED_PACKS:
+        raise ModuleNotFoundError(RETIRED_PACK_ERROR)
     module_name = pack_module(pack)
     return importlib.import_module(module_name)
 

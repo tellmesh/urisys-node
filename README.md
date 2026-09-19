@@ -46,3 +46,13 @@ urisys-node remote wait --timeout 60
 Alias w **urisys ≥0.1.78**: `urisys remote …` (ta sama implementacja).
 
 <!-- end-ecosystem -->
+
+### Retired chat pack
+
+The archived `urichat` repository has been removed. The node no longer resolves
+`chat://` to an automatically installed pack, and rejects loading `chat` or
+`urichat`, including stale local wheels. Use the existing
+`llm://local/text/query/plan` endpoint, validate its result and execute its target
+URI with explicit approval/dry-run context. Use
+`message://local/alert/command/send` with `channel: main` for the former message
+echo. Custom flows must migrate explicitly; chat URIs are not silently rewritten.
