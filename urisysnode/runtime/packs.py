@@ -9,6 +9,8 @@ from typing import Any
 
 from urisysnode.pack_resolver import (
     CONTROL_PACKS,
+    RETIRED_PACKS,
+    RETIRED_PACK_ERROR,
     PACK_MODULES,
     auto_install_enabled,
     ensure_pack_pypi,
@@ -53,6 +55,8 @@ def load_pack_into_runtime(
     pack = (pack or "").strip()
     if not pack:
         return {"ok": False, "error": "pack name is required"}
+    if pack in RETIRED_PACKS:
+        return {"ok": False, "pack": pack, "error": RETIRED_PACK_ERROR}
     loaded = getattr(runtime, "_loaded_packs", None)
     if loaded is None:
         loaded = set()
